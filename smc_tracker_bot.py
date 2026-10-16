@@ -6,13 +6,12 @@ import sqlite3
 from datetime import datetime
 
 # ========================================================
-# 1. إعدادات التليجرام والـ 50 عملة المختارة بعناية
+# 1. إعدادات التليجرام المحدثة لـ @SMC_Coins_Bot
 # ========================================================
 TELEGRAM_BOT_TOKEN = "8783526256:AAGaY3HW2BOpDqF-iGCmwtkcfHBf4hGnCU4"
 TELEGRAM_CHAT_ID = "7760401819"
 
-  
-# قائمة أقوى 50 عملة في باينانس من حيث السيولة وحجم التداول
+# قائمة أقوى 50 عملة
 SYMBOLS = [
     'BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'BNB/USDT', 'XRP/USDT',
     'DOGE/USDT', 'ADA/USDT', 'AVAX/USDT', 'SUI/USDT', 'LINK/USDT',
@@ -26,9 +25,10 @@ SYMBOLS = [
     'MKR/USDT', 'LDO/USDT', 'DYDX/USDT', 'FTM/USDT', 'ENA/USDT'
 ]
 
-TIMEFRAME = '1h'  # فريم الساعة (الأفضل والأدق لصفقات SMC)
+TIMEFRAME = '1h'
 
-exchange = ccxt.binance({
+# منصة KuCoin لا تفرض أي حظر جغرافي على السيرفرات السحابية
+exchange = ccxt.kucoin({
     'enableRateLimit': True
 })
 
@@ -46,8 +46,8 @@ def init_db():
             entry_price REAL,
             stop_loss REAL,
             take_profit REAL,
-            status TEXT,          -- OPEN, WIN, LOSS
-            pnl_r REAL,           -- ربح/خسارة بمضاعف المخاطرة (R)
+            status TEXT,
+            pnl_r REAL,
             open_time TEXT,
             close_time TEXT
         )
@@ -68,7 +68,8 @@ def send_telegram(message):
         "parse_mode": "Markdown"
     }
     try:
-        requests.post(url, json=payload, timeout=10)
+        r = requests.post(url, json=payload, timeout=10)
+        print(f"Telegram response: {r.status_code}")
     except Exception as e:
         print(f"Error sending to Telegram: {e}")
 
@@ -105,7 +106,7 @@ def update_trade_result(trade_id, status, pnl_r):
     conn.close()
 
 # ========================================================
-# 5. مراقبة الصفقات المفتوحة (هل ضربت الهدف أم الوقف؟)
+# 5. مراقبة الصفقات المفتوحة
 # ========================================================
 def track_open_trades():
     conn = sqlite3.connect('trades_journal.db')
@@ -120,7 +121,6 @@ def track_open_trades():
             ticker = exchange.fetch_ticker(symbol)
             current_price = ticker['last']
 
-            # حالة صفقة الشراء LONG
             if direction == 'LONG':
                 if current_price >= tp:
                     update_trade_result(trade_id, 'WIN', 3.0)
@@ -146,7 +146,6 @@ def track_open_trades():
                     )
                     send_telegram(msg)
 
-            # حالة صفقة البيع SHORT
             elif direction == 'SHORT':
                 if current_price <= tp:
                     update_trade_result(trade_id, 'WIN', 3.0)
@@ -280,8 +279,7 @@ def scan_smc():
                 )
                 send_telegram(msg)
 
-            # فاصل زمني صغير لحماية الاتصال من الضغط
-            time.sleep(0.2)
+            time.sleep(0.3)
 
         except Exception as e:
             print(f"Error scanning {symbol}: {e}")
@@ -290,25 +288,20 @@ def scan_smc():
 # 8. التشغيل المستمر
 # ========================================================
 def main():
-    print("✅ تم تشغيل البوت بنجاح لمراقبة أقوى 50 عملة!")
-    send_telegram("🚀 *تم تفعيل البوت لمراقبة أقوى 50 عملة بنجاح! نظام التتبع والتقارير يعمل الآن 24/7.*")
+    print("✅ تم تشغيل البوت بنجاح لمراقبة أقوى 50 عملة عبر السحابة!")
+    send_telegram("🚀 *تم تفعيل بوت SMC بنجاح لمراقبة أقوى 50 عملة! نظام التتبع والتقارير يعمل الآن 24/7.*")
     
     last_report_time = time.time()
 
     while True:
         try:
-            # 1. متابعة الصفقات الحالية هل ضربت الهدف أو الوقف
             track_open_trades()
-
-            # 2. فحص الـ 50 عملة بحثاً عن صفقات SMC
             scan_smc()
 
-            # 3. إرسال تقرير شامل تلقائياً كل 24 ساعة
             if time.time() - last_report_time > 86400:
                 send_summary_report()
                 last_report_time = time.time()
 
-            # الانتظار 60 ثانية قبل الدورة التالية
             time.sleep(60)
 
         except Exception as e:
