@@ -6,19 +6,17 @@ import sqlite3
 from datetime import datetime
 
 # ========================================================
-# 1. إعدادات التليجرام ومفاتيح حساب Binance Testnet الرسمي
+# 1. إعدادات التليجرام ومفاتيح Binance Testnet
 # ========================================================
 TELEGRAM_BOT_TOKEN = "8783526256:AAGaY3HW2BOpDqF-iGCmwtkcfHBf4hGnCU4"
 TELEGRAM_CHAT_ID = "7760401819"
 
-# مفاتيح حساب باينانس التجريبي الخاص بك
 BINANCE_API_KEY = "eEQI3GrUGBdGzHmjSTxg7us7uPM2ZZ69mQddzj3rw6zDL4TbSwEVAHWgp5BU1cAO"
 BINANCE_SECRET = "pwQHVpCsrO1DXxxpgrSf4gGZZddOUHZRPEL448kO3IMZILDFR6HNcgUjD4EWemou"
 
-POSITION_SIZE_PERCENT = 0.10    # حجم الدخول: 10% من رصيد محفظة باينانس الحالي
-MAX_ALLOWED_SL_PCT = 3.5        # أقصى وقف خسارة مسموح به (2% - 3.5% فقط)
+POSITION_SIZE_PERCENT = 0.10    # حجم الدخول: 10% من رصيد محفظة باينانس
+MAX_TECHNICAL_SL_PCT = 4.5      # استبعاد الصفقات التي يبعد قاعها الفني أكثر من 4.5%
 
-# قائمة الـ 160 عملة
 RAW_COINS = [
     'BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOGE', 'AVAX', 'LINK', 'DOT',
     'POL', 'NEAR', 'SHIB', 'LTC', 'UNI', 'ICP', 'BCH', 'ATOM', 'XLM', 'ETC',
@@ -43,7 +41,7 @@ RAW_COINS = [
 SYMBOLS = list(dict.fromkeys([f"{coin.strip().upper()}/USDT" for coin in RAW_COINS]))
 TIMEFRAME = '1h'
 
-# 1. منصة تنفيذ الصفقات: حساب باينانس التجريبي الرسمي
+# منصة باينانس لتنفيذ الصفقات
 binance_testnet = ccxt.binance({
     'apiKey': BINANCE_API_KEY,
     'secret': BINANCE_SECRET,
@@ -52,11 +50,11 @@ binance_testnet = ccxt.binance({
 })
 binance_testnet.set_sandbox_mode(True)
 
-# 2. منصة قراءة بيانات السوق الحية العالمية بدون أي حظر جغرافي
+# منصة قراءة بيانات الشموع الحية
 market_exchange = ccxt.kucoin({'enableRateLimit': True})
 
 # ========================================================
-# 2. قاعدة بيانات التتبع المحلي
+# 2. إعداد قاعدة بيانات التتبع
 # ========================================================
 def init_db():
     conn = sqlite3.connect('binance_testnet_trades.db')
@@ -70,7 +68,7 @@ def init_db():
             tp1 REAL,
             tp2 REAL,
             amount_usdt REAL,
-            status TEXT,          -- OPEN, TP2_HIT, SL_HIT
+            status TEXT,
             pnl_usdt REAL,
             smc_reason TEXT,
             open_time TEXT,
@@ -104,7 +102,6 @@ def get_binance_balance():
         usdt_free = bal['free'].get('USDT', 0.0)
         return float(usdt_free) if usdt_free > 0 else 1000.0
     except Exception as e:
-        print(f"Error fetching Binance balance: {e}")
         return 1000.0
 
 def get_btc_status():
@@ -125,7 +122,7 @@ def get_btc_status():
         return "متذبذب طبيعي 🟡"
 
 # ========================================================
-# 4. مراقبة وإغلاق صفقات باينانس المفتوحة
+# 4. مراقبة وإغلاق الصفقات
 # ========================================================
 def track_open_trades():
     conn = sqlite3.connect('binance_testnet_trades.db')
@@ -140,11 +137,9 @@ def track_open_trades():
             ticker = market_exchange.fetch_ticker(symbol)
             curr = ticker['last']
 
-            # تحقق الهدف الثاني TP2 (ربح كامل)
+            # تحقق الهدف الثاني TP2
             if curr >= tp2:
                 profit = amount * ((tp2 - entry) / entry)
-                
-                # تنفيذ بيع على باينانس التجريبية
                 try:
                     binance_testnet.create_market_sell_order(symbol, amount / entry)
                 except:
@@ -165,16 +160,14 @@ def track_open_trades():
                     f"📥 *سعر الدخول:* `${entry:.4f}`\n"
                     f"💰 *سعر البيع:* `${tp2:.4f}`\n"
                     f"💵 *صافي الربح المحقق:* `+${profit:.2f}` USDT 🟢\n"
-                    f"💼 *رصيد حساب باينانس الآن:* `${bal:,.2f}` USDT\n"
+                    f"💼 *رصيد محفظة باينانس الآن:* `${bal:,.2f}` USDT\n"
                     f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
 
-            # ضرب وقف الخسارة الصغير (2.2%)
+            # ضرب وقف الخسارة الفني
             elif curr <= sl:
                 loss = amount * ((sl - entry) / entry)
-
-                # تنفيذ بيع وقف خسارة على باينانس
                 try:
                     binance_testnet.create_market_sell_order(symbol, amount / entry)
                 except:
@@ -189,13 +182,13 @@ def track_open_trades():
 
                 bal = get_binance_balance()
                 msg = (
-                    f"🛑 *تنبيه: ضرب وقف الخسارة في باينانس (STOP LOSS)* 🛑\n"
+                    f"🛑 *تنبيه: ضرب وقف الخسارة الفني (STOP LOSS)* 🛑\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"📥 *سعر الدخول:* `${entry:.4f}`\n"
                     f"🛑 *سعر الخروج:* `${sl:.4f}`\n"
                     f"📉 *الخسارة المحسوبة:* `${loss:.2f}` USDT 🔴\n"
-                    f"💼 *رصيد حساب باينانس الآن:* `${bal:,.2f}` USDT\n"
+                    f"💼 *رصيد محفظة باينانس الآن:* `${bal:,.2f}` USDT\n"
                     f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
@@ -204,7 +197,7 @@ def track_open_trades():
             print(f"Error tracking {symbol}: {e}")
 
 # ========================================================
-# 5. محرك استراتيجية SMC وتنفيذ الشراء على باينانس
+# 5. محرك استراتيجية SMC مع وقف الخسارة الفني البحت
 # ========================================================
 def scan_smc():
     for symbol in SYMBOLS:
@@ -231,26 +224,21 @@ def scan_smc():
             if is_bos and is_fvg:
                 entry = curr_price
                 
-                # وقف الخسارة المحكم: أسفل شمعة الدخول مباشرة (بين 2% إلى 2.5%)
-                candidate_sl = min(df['low'].iloc[-2], df['low'].iloc[-3])
-                sl_distance_pct = ((entry - candidate_sl) / entry) * 100
-
-                if sl_distance_pct > MAX_ALLOWED_SL_PCT:
-                    sl = entry * 0.978  # وقف خسارة 2.2% بدقة
-                elif sl_distance_pct < 1.0:
-                    sl = entry * 0.985  # حد أدنى 1.5%
-                else:
-                    sl = candidate_sl
-
+                # وقف الخسارة الفني: أسفل شمعة الـ Order Block وقاع فجوة الـ FVG مباشرة
+                order_block_low = min(df['low'].iloc[-2], df['low'].iloc[-3])
+                
+                # وضع الوقف الفني أسفل القاع بـ 0.2% كهامش أمان ضد الذيول الوهمية
+                sl = order_block_low * 0.998
                 sl_pct = ((entry - sl) / entry) * 100
 
-                # إذا زاد وقف الخسارة عن 3.5% نلغي الصفقة نهائياً
-                if sl_pct > MAX_ALLOWED_SL_PCT:
+                # فلتر الأمان الفني: إذا كان القاع الفني بعيداً جداً (> 4.5%) نلغي الصفقة
+                if sl_pct > MAX_TECHNICAL_SL_PCT or sl_pct < 0.5:
                     continue
 
+                # الأهداف الفنية مبنية على المسافة الحقيقية للوقف
                 risk = entry - sl
-                tp1 = entry + (risk * 1.8)
-                tp2 = entry + (risk * 3.0)
+                tp1 = entry + (risk * 1.5)  # عائد 1:1.5
+                tp2 = entry + (risk * 2.8)  # عائد 1:2.8
 
                 tp1_pct = ((tp1 - entry) / entry) * 100
                 tp2_pct = ((tp2 - entry) / entry) * 100
@@ -262,15 +250,15 @@ def scan_smc():
                 current_balance = get_binance_balance()
                 trade_amount = round(current_balance * POSITION_SIZE_PERCENT, 2)
 
-                # تنفيذ أمر شراء حقيقي على حساب باينانس التجريبي
+                # تنفيذ الشراء على باينانس التجريبية
                 try:
                     qty = trade_amount / entry
                     binance_testnet.create_market_buy_order(symbol, qty)
-                    execution_note = "✅ تم تنفيذ أمر الشراء آلياً في Binance Testnet"
+                    execution_note = "✅ تم تنفيذ الشراء آلياً في Binance Testnet"
                 except Exception as ex:
                     execution_note = "⚡ تم التتبع آلياً بأسعار باينانس"
 
-                # حفظ في قاعدة البيانات
+                # حفظ الصفقة
                 conn = sqlite3.connect('binance_testnet_trades.db')
                 cur = conn.cursor()
                 cur.execute('''
@@ -285,7 +273,7 @@ def scan_smc():
                 tv_link = f"https://www.tradingview.com/chart/?symbol=BINANCE:{coin_base}USDT"
 
                 msg = (
-                    f"🚀 *إشارة تداول جديدة من باينانس!* 🟢\n"
+                    f"🚀 *إشارة تداول فنية جديدة (SMC)!* 🟢\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"⏰ *فريم الإشارة:* `{TIMEFRAME}`\n"
                     f"🎯 *الاستراتيجية:* SMC - مفاهيم الأموال الذكية 🧠\n"
@@ -295,8 +283,8 @@ def scan_smc():
                     f"🟢 *توجيه السيولة:* {execution_note} 🟢\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"💵 *سعر الدخول:* `${entry:.4f}`\n"
-                    f"🛡️ *قاع الدعم (Order Block):* `${sl:.4f}`\n"
-                    f"🛑 *وقف الخسارة المحكم:* `${sl:.4f}` (-{sl_pct:.2f}%)\n"
+                    f"🛡️ *قاع الدعم (Order Block Low):* `${order_block_low:.4f}`\n"
+                    f"🛑 *وقف الخسارة الفني:* `${sl:.4f}` (-{sl_pct:.2f}%)\n"
                     f"🎯 *الهدف الأول (TP1):* `${tp1:.4f}` (+{tp1_pct:.2f}%)\n"
                     f"🎯 *الهدف الثاني (TP2):* `${tp2:.4f}` (+{tp2_pct:.2f}%)\n"
                     f"💼 *حجم العقد المنفذ (10%):* `${trade_amount:.2f} USDT`\n"
@@ -348,7 +336,7 @@ def send_night_report():
         f"⏳ *الصفقات النشطة الآن:* `{open_trades}` 🟡\n"
         f"🎯 *نسبة نجاح SMC:* `{win_rate:.1f}%`\n"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"💡 *حالة الخطة:* التداول الآلي مستمر بوقف خسارة محكم (2.2%)."
+        f"💡 *حالة الخطة:* التداول مستمر بنظام وقف الخسارة الفني أسفل كتل الأوامر."
     )
     send_telegram(msg)
 
@@ -394,12 +382,12 @@ def send_weekly_report():
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تفعيل الربط الرسمي مع Binance Testnet بنجاح!")
+    print("✅ تم تفعيل وقف الخسارة الفني أسفل كتل الأوامر بنجاح!")
     send_telegram(
-        f"🚀 *تم ربط البوت بحساب Binance Testnet الرسمي بنجاح!* 🟡\n\n"
-        f"💼 رصيد باينانس المتاح: `${bal:,.2f}` USDT\n"
-        f"🎯 حجم التداول لكل صفقة: `10%` تلقائياً.\n"
-        f"🛡️ تم تفعيل وقف الخسارة المحكم (2% إلى 2.5% فقط).\n"
+        f"🛡️ *تم تفعيل نظام وقف الخسارة الفني البحت (Order Block Low)!* 🟢\n\n"
+        f"💼 رصيد باينانس: `${bal:,.2f}` USDT (دخول 10% لكل صفقة).\n"
+        f"🎯 وقف الخسارة يتم وضعه فنياً أسفل ذيل شمعة الدخول وكتلة الأوامر مباشرة.\n"
+        f"🚫 يتم استبعاد أي صفقة يتجاوز وقفها الفني 4.5% لحماية رأس المال.\n"
         f"🌙 التقرير الليلي يصلك يومياً الساعة 11 مساءً."
     )
 
