@@ -6,12 +6,14 @@ import sqlite3
 from datetime import datetime
 
 # ========================================================
-# 1. إعدادات التليجرام وقائمة الـ 50 عملة
+# 1. إعدادات التليجرام والمنصة والمحفظة التجريبية (10%)
 # ========================================================
 TELEGRAM_BOT_TOKEN = "8783526256:AAGaY3HW2BOpDqF-iGCmwtkcfHBf4hGnCU4"
 TELEGRAM_CHAT_ID = "7760401819"
 
-# أقوى 50 عملة سيولة على باينانس و كوكوين
+INITIAL_BALANCE = 1000.0        # رصيد المحفظة التجريبية الابتدائي
+POSITION_SIZE_PERCENT = 0.10    # حجم كل صفقة: 10% من رصيد المحفظة الحالي
+
 SYMBOLS = [
     'BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'BNB/USDT', 'XRP/USDT',
     'DOGE/USDT', 'ADA/USDT', 'AVAX/USDT', 'SUI/USDT', 'LINK/USDT',
@@ -27,26 +29,37 @@ SYMBOLS = [
 
 TIMEFRAME = '1h'
 
-exchange = ccxt.kucoin({
-    'enableRateLimit': True
-})
+exchange = ccxt.kucoin({'enableRateLimit': True})
 
 # ========================================================
-# 2. قاعدة بيانات تتبع صفقات السبوت
+# 2. إعداد قاعدة بيانات المحفظة والتتبع
 # ========================================================
 def init_db():
-    conn = sqlite3.connect('trades_journal.db')
+    conn = sqlite3.connect('paper_trading.db')
     cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS wallet (
+            id INTEGER PRIMARY KEY,
+            balance REAL,
+            starting_balance REAL
+        )
+    ''')
+    cursor.execute("SELECT COUNT(*) FROM wallet")
+    if cursor.fetchone()[0] == 0:
+        cursor.execute("INSERT INTO wallet VALUES (1, ?, ?)", (INITIAL_BALANCE, INITIAL_BALANCE))
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS trades (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             symbol TEXT,
-            direction TEXT,
             entry_price REAL,
             stop_loss REAL,
-            take_profit REAL,
-            status TEXT,
-            pnl_r REAL,
+            tp1 REAL,
+            tp2 REAL,
+            amount_usdt REAL,
+            status TEXT,          -- OPEN, TP1_HIT, TP2_HIT, SL_HIT
+            pnl_usdt REAL,
+            smc_reason TEXT,
             open_time TEXT,
             close_time TEXT
         )
@@ -57,150 +70,139 @@ def init_db():
 init_db()
 
 # ========================================================
-# 3. إرسال الرسائل إلى التليجرام
+# 3. دوال التليجرام والمحفظة
 # ========================================================
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": message,
-        "parse_mode": "Markdown"
+        "parse_mode": "Markdown",
+        "disable_web_page_preview": False
     }
     try:
         requests.post(url, json=payload, timeout=10)
     except Exception as e:
-        print(f"Error sending to Telegram: {e}")
+        print(f"Telegram error: {e}")
 
-# ========================================================
-# 4. إدارة صفقات السبوت
-# ========================================================
-def add_trade(symbol, entry, sl, tp):
-    conn = sqlite3.connect('trades_journal.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        INSERT INTO trades (symbol, direction, entry_price, stop_loss, take_profit, status, pnl_r, open_time)
-        VALUES (?, 'BUY', ?, ?, ?, 'OPEN', 0, ?)
-    ''', (symbol, entry, sl, tp, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    conn.commit()
-    conn.close()
+def get_btc_status():
+    try:
+        ticker = exchange.fetch_ticker('BTC/USDT')
+        change = ticker['percentage']
+        if change is None:
+            change = 0.0
+        if change > 2.0:
+            return f"صاعد بقوة (+{change:.2f}%) 🟢"
+        elif change > 0:
+            return f"متذبذب إيجابي (+{change:.2f}%) 🟢"
+        elif change > -2.0:
+            return f"متذبذب طبيعي ({change:.2f}%) 🟡"
+        else:
+            return f"هابط بحذر ({change:.2f}%) 🔴"
+    except:
+        return "متذبذب طبيعي 🟡"
 
-def has_open_trade(symbol):
-    conn = sqlite3.connect('trades_journal.db')
+def get_wallet_balance():
+    conn = sqlite3.connect('paper_trading.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT id FROM trades WHERE symbol = ? AND status = 'OPEN'", (symbol,))
+    cursor.execute("SELECT balance, starting_balance FROM wallet WHERE id = 1")
     row = cursor.fetchone()
     conn.close()
-    return row is not None
+    return row[0], row[1]
 
-def update_trade_result(trade_id, status, pnl_r):
-    conn = sqlite3.connect('trades_journal.db')
+def update_wallet_balance(pnl_amount):
+    conn = sqlite3.connect('paper_trading.db')
     cursor = conn.cursor()
-    cursor.execute('''
-        UPDATE trades 
-        SET status = ?, pnl_r = ?, close_time = ?
-        WHERE id = ?
-    ''', (status, pnl_r, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), trade_id))
+    cursor.execute("UPDATE wallet SET balance = balance + ? WHERE id = 1", (pnl_amount,))
     conn.commit()
     conn.close()
 
 # ========================================================
-# 5. متابعة صفقات الشراء المفتوحة (هل وصلت للهدف أم الوقف؟)
+# 4. مراقبة وإغلاق الصفقات التجريبية
 # ========================================================
 def track_open_trades():
-    conn = sqlite3.connect('trades_journal.db')
+    conn = sqlite3.connect('paper_trading.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT id, symbol, entry_price, stop_loss, take_profit FROM trades WHERE status = 'OPEN'")
-    open_trades = cursor.fetchall()
+    cursor.execute("SELECT id, symbol, entry_price, stop_loss, tp1, tp2, amount_usdt FROM trades WHERE status = 'OPEN'")
+    trades = cursor.fetchall()
     conn.close()
 
-    for trade in open_trades:
-        trade_id, symbol, entry, sl, tp = trade
+    for t in trades:
+        t_id, symbol, entry, sl, tp1, tp2, amount = t
         try:
             ticker = exchange.fetch_ticker(symbol)
-            current_price = ticker['last']
+            curr = ticker['last']
 
-            # تحقق الهدف
-            if current_price >= tp:
-                update_trade_result(trade_id, 'WIN', 3.0)
+            # تحقق الهدف الثاني TP2 (ربح كامل)
+            if curr >= tp2:
+                profit = amount * ((tp2 - entry) / entry)
+                update_wallet_balance(profit)
+                
+                conn = sqlite3.connect('paper_trading.db')
+                c = conn.cursor()
+                c.execute("UPDATE trades SET status = 'TP2_HIT', pnl_usdt = ?, close_time = ? WHERE id = ?",
+                          (profit, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), t_id))
+                conn.commit()
+                conn.close()
+
+                bal, _ = get_wallet_balance()
                 msg = (
-                    f"🎉 *مبروك! تحقق الهدف بنجاح (SPOT TAKE PROFIT)* 🎉\n\n"
-                    f"🪙 *العملة:* `{symbol}`\n"
-                    f"📥 *سعر الشراء:* `{entry}`\n"
-                    f"💰 *سعر البيع الحالي:* `{tp}`\n"
-                    f"📈 *الربح المحقق:* `+3R` (نسبة ممتازة)\n\n"
-                    f"يمكنك جني الأرباح وبيع العملة الآن."
+                    f"🎯 *تم تحقيق الهدف بنجاح (TP HIT)!* 🎉\n"
+                    f"━━━━━━━━━━━━━━━━━━\n"
+                    f"🪙 *العملة:* `#{symbol}`\n"
+                    f"📥 *سعر الدخول:* `${entry:.4f}`\n"
+                    f"💰 *سعر الخروج:* `${tp2:.4f}`\n"
+                    f"💵 *صافي الربح:* `+${profit:.2f}` USDT 🟢\n"
+                    f"💼 *رصيد المحفظة الآن:* `${bal:.2f}` USDT\n"
+                    f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
 
-            # كسر وقف الخسارة
-            elif current_price <= sl:
-                update_trade_result(trade_id, 'LOSS', -1.0)
+            # ضرب وقف الخسارة
+            elif curr <= sl:
+                loss = amount * ((sl - entry) / entry)
+                update_wallet_balance(loss)
+
+                conn = sqlite3.connect('paper_trading.db')
+                c = conn.cursor()
+                c.execute("UPDATE trades SET status = 'SL_HIT', pnl_usdt = ?, close_time = ? WHERE id = ?",
+                          (loss, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), t_id))
+                conn.commit()
+                conn.close()
+
+                bal, _ = get_wallet_balance()
                 msg = (
-                    f"🛑 *تنبيه وقف خسارة سبوت (STOP LOSS)* 🛑\n\n"
-                    f"🪙 *العملة:* `{symbol}`\n"
-                    f"📥 *سعر الشراء:* `{entry}`\n"
-                    f"🛑 *سعر الخروج:* `{sl}`\n"
-                    f"📉 *النتيجة:* `-1R`\n\n"
-                    f"يُفضل الخروج لحماية رأس المال وإعادة الدخول من قاع أفضل."
+                    f"🛑 *تنبيه: ضرب وقف الخسارة (STOP LOSS)* 🛑\n"
+                    f"━━━━━━━━━━━━━━━━━━\n"
+                    f"🪙 *العملة:* `#{symbol}`\n"
+                    f"📥 *سعر الدخول:* `${entry:.4f}`\n"
+                    f"🛑 *سعر الخروج:* `${sl:.4f}`\n"
+                    f"📉 *الخسارة التجريبية:* `${loss:.2f}` USDT 🔴\n"
+                    f"💼 *رصيد المحفظة الآن:* `${bal:.2f}` USDT\n"
+                    f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
 
         except Exception as e:
-            print(f"Error checking trade #{trade_id}: {e}")
+            print(f"Error tracking {symbol}: {e}")
 
 # ========================================================
-# 6. إرسال تقرير الأداء اليومي الشامل للسبوت
-# ========================================================
-def send_summary_report():
-    conn = sqlite3.connect('trades_journal.db')
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status != 'OPEN'")
-    total_closed = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'WIN'")
-    wins = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'LOSS'")
-    losses = cursor.fetchone()[0]
-
-    cursor.execute("SELECT SUM(pnl_r) FROM trades WHERE status != 'OPEN'")
-    total_r = cursor.fetchone()[0] or 0.0
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'OPEN'")
-    active = cursor.fetchone()[0]
-
-    conn.close()
-
-    win_rate = (wins / total_closed * 100) if total_closed > 0 else 0
-
-    report = (
-        f"📊 *تقرير أداء صفقات السبوت (SMC SPOT)* 📊\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"🔢 *إجمالي الصفقات المنتهية:* `{total_closed}`\n"
-        f"✅ *الصفقات الرابحة:* `{wins}` 🟢\n"
-        f"❌ *الصفقات الخاسرة:* `{losses}` 🔴\n"
-        f"⏳ *الصفقات المستمرة حالياً:* `{active}` 🟡\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"🎯 *نسبة النجاح (Win Rate):* `{win_rate:.1f}%`\n"
-        f"💰 *صافي الأرباح:* `{total_r:+.1f}R`\n"
-        f"━━━━━━━━━━━━━━━━━━"
-    )
-    send_telegram(report)
-
-# ========================================================
-# 7. فحص السوق لاكتشاف فرص الشراء فقط (BUY ONLY)
+# 5. محرك استراتيجية SMC وإرسال الإشارة (حجم 10%)
 # ========================================================
 def scan_smc():
     for symbol in SYMBOLS:
-        if has_open_trade(symbol):
+        conn = sqlite3.connect('paper_trading.db')
+        c = conn.cursor()
+        c.execute("SELECT id FROM trades WHERE symbol = ? AND status = 'OPEN'", (symbol,))
+        exists = c.fetchone()
+        conn.close()
+        if exists:
             continue
 
         try:
             ohlcv = exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=60)
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
 
-            # تحديد القمم والقيعان
             df['swing_high'] = df['high'][(df['high'] > df['high'].shift(1)) & (df['high'] > df['high'].shift(-1))]
             df['swing_low'] = df['low'][(df['low'] < df['low'].shift(1)) & (df['low'] < df['low'].shift(-1))]
 
@@ -215,27 +217,63 @@ def scan_smc():
             c1_high = df['high'].iloc[-3]
             c3_low = df['low'].iloc[-1]
 
-            # شرط الشراء السبوت: كسر هيكل صاعد (BOS/CHoCH) + فجوة FVG شرائية
-            if curr_price > last_high and c3_low > c1_high:
+            is_bos = curr_price > last_high
+            is_fvg = c3_low > c1_high
+
+            if is_bos and is_fvg:
                 entry = curr_price
                 sl = last_low
                 risk = entry - sl
                 
-                # أهداف بيع السبوت بربح
-                tp1 = entry + (risk * 2)   # هدف أول (1:2)
-                tp2 = entry + (risk * 3.5) # هدف ثانٍ رئيسي (1:3.5)
+                tp1 = entry + (risk * 1.5)
+                tp2 = entry + (risk * 2.8)
 
-                add_trade(symbol, entry, sl, tp2)
+                sl_pct = ((entry - sl) / entry) * 100
+                tp1_pct = ((tp1 - entry) / entry) * 100
+                tp2_pct = ((tp2 - entry) / entry) * 100
+
+                smc_reason = "BOS (Break of Structure) + Bullish FVG (Fair Value Gap)"
+                btc_status = get_btc_status()
+
+                # حساب حجم العقد ديناميكياً = 10% من رصيد المحفظة الحالي
+                curr_balance, _ = get_wallet_balance()
+                trade_amount = round(curr_balance * POSITION_SIZE_PERCENT, 2)
+
+                # تسجيل الصفقة التجريبية
+                conn = sqlite3.connect('paper_trading.db')
+                cur = conn.cursor()
+                cur.execute('''
+                    INSERT INTO trades (symbol, entry_price, stop_loss, tp1, tp2, amount_usdt, status, pnl_usdt, smc_reason, open_time)
+                    VALUES (?, ?, ?, ?, ?, ?, 'OPEN', 0, ?, ?)
+                ''', (symbol, entry, sl, tp1, tp2, trade_amount, smc_reason, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                conn.commit()
+                conn.close()
+
+                # روابط الشارت المباشرة
+                coin_base = symbol.split('/')[0]
+                binance_link = f"https://www.binance.com/en/trade/{coin_base}_USDT"
+                tv_link = f"https://www.tradingview.com/chart/?symbol=BINANCE:{coin_base}USDT"
+
                 msg = (
-                    f"🟢 *إشارة شراء سبوت جديدة (SPOT BUY)* 🟢\n\n"
-                    f"🪙 *العملة:* `{symbol}`\n"
-                    f"⏰ *الفريم:* `{TIMEFRAME}`\n\n"
-                    f"✅ *السبب:* كسر هيكل صاعد (BOS) مع فجوة سيولة (FVG)\n\n"
-                    f"📥 *سعر الشراء المقترح:* `{entry:.4f}`\n"
-                    f"🛑 *وقف الخسارة:* `{sl:.4f}`\n"
-                    f"🎯 *الهدف الأول (بيع نصف الكمية):* `{tp1:.4f}`\n"
-                    f"💰 *الهدف الثاني (بيع باقي الكمية):* `{tp2:.4f}`\n\n"
-                    f"⚡ *البوت بدأ تتبع هذه الصفقة وسيخبرك عند الوصول للأهداف.*"
+                    f"🚀 *إشارة تداول تجريبية جديدة!* 🟢\n"
+                    f"🪙 *العملة:* `#{symbol}`\n"
+                    f"⏰ *فريم الإشارة:* `{TIMEFRAME}`\n"
+                    f"🎯 *الاستراتيجية:* SMC - مفاهيم الأموال الذكية 🧠\n"
+                    f"🌟 *تصنيف الصفقة:* صفقة كبرى (+A) 🌟\n"
+                    f"📌 *التأكيد الفني:* كسر هيكل صاعد مع فجوة سيولة\n"
+                    f"🔍 *السبب الفني:* `{smc_reason}`\n"
+                    f"🟢 *توجيه السيولة:* استثمار آمن وممتاز 🟢\n"
+                    f"━━━━━━━━━━━━━━━━━━\n"
+                    f"💵 *سعر الدخول:* `${entry:.4f}`\n"
+                    f"🛡️ *قاع الدعم (Swing Low):* `${sl:.4f}`\n"
+                    f"🛑 *وقف الخسارة:* `${sl:.4f}` (-{sl_pct:.2f}%)\n"
+                    f"🎯 *الهدف الأول (TP1):* `${tp1:.4f}` (+{tp1_pct:.2f}%)\n"
+                    f"🎯 *الهدف الثاني (TP2):* `${tp2:.4f}` (+{tp2_pct:.2f}%)\n"
+                    f"💼 *حجم العقد التجريبي (10%):* `${trade_amount:.2f} USDT`\n"
+                    f"🌐 *سوق البيتكوين:* {btc_status}\n"
+                    f"━━━━━━━━━━━━━━━━━━\n"
+                    f"📊 [عرض الشارت على Binance]({binance_link})\n"
+                    f"📈 [عرض الشارت على TradingView]({tv_link})"
                 )
                 send_telegram(msg)
 
@@ -245,27 +283,121 @@ def scan_smc():
             print(f"Error scanning {symbol}: {e}")
 
 # ========================================================
-# 8. التشغيل المستمر
+# 6. التقارير الليلية والأسبوعية
+# ========================================================
+def send_night_report():
+    conn = sqlite3.connect('paper_trading.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'TP2_HIT'")
+    wins = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'SL_HIT'")
+    losses = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'OPEN'")
+    open_trades = cursor.fetchone()[0]
+
+    cursor.execute("SELECT SUM(pnl_usdt) FROM trades WHERE status != 'OPEN'")
+    total_pnl = cursor.fetchone()[0] or 0.0
+
+    conn.close()
+
+    bal, start_bal = get_wallet_balance()
+    roi = ((bal - start_bal) / start_bal) * 100
+    total_closed = wins + losses
+    win_rate = (wins / total_closed * 100) if total_closed > 0 else 0
+
+    msg = (
+        f"🌙 *التقرير الليلي لصفقات التداول التجريبي* 🌙\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"💼 *رصيد المحفظة الحالي:* `${bal:.2f}` USDT\n"
+        f"📈 *العائد الكلي (ROI):* `{roi:+.2f}%` ({total_pnl:+.2f}$)\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"✅ *الصفقات الرابحة:* `{wins}` 🟢\n"
+        f"❌ *الصفقات الخاسرة:* `{losses}` 🔴\n"
+        f"⏳ *الصفقات النشطة الآن:* `{open_trades}` 🟡\n"
+        f"🎯 *نسبة نجاح SMC:* `{win_rate:.1f}%`\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"💡 *حالة الخطة:* النظام يواصل اختبار الصفقات بدقة في السحابة."
+    )
+    send_telegram(msg)
+
+def send_weekly_report():
+    conn = sqlite3.connect('paper_trading.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'TP2_HIT'")
+    wins = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'SL_HIT'")
+    losses = cursor.fetchone()[0]
+
+    cursor.execute("SELECT SUM(pnl_usdt) FROM trades WHERE status != 'OPEN'")
+    total_pnl = cursor.fetchone()[0] or 0.0
+
+    conn.close()
+
+    bal, start_bal = get_wallet_balance()
+    roi = ((bal - start_bal) / start_bal) * 100
+    total_closed = wins + losses
+    win_rate = (wins / total_closed * 100) if total_closed > 0 else 0
+
+    evaluation = "ممتازة وجاهزة للحساب الحقيقي! 🚀" if win_rate >= 50 and roi > 0 else "تحتاج لمزيد من المراقبة والتعديل ⚠️"
+
+    msg = (
+        f"📅 *التقرير الأسبوعي الشامل لتقييم الاستراتيجية* 📅\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"💼 *الرصيد الابتدائي:* `${start_bal:.2f}` USDT\n"
+        f"💰 *الرصيد النهائي:* `${bal:.2f}` USDT\n"
+        f"📈 *صافي الأرباح:* `{total_pnl:+.2f}$` ({roi:+.2f}%)\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"🔢 *إجمالي الصفقات المغلقة:* `{total_closed}`\n"
+        f"✅ *صفقات رابحة:* `{wins}`\n"
+        f"❌ *صفقات خاسرة:* `{losses}`\n"
+        f"🎯 *معدل الفوز الحقيقي:* `{win_rate:.1f}%`\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"🎖️ *التقييم النهائي:* {evaluation}\n"
+        f"━━━━━━━━━━━━━━━━━━"
+    )
+    send_telegram(msg)
+
+# ========================================================
+# 7. الحلقة الرئيسية للتشغيل
 # ========================================================
 def main():
-    print("✅ تم تشغيل بوت السبوت بنجاح (شراء فقط)!")
-    send_telegram("🚀 *تم تحديث البوت لنظام السبوت الفوري (SPOT ONLY)! سيبحث الآن عن أقوى صفقات الشراء فقط.*")
-    
-    last_report_time = time.time()
+    print("✅ تم تشغيل بوت التداول التجريبي الآلي SMC بنجاح (10% لكل صفقة)!")
+    send_telegram(
+        "🚀 *تم تفعيل نظام التداول التجريبي الآلي SMC (10% لكل صفقة)!* 🟢\n\n"
+        "💼 حجم الدخول محسوب تلقائياً = 10% من رصيد المحفظة.\n"
+        "🌙 التقرير الليلي يصلك يومياً الساعة 11 مساءً.\n"
+        "📅 التقرير الأسبوعي الشامل يصلك مساء كل أحد لتقييم النتائج بدقة."
+    )
+
+    last_night_report_day = -1
+    last_weekly_report_week = -1
 
     while True:
         try:
             track_open_trades()
             scan_smc()
 
-            if time.time() - last_report_time > 86400:
-                send_summary_report()
-                last_report_time = time.time()
+            now = datetime.now()
+
+            # التقرير الليلي الساعة 11 مساءً
+            if now.hour == 23 and now.day != last_night_report_day:
+                send_night_report()
+                last_night_report_day = now.day
+
+            # التقرير الأسبوعي كل أحد الساعة 11:30 مساءً
+            if now.weekday() == 6 and now.hour == 23 and now.isocalendar()[1] != last_weekly_report_week:
+                send_weekly_report()
+                last_weekly_report_week = now.isocalendar()[1]
 
             time.sleep(60)
 
         except Exception as e:
-            print(f"خطأ في الدورة العامة: {e}")
+            print(f"Error in main loop: {e}")
             time.sleep(15)
 
 if __name__ == "__main__":
