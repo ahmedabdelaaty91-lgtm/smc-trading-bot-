@@ -1,0 +1,28 @@
+name: SMC Trading Bot 24-7
+
+on:
+  schedule:
+    # فحص تلقائي في السحابة كل 30 دقيقة
+    - cron: '*/30 * * * *'
+  # يتيح لك تشغيله بضغطة زر في أي وقت
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: تنزيل ملفات المشروع
+        uses: actions/checkout@v4
+
+      - name: إعداد لغة بايثون
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: تثبيت المكتبات
+        run: |
+          pip install ccxt pandas requests
+
+      - name: تشغيل البوت
+        run: |
+          python smc_tracker_bot.py
