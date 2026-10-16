@@ -6,26 +6,38 @@ import sqlite3
 from datetime import datetime
 
 # ========================================================
-# 1. إعدادات التليجرام والمنصة والمحفظة التجريبية (10%)
+# 1. إعدادات التليجرام والمحفظة وقائمة الـ 160 عملة
 # ========================================================
 TELEGRAM_BOT_TOKEN = "8783526256:AAGaY3HW2BOpDqF-iGCmwtkcfHBf4hGnCU4"
 TELEGRAM_CHAT_ID = "7760401819"
 
-INITIAL_BALANCE = 1000.0        # رصيد المحفظة التجريبية الابتدائي
-POSITION_SIZE_PERCENT = 0.10    # حجم كل صفقة: 10% من رصيد المحفظة الحالي
+INITIAL_BALANCE = 1000.0        # رصيد المحفظة التجريبية الابتدائي (1000$)
+POSITION_SIZE_PERCENT = 0.10    # حجم الدخول: 10% من رصيد المحفظة الحالي
 
-SYMBOLS = [
-    'BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'BNB/USDT', 'XRP/USDT',
-    'DOGE/USDT', 'ADA/USDT', 'AVAX/USDT', 'SUI/USDT', 'LINK/USDT',
-    'NEAR/USDT', 'APT/USDT', 'DOT/USDT', 'LTC/USDT', 'PEPE/USDT',
-    'SHIB/USDT', 'TRX/USDT', 'ICP/USDT', 'FET/USDT', 'RENDER/USDT',
-    'TIA/USDT', 'INJ/USDT', 'ARB/USDT', 'OP/USDT', 'UNI/USDT',
-    'AAVE/USDT', 'STX/USDT', 'FIL/USDT', 'ATOM/USDT', 'SEI/USDT',
-    'WIF/USDT', 'FLOKI/USDT', 'BONK/USDT', 'GALA/USDT', 'RUNE/USDT',
-    'GRT/USDT', 'SAND/USDT', 'MANA/USDT', 'CHZ/USDT', 'ALGO/USDT',
-    'XLM/USDT', 'HBAR/USDT', 'VET/USDT', 'EOS/USDT', 'CRV/USDT',
-    'MKR/USDT', 'LDO/USDT', 'DYDX/USDT', 'FTM/USDT', 'ENA/USDT'
+# قائمة العملات الكاملة المحددة من قبلك
+RAW_COINS = [
+    'BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOGE', 'AVAX', 'LINK', 'DOT',
+    'POL', 'NEAR', 'SHIB', 'LTC', 'UNI', 'ICP', 'BCH', 'ATOM', 'XLM', 'ETC',
+    'FIL', 'HBAR', 'INJ', 'IMX', 'RENDER', 'OP', 'ARB', 'SUI', 'TIA', 'SEI',
+    'GRT', 'AAVE', 'ALGO', 'THETA', 'FLOW', 'CHZ', 'GALA', 'SAND', 'MANA', 'AXS',
+    'KAVA', 'CELO', 'AR', 'PYTH', 'MANTA', 'JUP', 'BONK', 'FLOKI', 'PEPE', 'WIF',
+    'NOT', 'TAO', 'FET', 'PIXEL', 'XEC', 'PENDLE', 'STRK', 'ALT', 'PORTAL', 'XAI',
+    'NEXO', 'GMX', 'CRV', 'CAKE', '1INCH', 'SNX', 'COMP', 'ZK', 'ZRO', 'ENA',
+    'SAGA', 'IOST', 'JTO', 'QTUM', 'MINA', 'APT', 'BOME', 'GAS', 'TRUMP', 'ZIL',
+    'IOTA', 'DASH', 'ZEC', 'RVN', 'KSM', 'BICO', 'HMSTR', 'CVC', 'BAND', 'DUSK',
+    'LSK', 'SNDKB', 'XPL', 'VANA', 'AVA', 'OGN', 'OG', 'SENT', 'PUMP', 'ONT',
+    'WLD', 'HYPE', 'SKL', 'CATI', 'MUUB', 'JST', 'ONE', 'SUPER', 'AMP', 'OPG',
+    'EPIC', 'EDEN', 'BEAMX', 'GPS', 'AVNT', 'OPEN', 'OSMO', 'SPK', 'TRX', 'ADBEB',
+    'MBL', 'MUBARAK', 'QUICK', 'CHIP', 'AT', 'SHELL', 'BROCCOLI714', 'ERA', 'AGLD', 'GNS',
+    'IOTX', 'CETUS', 'PENGU', 'TUT', 'TWT', 'HOME', 'PEOPLE', 'CITY', 'RED', 'BANANA',
+    'VET', 'MOVE', 'BANK', '1000SATS', 'PSG', 'ATM', 'PORTO', 'MEME', 'NVDAB', '1000CAT',
+    'GTC', 'BB', 'HOT', 'C98', 'MANTRA', 'KMNO', 'SOLV', 'FLUX', 'HEMI', 'VTHO',
+    'CYPHB', 'ANIME', 'ZAMA', 'CRCLB', 'PROM', 'BLUR', 'COINB', 'ONDO', 'FF', 'EDU',
+    'ASTSB', 'AERO', 'JASMY'
 ]
+
+# تحويلها لأزواج تداول مع USDT وإزالة أي تكرار
+SYMBOLS = list(dict.fromkeys([f"{coin.strip().upper()}/USDT" for coin in RAW_COINS]))
 
 TIMEFRAME = '1h'
 
@@ -57,7 +69,7 @@ def init_db():
             tp1 REAL,
             tp2 REAL,
             amount_usdt REAL,
-            status TEXT,          -- OPEN, TP1_HIT, TP2_HIT, SL_HIT
+            status TEXT,
             pnl_usdt REAL,
             smc_reason TEXT,
             open_time TEXT,
@@ -187,7 +199,7 @@ def track_open_trades():
             print(f"Error tracking {symbol}: {e}")
 
 # ========================================================
-# 5. محرك استراتيجية SMC وإرسال الإشارة (حجم 10%)
+# 5. محرك استراتيجية SMC وإرسال الإشارة
 # ========================================================
 def scan_smc():
     for symbol in SYMBOLS:
@@ -249,7 +261,7 @@ def scan_smc():
                 conn.commit()
                 conn.close()
 
-                # روابط الشارت المباشرة
+                # روابط الشارت
                 coin_base = symbol.split('/')[0]
                 binance_link = f"https://www.binance.com/en/trade/{coin_base}_USDT"
                 tv_link = f"https://www.tradingview.com/chart/?symbol=BINANCE:{coin_base}USDT"
@@ -277,10 +289,11 @@ def scan_smc():
                 )
                 send_telegram(msg)
 
-            time.sleep(0.3)
+            time.sleep(0.15)
 
         except Exception as e:
-            print(f"Error scanning {symbol}: {e}")
+            # تخطي أي عملة غير مدرجة على المنصة بسلاسة
+            pass
 
 # ========================================================
 # 6. التقارير الليلية والأسبوعية
@@ -319,7 +332,7 @@ def send_night_report():
         f"⏳ *الصفقات النشطة الآن:* `{open_trades}` 🟡\n"
         f"🎯 *نسبة نجاح SMC:* `{win_rate:.1f}%`\n"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"💡 *حالة الخطة:* النظام يواصل اختبار الصفقات بدقة في السحابة."
+        f"💡 *حالة الخطة:* النظام يواصل فحص أكثر من 160 عملة بدقة في السحابة."
     )
     send_telegram(msg)
 
@@ -366,12 +379,12 @@ def send_weekly_report():
 # 7. الحلقة الرئيسية للتشغيل
 # ========================================================
 def main():
-    print("✅ تم تشغيل بوت التداول التجريبي الآلي SMC بنجاح (10% لكل صفقة)!")
+    print("✅ تم تشغيل بوت التداول التجريبي الآلي SMC لأكثر من 160 عملة!")
     send_telegram(
-        "🚀 *تم تفعيل نظام التداول التجريبي الآلي SMC (10% لكل صفقة)!* 🟢\n\n"
-        "💼 حجم الدخول محسوب تلقائياً = 10% من رصيد المحفظة.\n"
+        f"🚀 *تم تحديث البوت لمراقبة {len(SYMBOLS)} عملة رقمية بنجاح!* 🟢\n\n"
+        "💼 المحفظة الافتراضية: 1,000$ USDT (دخول 10% لكل صفقة).\n"
         "🌙 التقرير الليلي يصلك يومياً الساعة 11 مساءً.\n"
-        "📅 التقرير الأسبوعي الشامل يصلك مساء كل أحد لتقييم النتائج بدقة."
+        "📅 التقرير الأسبوعي الشامل يصلك مساء كل أحد."
     )
 
     last_night_report_day = -1
