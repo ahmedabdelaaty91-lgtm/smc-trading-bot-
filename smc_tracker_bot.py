@@ -6,12 +6,12 @@ import sqlite3
 from datetime import datetime
 
 # ========================================================
-# 1. إعدادات التليجرام المحدثة لـ @SMC_Coins_Bot
+# 1. إعدادات التليجرام وقائمة الـ 50 عملة
 # ========================================================
 TELEGRAM_BOT_TOKEN = "8783526256:AAGaY3HW2BOpDqF-iGCmwtkcfHBf4hGnCU4"
 TELEGRAM_CHAT_ID = "7760401819"
 
-# قائمة أقوى 50 عملة
+# أقوى 50 عملة سيولة على باينانس و كوكوين
 SYMBOLS = [
     'BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'BNB/USDT', 'XRP/USDT',
     'DOGE/USDT', 'ADA/USDT', 'AVAX/USDT', 'SUI/USDT', 'LINK/USDT',
@@ -27,13 +27,12 @@ SYMBOLS = [
 
 TIMEFRAME = '1h'
 
-# منصة KuCoin لا تفرض أي حظر جغرافي على السيرفرات السحابية
 exchange = ccxt.kucoin({
     'enableRateLimit': True
 })
 
 # ========================================================
-# 2. إعداد قاعدة بيانات محلية لحفظ وتتبع الصفقات
+# 2. قاعدة بيانات تتبع صفقات السبوت
 # ========================================================
 def init_db():
     conn = sqlite3.connect('trades_journal.db')
@@ -58,7 +57,7 @@ def init_db():
 init_db()
 
 # ========================================================
-# 3. دوال التليجرام
+# 3. إرسال الرسائل إلى التليجرام
 # ========================================================
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -68,21 +67,20 @@ def send_telegram(message):
         "parse_mode": "Markdown"
     }
     try:
-        r = requests.post(url, json=payload, timeout=10)
-        print(f"Telegram response: {r.status_code}")
+        requests.post(url, json=payload, timeout=10)
     except Exception as e:
         print(f"Error sending to Telegram: {e}")
 
 # ========================================================
-# 4. إدارة الصفقات في قاعدة البيانات
+# 4. إدارة صفقات السبوت
 # ========================================================
-def add_trade(symbol, direction, entry, sl, tp):
+def add_trade(symbol, entry, sl, tp):
     conn = sqlite3.connect('trades_journal.db')
     cursor = conn.cursor()
     cursor.execute('''
         INSERT INTO trades (symbol, direction, entry_price, stop_loss, take_profit, status, pnl_r, open_time)
-        VALUES (?, ?, ?, ?, ?, 'OPEN', 0, ?)
-    ''', (symbol, direction, entry, sl, tp, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        VALUES (?, 'BUY', ?, ?, ?, 'OPEN', 0, ?)
+    ''', (symbol, entry, sl, tp, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     conn.commit()
     conn.close()
 
@@ -106,76 +104,52 @@ def update_trade_result(trade_id, status, pnl_r):
     conn.close()
 
 # ========================================================
-# 5. مراقبة الصفقات المفتوحة
+# 5. متابعة صفقات الشراء المفتوحة (هل وصلت للهدف أم الوقف؟)
 # ========================================================
 def track_open_trades():
     conn = sqlite3.connect('trades_journal.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT id, symbol, direction, entry_price, stop_loss, take_profit FROM trades WHERE status = 'OPEN'")
+    cursor.execute("SELECT id, symbol, entry_price, stop_loss, take_profit FROM trades WHERE status = 'OPEN'")
     open_trades = cursor.fetchall()
     conn.close()
 
     for trade in open_trades:
-        trade_id, symbol, direction, entry, sl, tp = trade
+        trade_id, symbol, entry, sl, tp = trade
         try:
             ticker = exchange.fetch_ticker(symbol)
             current_price = ticker['last']
 
-            if direction == 'LONG':
-                if current_price >= tp:
-                    update_trade_result(trade_id, 'WIN', 3.0)
-                    msg = (
-                        f"🎉 *مبروك! تحقق الهدف بنجاح (TAKE PROFIT)* 🎉\n\n"
-                        f"🪙 *العملة:* `{symbol}` (LONG)\n"
-                        f"🎯 *سعر الدخول:* `{entry}`\n"
-                        f"💰 *سعر الهدف:* `{tp}`\n"
-                        f"📈 *الربح المحقق:* `+3R` (3 أضعاف المخاطرة)\n\n"
-                        f"تم تسجيل الصفقة رابحة في التقرير."
-                    )
-                    send_telegram(msg)
+            # تحقق الهدف
+            if current_price >= tp:
+                update_trade_result(trade_id, 'WIN', 3.0)
+                msg = (
+                    f"🎉 *مبروك! تحقق الهدف بنجاح (SPOT TAKE PROFIT)* 🎉\n\n"
+                    f"🪙 *العملة:* `{symbol}`\n"
+                    f"📥 *سعر الشراء:* `{entry}`\n"
+                    f"💰 *سعر البيع الحالي:* `{tp}`\n"
+                    f"📈 *الربح المحقق:* `+3R` (نسبة ممتازة)\n\n"
+                    f"يمكنك جني الأرباح وبيع العملة الآن."
+                )
+                send_telegram(msg)
 
-                elif current_price <= sl:
-                    update_trade_result(trade_id, 'LOSS', -1.0)
-                    msg = (
-                        f"🛑 *ضرب وقف الخسارة (STOP LOSS)* 🛑\n\n"
-                        f"🪙 *العملة:* `{symbol}` (LONG)\n"
-                        f"🎯 *سعر الدخول:* `{entry}`\n"
-                        f"🛑 *وقف الخسارة:* `{sl}`\n"
-                        f"📉 *النتيجة:* `-1R`\n\n"
-                        f"تم تسجيل الصفقة خاسرة في التقرير."
-                    )
-                    send_telegram(msg)
-
-            elif direction == 'SHORT':
-                if current_price <= tp:
-                    update_trade_result(trade_id, 'WIN', 3.0)
-                    msg = (
-                        f"🎉 *مبروك! تحقق الهدف بنجاح (TAKE PROFIT)* 🎉\n\n"
-                        f"🪙 *العملة:* `{symbol}` (SHORT)\n"
-                        f"🎯 *سعر الدخول:* `{entry}`\n"
-                        f"💰 *سعر الهدف:* `{tp}`\n"
-                        f"📈 *الربح المحقق:* `+3R`\n\n"
-                        f"تم تسجيل الصفقة رابحة في التقرير."
-                    )
-                    send_telegram(msg)
-
-                elif current_price >= sl:
-                    update_trade_result(trade_id, 'LOSS', -1.0)
-                    msg = (
-                        f"🛑 *ضرب وقف الخسارة (STOP LOSS)* 🛑\n\n"
-                        f"🪙 *العملة:* `{symbol}` (SHORT)\n"
-                        f"🎯 *سعر الدخول:* `{entry}`\n"
-                        f"🛑 *وقف الخسارة:* `{sl}`\n"
-                        f"📉 *النتيجة:* `-1R`\n\n"
-                        f"تم تسجيل الصفقة خاسرة في التقرير."
-                    )
-                    send_telegram(msg)
+            # كسر وقف الخسارة
+            elif current_price <= sl:
+                update_trade_result(trade_id, 'LOSS', -1.0)
+                msg = (
+                    f"🛑 *تنبيه وقف خسارة سبوت (STOP LOSS)* 🛑\n\n"
+                    f"🪙 *العملة:* `{symbol}`\n"
+                    f"📥 *سعر الشراء:* `{entry}`\n"
+                    f"🛑 *سعر الخروج:* `{sl}`\n"
+                    f"📉 *النتيجة:* `-1R`\n\n"
+                    f"يُفضل الخروج لحماية رأس المال وإعادة الدخول من قاع أفضل."
+                )
+                send_telegram(msg)
 
         except Exception as e:
             print(f"Error checking trade #{trade_id}: {e}")
 
 # ========================================================
-# 6. إرسال تقرير الأداء الشامل
+# 6. إرسال تقرير الأداء اليومي الشامل للسبوت
 # ========================================================
 def send_summary_report():
     conn = sqlite3.connect('trades_journal.db')
@@ -201,22 +175,21 @@ def send_summary_report():
     win_rate = (wins / total_closed * 100) if total_closed > 0 else 0
 
     report = (
-        f"📊 *تقرير أداء صفقات SMC المحدث (50 عملة)* 📊\n"
+        f"📊 *تقرير أداء صفقات السبوت (SMC SPOT)* 📊\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"🔢 *إجمالي الصفقات المنتهية:* `{total_closed}`\n"
         f"✅ *الصفقات الرابحة:* `{wins}` 🟢\n"
         f"❌ *الصفقات الخاسرة:* `{losses}` 🔴\n"
-        f"⏳ *الصفقات المفتوحة حالياً:* `{active}` 🟡\n"
+        f"⏳ *الصفقات المستمرة حالياً:* `{active}` 🟡\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"🎯 *نسبة النجاح (Win Rate):* `{win_rate:.1f}%`\n"
-        f"💰 *صافي الأرباح (Net R):* `{total_r:+.1f}R`\n"
-        f"*(ملاحظة: إذا كنت تخاطر بـ 1% لكل صفقة، فأنت ربحت {total_r:+.1f}% صافي)*\n"
+        f"💰 *صافي الأرباح:* `{total_r:+.1f}R`\n"
         f"━━━━━━━━━━━━━━━━━━"
     )
     send_telegram(report)
 
 # ========================================================
-# 7. محرك استراتيجية SMC لاكتشاف الفرص
+# 7. فحص السوق لاكتشاف فرص الشراء فقط (BUY ONLY)
 # ========================================================
 def scan_smc():
     for symbol in SYMBOLS:
@@ -227,6 +200,7 @@ def scan_smc():
             ohlcv = exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=60)
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
 
+            # تحديد القمم والقيعان
             df['swing_high'] = df['high'][(df['high'] > df['high'].shift(1)) & (df['high'] > df['high'].shift(-1))]
             df['swing_low'] = df['low'][(df['low'] < df['low'].shift(1)) & (df['low'] < df['low'].shift(-1))]
 
@@ -241,41 +215,27 @@ def scan_smc():
             c1_high = df['high'].iloc[-3]
             c3_low = df['low'].iloc[-1]
 
-            # فرصة شراء LONG
+            # شرط الشراء السبوت: كسر هيكل صاعد (BOS/CHoCH) + فجوة FVG شرائية
             if curr_price > last_high and c3_low > c1_high:
                 entry = curr_price
                 sl = last_low
                 risk = entry - sl
-                tp = entry + (risk * 3)
+                
+                # أهداف بيع السبوت بربح
+                tp1 = entry + (risk * 2)   # هدف أول (1:2)
+                tp2 = entry + (risk * 3.5) # هدف ثانٍ رئيسي (1:3.5)
 
-                add_trade(symbol, 'LONG', entry, sl, tp)
+                add_trade(symbol, entry, sl, tp2)
                 msg = (
-                    f"🚨 *إشارة دخول شراء (LONG - SMC)* 🚨\n\n"
+                    f"🟢 *إشارة شراء سبوت جديدة (SPOT BUY)* 🟢\n\n"
                     f"🪙 *العملة:* `{symbol}`\n"
                     f"⏰ *الفريم:* `{TIMEFRAME}`\n\n"
-                    f"📥 *نقطة الدخول:* `{entry:.4f}`\n"
+                    f"✅ *السبب:* كسر هيكل صاعد (BOS) مع فجوة سيولة (FVG)\n\n"
+                    f"📥 *سعر الشراء المقترح:* `{entry:.4f}`\n"
                     f"🛑 *وقف الخسارة:* `{sl:.4f}`\n"
-                    f"🎯 *الهدف (1:3):* `{tp:.4f}`\n\n"
-                    f"⚡ *البوت بدأ تتبع هذه الصفقة تلقائياً وسيخبرك بالنتيجة.*"
-                )
-                send_telegram(msg)
-
-            # فرصة بيع SHORT
-            elif curr_price < last_low:
-                entry = curr_price
-                sl = last_high
-                risk = sl - entry
-                tp = entry - (risk * 3)
-
-                add_trade(symbol, 'SHORT', entry, sl, tp)
-                msg = (
-                    f"🚨 *إشارة دخول بيع (SHORT - SMC)* 🚨\n\n"
-                    f"🪙 *العملة:* `{symbol}`\n"
-                    f"⏰ *الفريم:* `{TIMEFRAME}`\n\n"
-                    f"📥 *نقطة الدخول:* `{entry:.4f}`\n"
-                    f"🛑 *وقف الخسارة:* `{sl:.4f}`\n"
-                    f"🎯 *الهدف (1:3):* `{tp:.4f}`\n\n"
-                    f"⚡ *البوت بدأ تتبع هذه الصفقة تلقائياً وسيخبرك بالنتيجة.*"
+                    f"🎯 *الهدف الأول (بيع نصف الكمية):* `{tp1:.4f}`\n"
+                    f"💰 *الهدف الثاني (بيع باقي الكمية):* `{tp2:.4f}`\n\n"
+                    f"⚡ *البوت بدأ تتبع هذه الصفقة وسيخبرك عند الوصول للأهداف.*"
                 )
                 send_telegram(msg)
 
@@ -288,8 +248,8 @@ def scan_smc():
 # 8. التشغيل المستمر
 # ========================================================
 def main():
-    print("✅ تم تشغيل البوت بنجاح لمراقبة أقوى 50 عملة عبر السحابة!")
-    send_telegram("🚀 *تم تفعيل بوت SMC بنجاح لمراقبة أقوى 50 عملة! نظام التتبع والتقارير يعمل الآن 24/7.*")
+    print("✅ تم تشغيل بوت السبوت بنجاح (شراء فقط)!")
+    send_telegram("🚀 *تم تحديث البوت لنظام السبوت الفوري (SPOT ONLY)! سيبحث الآن عن أقوى صفقات الشراء فقط.*")
     
     last_report_time = time.time()
 
