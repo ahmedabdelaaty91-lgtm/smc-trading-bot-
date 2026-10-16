@@ -9,7 +9,7 @@ from datetime import datetime
 # 1. إعدادات التليجرام والـ 50 عملة المختارة بعناية
 # ========================================================
 TELEGRAM_BOT_TOKEN = "8783526256:AAGaY3HW2BOpDqF-iGCmwtkcfHBf4hGnCU4"
-TELEGRAM_CHAT_ID = "8744541280"
+TELEGRAM_CHAT_ID = "7760401819"
 
   
 # قائمة أقوى 50 عملة في باينانس من حيث السيولة وحجم التداول
