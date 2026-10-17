@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 997.2638825142157,
-  "total_profit_usdt": -2.7361174857844244,
+  "current_balance": 996.7380291452635,
+  "total_profit_usdt": -3.261970854736631,
   "winning_trades": [],
   "losing_trades": [
     {
@@ -17,18 +17,16 @@
       "exit": 0.004341299999999999,
       "loss": -1.5578231292517128,
       "time": "2026-10-17 16:09"
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "TRX/USDT",
       "entry": 0.3369,
-      "sl": 0.3351284,
-      "tp1": 0.33955739999999995,
-      "tp2": 0.3418604799999999,
-      "amount": 100.0,
-      "time": "2026-10-17 11:07"
-    },
+      "exit": 0.3351284,
+      "loss": -0.5258533689522067,
+      "time": "2026-10-17 16:16"
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "CAKE/USDT",
       "entry": 2.209,
