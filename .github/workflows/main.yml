@@ -1,20 +1,27 @@
 name: SMC Trading Bot 24-7
 
 on:
-  schedule:
-    # فحص تلقائي في السحابة كل 30 دقيقة
-    - cron: '*/30 * * * *'
-  # يتيح لك تشغيله بضغطة زر في أي وقت
   workflow_dispatch:
+  schedule:
+    # يعاد تنشيطه كل 6 ساعات بانتظام بدون أي تكرار
+    - cron: '0 */6 * * *'
+
+# يمنع تكرار السيرفرات: يلغي أي سيرفر قديم فوراً ويبقي سيرفراً واحداً فقط نشطاً
+concurrency:
+  group: smc-trading-bot
+  cancel-in-progress: true
+
+permissions:
+  contents: write
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
-      - name: تنزيل ملفات المشروع
+      - name: تحميل المشروع
         uses: actions/checkout@v4
 
-      - name: إعداد لغة بايثون
+      - name: إعداد بايثون
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -25,4 +32,4 @@ jobs:
 
       - name: تشغيل البوت
         run: |
-          python smc_tracker_bot.py
+          python -u smc_tracker_bot.py
