@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 980.4684542849608,
-  "total_profit_usdt": -19.531545715039243,
+  "current_balance": 979.1426062441907,
+  "total_profit_usdt": -20.85739375580934,
   "winning_trades": [],
   "losing_trades": [
     {
@@ -80,6 +80,13 @@
       "exit": 0.007354261999999999,
       "loss": -2.955487064256503,
       "time": "2026-10-17 21:34"
+    },
+    {
+      "symbol": "GMX/USDT",
+      "entry": 8.83,
+      "exit": 8.71254,
+      "loss": -1.3258480407700957,
+      "time": "2026-10-17 21:36"
     }
   ],
   "open_trades": [
@@ -136,15 +143,6 @@
       "tp2": 0.022989752000000006,
       "amount": 99.67,
       "time": "2026-10-17 19:20"
-    },
-    {
-      "symbol": "GMX/USDT",
-      "entry": 8.83,
-      "sl": 8.71254,
-      "tp1": 9.00619,
-      "tp2": 9.158888,
-      "amount": 99.67,
-      "time": "2026-10-17 19:42"
     },
     {
       "symbol": "GRT/USDT",
