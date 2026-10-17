@@ -1,0 +1,18 @@
+{
+  "starting_balance": 1000.0,
+  "current_balance": 1000.0,
+  "total_profit_usdt": 0.0,
+  "winning_trades": [],
+  "losing_trades": [],
+  "open_trades": [
+    {
+      "symbol": "KAVA/USDT",
+      "entry": 0.07141,
+      "sl": 0.07056857999999999,
+      "tp1": 0.07267213000000002,
+      "tp2": 0.07376597600000002,
+      "amount": 100.0,
+      "time": "2026-10-17 10:51"
+    }
+  ]
+}
