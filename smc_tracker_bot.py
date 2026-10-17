@@ -1,8 +1,10 @@
 import time
+import json
+import os
+import subprocess
 import requests
 import ccxt
 import pandas as pd
-import sqlite3
 from datetime import datetime
 
 # ========================================================
@@ -14,8 +16,9 @@ TELEGRAM_CHAT_ID = "7760401819"
 BINANCE_API_KEY = "eEQI3GrUGBdGzHmjSTxg7us7uPM2ZZ69mQddzj3rw6zDL4TbSwEVAHWgp5BU1cAO"
 BINANCE_SECRET = "pwQHVpCsrO1DXxxpgrSf4gGZZddOUHZRPEL448kO3IMZILDFR6HNcgUjD4EWemou"
 
-POSITION_SIZE_PERCENT = 0.10    # حجم الدخول: 10% من رصيد محفظة باينانس
-MAX_TECHNICAL_SL_PCT = 4.5      # استبعاد الصفقات التي يبعد قاعها الفني أكثر من 4.5%
+POSITION_SIZE_PERCENT = 0.10    # 10% لكل صفقة
+MAX_TECHNICAL_SL_PCT = 4.5      # أقصى وقف خسارة فني مسموح به
+HISTORY_FILE = "trades_permanent_history.json"
 
 RAW_COINS = [
     'BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOGE', 'AVAX', 'LINK', 'DOT',
@@ -41,7 +44,6 @@ RAW_COINS = [
 SYMBOLS = list(dict.fromkeys([f"{coin.strip().upper()}/USDT" for coin in RAW_COINS]))
 TIMEFRAME = '1h'
 
-# منصة باينانس لتنفيذ الصفقات
 binance_testnet = ccxt.binance({
     'apiKey': BINANCE_API_KEY,
     'secret': BINANCE_SECRET,
@@ -50,38 +52,43 @@ binance_testnet = ccxt.binance({
 })
 binance_testnet.set_sandbox_mode(True)
 
-# منصة قراءة بيانات الشموع الحية
 market_exchange = ccxt.kucoin({'enableRateLimit': True})
 
 # ========================================================
-# 2. إعداد قاعدة بيانات التتبع
+# 2. نظام السجل الدائم (Permanent Ledger)
 # ========================================================
-def init_db():
-    conn = sqlite3.connect('binance_testnet_trades.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS trades (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            symbol TEXT,
-            entry_price REAL,
-            stop_loss REAL,
-            tp1 REAL,
-            tp2 REAL,
-            amount_usdt REAL,
-            status TEXT,
-            pnl_usdt REAL,
-            smc_reason TEXT,
-            open_time TEXT,
-            close_time TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
+def load_history():
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
+            pass
+    return {
+        "starting_balance": 1000.0,
+        "current_balance": 1000.0,
+        "total_profit_usdt": 0.0,
+        "winning_trades": [],
+        "losing_trades": [],
+        "open_trades": []
+    }
 
-init_db()
+def save_history(data):
+    with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    
+    # حفظ تلقائي إلى مستودع GitHub حتى لا يضيع أبداً
+    try:
+        subprocess.run(['git', 'config', 'user.name', 'SMC-Bot'], check=False)
+        subprocess.run(['git', 'config', 'user.email', 'bot@github.actions'], check=False)
+        subprocess.run(['git', 'add', HISTORY_FILE], check=False)
+        subprocess.run(['git', 'commit', '-m', 'chore: update trades ledger [skip ci]'], check=False)
+        subprocess.run(['git', 'push'], check=False)
+    except:
+        pass
 
 # ========================================================
-# 3. دوال التليجرام ورصيد باينانس
+# 3. دوال التليجرام والمحفظة
 # ========================================================
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -96,43 +103,124 @@ def send_telegram(message):
     except Exception as e:
         print(f"Telegram error: {e}")
 
-def get_binance_balance():
-    try:
-        bal = binance_testnet.fetch_balance()
-        usdt_free = bal['free'].get('USDT', 0.0)
-        return float(usdt_free) if usdt_free > 0 else 1000.0
-    except Exception as e:
-        return 1000.0
-
 def get_btc_status():
     try:
         ticker = market_exchange.fetch_ticker('BTC/USDT')
         change = ticker['percentage']
-        if change is None:
-            change = 0.0
-        if change > 2.0:
-            return f"صاعد بقوة (+{change:.2f}%) 🟢"
-        elif change > 0:
-            return f"متذبذب إيجابي (+{change:.2f}%) 🟢"
-        elif change > -2.0:
-            return f"متذبذب طبيعي ({change:.2f}%) 🟡"
-        else:
-            return f"هابط بحذر ({change:.2f}%) 🔴"
+        if change is None: change = 0.0
+        if change > 2.0: return f"صاعد بقوة (+{change:.2f}%) 🟢"
+        elif change > 0: return f"متذبذب إيجابي (+{change:.2f}%) 🟢"
+        elif change > -2.0: return f"متذبذب طبيعي ({change:.2f}%) 🟡"
+        else: return f"هابط بحذر ({change:.2f}%) 🔴"
     except:
         return "متذبذب طبيعي 🟡"
 
+def get_binance_balance():
+    try:
+        bal = binance_testnet.fetch_balance()
+        usdt = bal['free'].get('USDT', 0.0)
+        return float(usdt) if usdt > 0 else 1000.0
+    except:
+        hist = load_history()
+        return hist.get("current_balance", 1000.0)
+
 # ========================================================
-# 4. مراقبة وإغلاق الصفقات
+# 4. إرسال التقرير الشامل والمفصل بالأسماء والأرقام
+# ========================================================
+def send_full_detailed_report():
+    hist = load_history()
+    bal = get_binance_balance()
+    start_bal = hist.get("starting_balance", 1000.0)
+    wins = hist.get("winning_trades", [])
+    losses = hist.get("losing_trades", [])
+    open_tr = hist.get("open_trades", [])
+    
+    total_closed = len(wins) + len(losses)
+    win_rate = (len(wins) / total_closed * 100) if total_closed > 0 else 0.0
+    net_pnl = hist.get("total_profit_usdt", 0.0)
+
+    # تفاصيل الصفقات الرابحة
+    wins_text = ""
+    if wins:
+        for w in wins[-5:]: # آخر 5 صفقات رابحة
+            wins_text += f"• `{w['symbol']}`: دخول `${w['entry']}` ⬅️ خروج `${w['exit']}` (+${w['profit']:.2f})\n"
+    else:
+        wins_text = "لا توجد صفقات رابحة مغلقة بعد.\n"
+
+    # تفاصيل الصفقات الخاسرة
+    losses_text = ""
+    if losses:
+        for l in losses[-5:]: # آخر 5 صفقات خاسرة
+            losses_text += f"• `{l['symbol']}`: دخول `${l['entry']}` ⬅️ وقف `${l['exit']}` (${l['loss']:.2f})\n"
+    else:
+        losses_text = "لا توجد صفقات خاسرة حتى الآن.\n"
+
+    # تفاصيل الصفقات المفتوحة حالياً
+    open_text = ""
+    if open_tr:
+        for o in open_tr:
+            open_text += f"• `{o['symbol']}`: دخول `${o['entry']}` | وقف فني `${o['sl']}` | هدف `${o['tp2']}`\n"
+    else:
+        open_text = "لا توجد صفقات مفتوحة الآن.\n"
+
+    msg = (
+        f"📊 *السجل الدائم لأداء صفقات SMC* 📊\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"💼 *رصيد محفظة باينانس:* `${bal:,.2f}` USDT\n"
+        f"💰 *صافي الأرباح الكلية:* `{net_pnl:+.2f}$`\n"
+        f"🎯 *نسبة الفوز الحقيقية:* `{win_rate:.1f}%`\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"✅ *الصفقات الرابحة ({len(wins)}):* 🟢\n"
+        f"{wins_text}"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"❌ *الصفقات التي ضربت الوقف ({len(losses)}):* 🔴\n"
+        f"{losses_text}"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"⏳ *الصفقات قيد التداول حالياً ({len(open_tr)}):* 🟡\n"
+        f"{open_text}"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"💡 *أرسل كلمة (تقرير) في أي وقت لاستلام هذا التقرير فوراً!*"
+    )
+    send_telegram(msg)
+
+# ========================================================
+# 5. الاستماع لأوامر التليجرام (كلمة تقرير)
+# ========================================================
+last_telegram_update_id = 0
+
+def check_telegram_commands():
+    global last_telegram_update_id
+    try:
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates?offset={last_telegram_update_id + 1}&timeout=1"
+        res = requests.get(url, timeout=3).json()
+        if res.get('ok') and res.get('result'):
+            for item in res['result']:
+                last_telegram_update_id = item['update_id']
+                text = item.get('message', {}).get('text', '').strip()
+                if text in ['تقرير', '/report', 'صفقات', '/trades', 'الارباح']:
+                    send_full_detailed_report()
+    except:
+        pass
+
+# ========================================================
+# 6. مراقبة وإغلاق الصفقات المفتوحة وحفظها في السجل الدائم
 # ========================================================
 def track_open_trades():
-    conn = sqlite3.connect('binance_testnet_trades.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, symbol, entry_price, stop_loss, tp1, tp2, amount_usdt FROM trades WHERE status = 'OPEN'")
-    trades = cursor.fetchall()
-    conn.close()
+    hist = load_history()
+    open_trades = hist.get("open_trades", [])
+    if not open_trades:
+        return
 
-    for t in trades:
-        t_id, symbol, entry, sl, tp1, tp2, amount = t
+    updated_open = []
+    changed = False
+
+    for t in open_trades:
+        symbol = t['symbol']
+        entry = t['entry']
+        sl = t['sl']
+        tp2 = t['tp2']
+        amount = t['amount']
+
         try:
             ticker = market_exchange.fetch_ticker(symbol)
             curr = ticker['last']
@@ -145,14 +233,17 @@ def track_open_trades():
                 except:
                     pass
 
-                conn = sqlite3.connect('binance_testnet_trades.db')
-                c = conn.cursor()
-                c.execute("UPDATE trades SET status = 'TP2_HIT', pnl_usdt = ?, close_time = ? WHERE id = ?",
-                          (profit, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), t_id))
-                conn.commit()
-                conn.close()
+                hist["winning_trades"].append({
+                    "symbol": symbol,
+                    "entry": entry,
+                    "exit": tp2,
+                    "profit": profit,
+                    "time": datetime.now().strftime('%Y-%m-%d %H:%M')
+                })
+                hist["total_profit_usdt"] += profit
+                hist["current_balance"] += profit
+                changed = True
 
-                bal = get_binance_balance()
                 msg = (
                     f"🎯 *تم تحقيق الهدف بنجاح في باينانس (TP2 HIT)!* 🎉\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
@@ -160,10 +251,11 @@ def track_open_trades():
                     f"📥 *سعر الدخول:* `${entry:.4f}`\n"
                     f"💰 *سعر البيع:* `${tp2:.4f}`\n"
                     f"💵 *صافي الربح المحقق:* `+${profit:.2f}` USDT 🟢\n"
-                    f"💼 *رصيد محفظة باينانس الآن:* `${bal:,.2f}` USDT\n"
+                    f"💼 *رصيد باينانس المحدث:* `${hist['current_balance']:,.2f}` USDT\n"
                     f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
+                continue
 
             # ضرب وقف الخسارة الفني
             elif curr <= sl:
@@ -173,14 +265,17 @@ def track_open_trades():
                 except:
                     pass
 
-                conn = sqlite3.connect('binance_testnet_trades.db')
-                c = conn.cursor()
-                c.execute("UPDATE trades SET status = 'SL_HIT', pnl_usdt = ?, close_time = ? WHERE id = ?",
-                          (loss, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), t_id))
-                conn.commit()
-                conn.close()
+                hist["losing_trades"].append({
+                    "symbol": symbol,
+                    "entry": entry,
+                    "exit": sl,
+                    "loss": loss,
+                    "time": datetime.now().strftime('%Y-%m-%d %H:%M')
+                })
+                hist["total_profit_usdt"] += loss
+                hist["current_balance"] += loss
+                changed = True
 
-                bal = get_binance_balance()
                 msg = (
                     f"🛑 *تنبيه: ضرب وقف الخسارة الفني (STOP LOSS)* 🛑\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
@@ -188,25 +283,30 @@ def track_open_trades():
                     f"📥 *سعر الدخول:* `${entry:.4f}`\n"
                     f"🛑 *سعر الخروج:* `${sl:.4f}`\n"
                     f"📉 *الخسارة المحسوبة:* `${loss:.2f}` USDT 🔴\n"
-                    f"💼 *رصيد محفظة باينانس الآن:* `${bal:,.2f}` USDT\n"
+                    f"💼 *رصيد باينانس المحدث:* `${hist['current_balance']:,.2f}` USDT\n"
                     f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
+                continue
+
+            updated_open.append(t)
 
         except Exception as e:
-            print(f"Error tracking {symbol}: {e}")
+            updated_open.append(t)
+
+    if changed:
+        hist["open_trades"] = updated_open
+        save_history(hist)
 
 # ========================================================
-# 5. محرك استراتيجية SMC مع وقف الخسارة الفني البحت
+# 7. فحص السوق لاكتشاف صفقات الشراء بوقف فني
 # ========================================================
 def scan_smc():
+    hist = load_history()
+    open_symbols = [t['symbol'] for t in hist.get("open_trades", [])]
+
     for symbol in SYMBOLS:
-        conn = sqlite3.connect('binance_testnet_trades.db')
-        c = conn.cursor()
-        c.execute("SELECT id FROM trades WHERE symbol = ? AND status = 'OPEN'", (symbol,))
-        exists = c.fetchone()
-        conn.close()
-        if exists:
+        if symbol in open_symbols:
             continue
 
         try:
@@ -223,50 +323,45 @@ def scan_smc():
 
             if is_bos and is_fvg:
                 entry = curr_price
-                
-                # وقف الخسارة الفني: أسفل شمعة الـ Order Block وقاع فجوة الـ FVG مباشرة
                 order_block_low = min(df['low'].iloc[-2], df['low'].iloc[-3])
-                
-                # وضع الوقف الفني أسفل القاع بـ 0.2% كهامش أمان ضد الذيول الوهمية
                 sl = order_block_low * 0.998
                 sl_pct = ((entry - sl) / entry) * 100
 
-                # فلتر الأمان الفني: إذا كان القاع الفني بعيداً جداً (> 4.5%) نلغي الصفقة
+                # فلتر الأمان: لا ندخل إذا كان الوقف الفني أكبر من 4.5%
                 if sl_pct > MAX_TECHNICAL_SL_PCT or sl_pct < 0.5:
                     continue
 
-                # الأهداف الفنية مبنية على المسافة الحقيقية للوقف
                 risk = entry - sl
-                tp1 = entry + (risk * 1.5)  # عائد 1:1.5
-                tp2 = entry + (risk * 2.8)  # عائد 1:2.8
+                tp1 = entry + (risk * 1.5)
+                tp2 = entry + (risk * 2.8)
 
                 tp1_pct = ((tp1 - entry) / entry) * 100
                 tp2_pct = ((tp2 - entry) / entry) * 100
 
-                smc_reason = "BOS (Break of Structure) + Bullish FVG (Fair Value Gap)"
+                smc_reason = "BOS (Break of Structure) + Bullish FVG"
                 btc_status = get_btc_status()
 
-                # حساب 10% من رصيد باينانس الحقيقي
-                current_balance = get_binance_balance()
-                trade_amount = round(current_balance * POSITION_SIZE_PERCENT, 2)
+                bal = get_binance_balance()
+                trade_amount = round(bal * POSITION_SIZE_PERCENT, 2)
 
-                # تنفيذ الشراء على باينانس التجريبية
                 try:
                     qty = trade_amount / entry
                     binance_testnet.create_market_buy_order(symbol, qty)
-                    execution_note = "✅ تم تنفيذ الشراء آلياً في Binance Testnet"
-                except Exception as ex:
-                    execution_note = "⚡ تم التتبع آلياً بأسعار باينانس"
+                    exec_note = "✅ تم الشراء في Binance Testnet"
+                except:
+                    exec_note = "⚡ تم التتبع آلياً بأسعار باينانس"
 
-                # حفظ الصفقة
-                conn = sqlite3.connect('binance_testnet_trades.db')
-                cur = conn.cursor()
-                cur.execute('''
-                    INSERT INTO trades (symbol, entry_price, stop_loss, tp1, tp2, amount_usdt, status, pnl_usdt, smc_reason, open_time)
-                    VALUES (?, ?, ?, ?, ?, ?, 'OPEN', 0, ?, ?)
-                ''', (symbol, entry, sl, tp1, tp2, trade_amount, smc_reason, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-                conn.commit()
-                conn.close()
+                # حفظ في السجل الدائم
+                hist["open_trades"].append({
+                    "symbol": symbol,
+                    "entry": entry,
+                    "sl": sl,
+                    "tp1": tp1,
+                    "tp2": tp2,
+                    "amount": trade_amount,
+                    "time": datetime.now().strftime('%Y-%m-%d %H:%M')
+                })
+                save_history(hist)
 
                 coin_base = symbol.split('/')[0]
                 binance_link = f"https://www.binance.com/en/trade/{coin_base}_USDT"
@@ -280,7 +375,7 @@ def scan_smc():
                     f"🌟 *تصنيف الصفقة:* صفقة كبرى (+A) 🌟\n"
                     f"📌 *التأكيد الفني:* كسر هيكل صاعد مع فجوة سيولة\n"
                     f"🔍 *السبب الفني:* `{smc_reason}`\n"
-                    f"🟢 *توجيه السيولة:* {execution_note} 🟢\n"
+                    f"🟢 *توجيه السيولة:* {exec_note} 🟢\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"💵 *سعر الدخول:* `${entry:.4f}`\n"
                     f"🛡️ *قاع الدعم (Order Block Low):* `${order_block_low:.4f}`\n"
@@ -301,120 +396,40 @@ def scan_smc():
             pass
 
 # ========================================================
-# 6. التقارير الليلية والأسبوعية
-# ========================================================
-def send_night_report():
-    conn = sqlite3.connect('binance_testnet_trades.db')
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'TP2_HIT'")
-    wins = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'SL_HIT'")
-    losses = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'OPEN'")
-    open_trades = cursor.fetchone()[0]
-
-    cursor.execute("SELECT SUM(pnl_usdt) FROM trades WHERE status != 'OPEN'")
-    total_pnl = cursor.fetchone()[0] or 0.0
-
-    conn.close()
-
-    bal = get_binance_balance()
-    total_closed = wins + losses
-    win_rate = (wins / total_closed * 100) if total_closed > 0 else 0
-
-    msg = (
-        f"🌙 *التقرير الليلي لصفقات باينانس الافتراضية* 🌙\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"💼 *رصيد حساب باينانس الحالي:* `${bal:,.2f}` USDT\n"
-        f"📈 *صافي الأرباح المحققة:* `{total_pnl:+.2f}$`\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"✅ *الصفقات الرابحة:* `{wins}` 🟢\n"
-        f"❌ *الصفقات الخاسرة:* `{losses}` 🔴\n"
-        f"⏳ *الصفقات النشطة الآن:* `{open_trades}` 🟡\n"
-        f"🎯 *نسبة نجاح SMC:* `{win_rate:.1f}%`\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"💡 *حالة الخطة:* التداول مستمر بنظام وقف الخسارة الفني أسفل كتل الأوامر."
-    )
-    send_telegram(msg)
-
-def send_weekly_report():
-    conn = sqlite3.connect('binance_testnet_trades.db')
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'TP2_HIT'")
-    wins = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM trades WHERE status = 'SL_HIT'")
-    losses = cursor.fetchone()[0]
-
-    cursor.execute("SELECT SUM(pnl_usdt) FROM trades WHERE status != 'OPEN'")
-    total_pnl = cursor.fetchone()[0] or 0.0
-
-    conn.close()
-
-    bal = get_binance_balance()
-    total_closed = wins + losses
-    win_rate = (wins / total_closed * 100) if total_closed > 0 else 0
-
-    evaluation = "ممتازة وجاهزة للحساب الحقيقي! 🚀" if win_rate >= 50 and total_pnl > 0 else "تحتاج لمزيد من المراقبة والتعديل ⚠️"
-
-    msg = (
-        f"📅 *التقرير الأسبوعي الشامل لتقييم استراتيجية باينانس* 📅\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"💰 *رصيد محفظة باينانس النهائي:* `${bal:,.2f}` USDT\n"
-        f"📈 *صافي الأرباح:* `{total_pnl:+.2f}$`\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"🔢 *إجمالي الصفقات المغلقة:* `{total_closed}`\n"
-        f"✅ *صفقات رابحة:* `{wins}`\n"
-        f"❌ *صفقات خاسرة:* `{losses}`\n"
-        f"🎯 *معدل الفوز الحقيقي:* `{win_rate:.1f}%`\n"
-        f"━━━━━━━━━━━━━━━━━━\n"
-        f"🎖️ *التقييم النهائي:* {evaluation}\n"
-        f"━━━━━━━━━━━━━━━━━━"
-    )
-    send_telegram(msg)
-
-# ========================================================
-# 7. الحلقة الرئيسية للتشغيل
+# 8. حلقة التشغيل الرئيسية المستقرة
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تفعيل وقف الخسارة الفني أسفل كتل الأوامر بنجاح!")
+    print("✅ تم تفعيل البوت بالسجل الدائم ومنع التكرار!")
     send_telegram(
-        f"🛡️ *تم تفعيل نظام وقف الخسارة الفني البحت (Order Block Low)!* 🟢\n\n"
-        f"💼 رصيد باينانس: `${bal:,.2f}` USDT (دخول 10% لكل صفقة).\n"
-        f"🎯 وقف الخسارة يتم وضعه فنياً أسفل ذيل شمعة الدخول وكتلة الأوامر مباشرة.\n"
-        f"🚫 يتم استبعاد أي صفقة يتجاوز وقفها الفني 4.5% لحماية رأس المال.\n"
-        f"🌙 التقرير الليلي يصلك يومياً الساعة 11 مساءً."
+        f"🚀 *تم تحديث البوت بالسجل الدائم وحماية السيرفر من التكرار!* 🛡️\n\n"
+        f"💼 رصيد باينانس: `${bal:,.2f}` USDT\n"
+        f"💾 لن تضيع أي صفقة رابحة أو خاسرة بعد الآن أبداً حتى لو تم إعادة تشغيل السيرفر.\n"
+        f"💬 *ميزة جديدة:* اكتب كلمة (تقرير) للبوت في أي وقت ليرسل لك تفاصيل كل الصفقات لحظياً!"
     )
 
-    last_night_report_day = -1
-    last_weekly_report_week = -1
+    last_night_day = -1
 
     while True:
         try:
+            # 1. الاستماع لكلمة "تقرير" من المستخدم
+            check_telegram_commands()
+
+            # 2. متابعة وإغلاق الصفقات المفتوحة
             track_open_trades()
+
+            # 3. فحص العملات واكتشاف صفقات جديدة
             scan_smc()
 
+            # 4. التقرير الليلي التلقائي الساعة 11 مساءً
             now = datetime.now()
+            if now.hour == 23 and now.day != last_night_day:
+                send_full_detailed_report()
+                last_night_day = now.day
 
-            # التقرير الليلي الساعة 11 مساءً
-            if now.hour == 23 and now.day != last_night_report_day:
-                send_night_report()
-                last_night_report_day = now.day
-
-            # التقرير الأسبوعي كل أحد الساعة 11:30 مساءً
-            if now.weekday() == 6 and now.hour == 23 and now.isocalendar()[1] != last_weekly_report_week:
-                send_weekly_report()
-                last_weekly_report_week = now.isocalendar()[1]
-
-            time.sleep(60)
+            time.sleep(40)
 
         except Exception as e:
-            print(f"Error in main loop: {e}")
             time.sleep(15)
 
 if __name__ == "__main__":
