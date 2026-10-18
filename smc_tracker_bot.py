@@ -5,7 +5,6 @@ import subprocess
 import requests
 import ccxt
 import pandas as pd
-import numpy as np
 from datetime import datetime
 
 # ========================================================
@@ -18,7 +17,8 @@ BINANCE_API_KEY = "eEQI3GrUGBdGzHmjSTxg7us7uPM2ZZ69mQddzj3rw6zDL4TbSwEVAHWgp5BU1
 BINANCE_SECRET = "pwQHVpCsrO1DXxxpgrSf4gGZZddOUHZRPEL448kO3IMZILDFR6HNcgUjD4EWemou"
 
 POSITION_SIZE_PERCENT = 0.10    # 10% لكل صفقة
-MAX_TECHNICAL_SL_PCT = 3.8      # استبعاد الصفقات التي يتجاوز وقفها الفني 3.8%
+MIN_TECHNICAL_SL_PCT = 1.5      # الحد الأدنى لوقف الخسارة الفني
+MAX_TECHNICAL_SL_PCT = 3.2      # الحد الأقصى لوقف الخسارة الفني (بين 1.5% إلى 3.2% فقط)
 HISTORY_FILE = "trades_permanent_history.json"
 
 RAW_COINS = [
@@ -87,7 +87,7 @@ def save_history(data):
         pass
 
 # ========================================================
-# 3. دوال التليجرام والمؤشرات الفنية
+# 3. دوال التليجرام والمحفظة
 # ========================================================
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -106,11 +106,12 @@ def get_btc_status():
     try:
         ticker = market_exchange.fetch_ticker('BTC/USDT')
         change = ticker['percentage'] or 0.0
-        if change > 2.0: return "صاعد بقوة (+{:.2f}%) 🟢".format(change), True
-        elif change > -1.0: return "مستقر طبيعي ({:+.2f}%) 🟢".format(change), True
-        else: return "هابط بحذر ({:+.2f}%) 🔴".format(change), False
+        if change > 2.0: return "صاعد بقوة (+{:.2f}%) 🟢".format(change)
+        elif change > 0: return "متذبذب إيجابي (+{:.2f}%) 🟢".format(change)
+        elif change > -2.0: return "متذبذب طبيعي ({:+.2f}%) 🟡".format(change)
+        else: return "هابط بحذر ({:+.2f}%) 🔴".format(change)
     except:
-        return "مستقر طبيعي 🟡", True
+        return "متذبذب طبيعي 🟡"
 
 def get_binance_balance():
     try:
@@ -120,13 +121,6 @@ def get_binance_balance():
     except:
         hist = load_history()
         return hist.get("current_balance", 1000.0)
-
-def calculate_rsi(series, period=14):
-    delta = series.diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
-    rs = gain / (loss + 1e-9)
-    return 100 - (100 / (1 + rs))
 
 # ========================================================
 # 4. إرسال التقارير
@@ -147,7 +141,7 @@ def send_full_detailed_report():
     open_text = "".join([f"• `{o['symbol']}`: دخول `${o['entry']}` | وقف `${o['sl']}` | هدف `${o['tp2']}`\n" for o in open_tr]) or "لا توجد صفقات مفتوحة الآن.\n"
 
     msg = (
-        f"📊 *السجل الدائم لأداء صفقات SMC 2.0* 📊\n"
+        f"📊 *السجل الدائم لأداء صفقات SMC* 📊\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"💼 *رصيد محفظة باينانس:* `${bal:,.2f}` USDT\n"
         f"💰 *صافي الأرباح الكلية:* `{net_pnl:+.2f}$`\n"
@@ -199,6 +193,7 @@ def track_open_trades():
             ticker = market_exchange.fetch_ticker(symbol)
             curr = ticker['last']
 
+            # تحقق الهدف الثاني TP2
             if curr >= tp2:
                 profit = amount * ((tp2 - entry) / entry)
                 try: binance_testnet.create_market_sell_order(symbol, amount / entry)
@@ -224,6 +219,7 @@ def track_open_trades():
                 send_telegram(msg)
                 continue
 
+            # ضرب وقف الخسارة الفني
             elif curr <= sl:
                 loss = amount * ((sl - entry) / entry)
                 try: binance_testnet.create_market_sell_order(symbol, amount / entry)
@@ -258,13 +254,9 @@ def track_open_trades():
         save_history(hist)
 
 # ========================================================
-# 6. محرك SMC 2.0 المطور (الفلاتر المؤسسية الخمسة)
+# 6. محرك SMC الفني الدقيق لتنفيذ شروطك الأربعة
 # ========================================================
 def scan_smc():
-    btc_text, btc_is_safe = get_btc_status()
-    if not btc_is_safe:
-        return  # حماية: لا شراء أثناء هبوط البيتكوين الحاد
-
     hist = load_history()
     open_symbols = [t['symbol'] for t in hist.get("open_trades", [])]
 
@@ -273,57 +265,51 @@ def scan_smc():
             continue
 
         try:
-            ohlcv = market_exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=120)
+            ohlcv = market_exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=70)
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
 
-            # 1. فلتر الاتجاه العام (EMA 200 & EMA 50)
+            # 1. فلتر الاتجاه: السعر فوق متوسط EMA 50
             df['ema_50'] = df['close'].ewm(span=50, adjust=False).mean()
-            df['ema_200'] = df['close'].ewm(span=100, adjust=False).mean()
             curr_price = df['close'].iloc[-1]
             ema_50 = df['ema_50'].iloc[-1]
-            ema_200 = df['ema_200'].iloc[-1]
 
-            # شرط الاتجاه الصاعد: السعر فوق EMA 200 و EMA 50
-            if curr_price < ema_200 or curr_price < ema_50:
+            if curr_price < ema_50:
                 continue
 
-            # 2. فلتر مؤشر القوة النسبية RSI (بين 48 و 68 - زخم صاعد دون تشبع)
-            df['rsi'] = calculate_rsi(df['close'], period=14)
-            curr_rsi = df['rsi'].iloc[-1]
-            if curr_rsi < 48 or curr_rsi > 68:
-                continue
+            # 2. فحص الكسر والفوليوم على الشمعة السابقة المكتملة 100% (df.iloc[-2])
+            breakout_candle_close = df['close'].iloc[-2]
+            breakout_candle_vol = df['volume'].iloc[-2]
+            vol_ma20 = df['volume'].rolling(window=20).mean().iloc[-2]
+            
+            # قمة الشموع السابقة للاختراق
+            prev_high = df['high'].iloc[-14:-2].max()
 
-            # 3. فلتر الفوليوم المؤسسي (شمعة الكسر مدعومة بسيولة قوية أعلى من المتوسط)
-            df['vol_ma'] = df['volume'].rolling(window=20).mean()
-            curr_vol = df['volume'].iloc[-1]
-            vol_ma = df['vol_ma'].iloc[-1]
-            if curr_vol < (vol_ma * 1.25):
-                continue
+            # تحقق كسر القمة السابقة (BOS) مع فوليوم تأكيد
+            is_bos = breakout_candle_close > prev_high
+            is_vol_confirmed = breakout_candle_vol >= (vol_ma20 * 0.95)
 
-            # 4. شروط SMC: كسر هيكل واضح + وجود فجوة FVG حقيقية
-            recent_high = df['high'].iloc[-12:-2].max()
+            # 3. فحص فجوة الـ FVG الحقيقية
             c1_high = df['high'].iloc[-3]
             c3_low = df['low'].iloc[-1]
-            c2_open = df['open'].iloc[-2]
-            c2_close = df['close'].iloc[-2]
+            is_fvg = c3_low >= (c1_high * 0.999)
 
-            is_bos = curr_price > recent_high
-            is_fvg = c3_low > c1_high
-            is_strong_bull_candle = c2_close > c2_open
-
-            if is_bos and is_fvg and is_strong_bull_candle:
+            if is_bos and is_vol_confirmed and is_fvg:
                 entry = curr_price
                 
-                # وقف الخسارة الفني أسفل شمعة كسر الهيكل مباشرة
-                ob_low = min(df['low'].iloc[-2], df['low'].iloc[-3])
-                sl = ob_low * 0.998
+                # 4. وقف الخسارة الفني: أسفل قاع الـ Order Block أو الـ FVG مباشرة
+                ob_low = df['low'].iloc[-3]        # قاع شمعة الأوردر بلوك
+                fvg_low = df['low'].iloc[-2]       # قاع شمعة الاختراق والـ FVG
+                technical_low = min(ob_low, fvg_low)
+                
+                # الوقف أسفل القاع الفني بـ 0.2% كهامش أمان ضد الذيول
+                sl = technical_low * 0.998
                 sl_pct = ((entry - sl) / entry) * 100
 
-                # فلتر المخاطرة: وقف خسارة فني محكم بين 1.2% و 3.8%
-                if sl_pct > MAX_TECHNICAL_SL_PCT or sl_pct < 1.0:
+                # شرطك الصارم: وقف الخسارة الفني يجب أن يكون بين 1.5% إلى 3.2% فقط
+                if sl_pct < MIN_TECHNICAL_SL_PCT or sl_pct > MAX_TECHNICAL_SL_PCT:
                     continue
 
-                # أهداف متناسبة مع الوقف الفني (عائد 1:1.6 و 1:2.8)
+                # الأهداف الفنية: عائد 1:1.6 و 1:2.8
                 risk = entry - sl
                 tp1 = entry + (risk * 1.6)
                 tp2 = entry + (risk * 2.8)
@@ -331,7 +317,9 @@ def scan_smc():
                 tp1_pct = ((tp1 - entry) / entry) * 100
                 tp2_pct = ((tp2 - entry) / entry) * 100
 
-                smc_reason = "BOS + Bullish FVG + Trend (EMA200) + Volume Spike"
+                smc_reason = "BOS + Bullish FVG (Order Block Support)"
+                btc_status = get_btc_status()
+
                 bal = get_binance_balance()
                 trade_amount = round(bal * POSITION_SIZE_PERCENT, 2)
 
@@ -354,23 +342,22 @@ def scan_smc():
                 tv_link = f"https://www.tradingview.com/chart/?symbol=BINANCE:{coin_base}USDT"
 
                 msg = (
-                    f"🚀 *إشارة تداول مؤسسية فائقة الجودة (+A)!* 🟢\n"
+                    f"🚀 *إشارة تداول فنية جديدة (SMC)!* 🟢\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"⏰ *فريم الإشارة:* `{TIMEFRAME}`\n"
-                    f"🎯 *الاستراتيجية:* SMC 2.0 (Trend + Volume + FVG) 🧠\n"
+                    f"🎯 *الاستراتيجية:* SMC - مفاهيم الأموال الذكية 🧠\n"
                     f"🌟 *تصنيف الصفقة:* صفقة مؤكدة (+A) 🌟\n"
-                    f"📌 *التأكيد الفني:* كسر صاعد فوق EMA200 مع انفجار فوليوم\n"
+                    f"📌 *التأكيد الفني:* كسر هيكل صاعد فوق EMA50 وتأكيد فوليوم الشمعة المكتملة\n"
                     f"🔍 *السبب الفني:* `{smc_reason}`\n"
-                    f"📊 *مؤشر RSI:* `{curr_rsi:.1f}` (زخم صاعد ممتاز)\n"
                     f"🟢 *توجيه السيولة:* {exec_note} 🟢\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"💵 *سعر الدخول:* `${entry:.4f}`\n"
-                    f"🛡️ *قاع الدعم (Order Block Low):* `${ob_low:.4f}`\n"
+                    f"🛡️ *قاع الدعم (OB/FVG Low):* `${technical_low:.4f}`\n"
                     f"🛑 *وقف الخسارة الفني:* `${sl:.4f}` (-{sl_pct:.2f}%)\n"
-                    f"🎯 *الهدف الأول (TP1):* `${tp1:.4f}` (+{tp1_pct:.2f}%)\n"
-                    f"🎯 *الهدف الثاني (TP2):* `${tp2:.4f}` (+{tp2_pct:.2f}%)\n"
+                    f"🎯 *الهدف الأول (TP1 - 1:1.6):* `${tp1:.4f}` (+{tp1_pct:.2f}%)\n"
+                    f"🎯 *الهدف الثاني (TP2 - 1:2.8):* `${tp2:.4f}` (+{tp2_pct:.2f}%)\n"
                     f"💼 *حجم العقد المنفذ (10%):* `${trade_amount:.2f} USDT`\n"
-                    f"🌐 *سوق البيتكوين:* {btc_text}\n"
+                    f"🌐 *سوق البيتكوين:* {btc_status}\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"📊 [عرض الشارت على Binance]({binance_link})\n"
                     f"📈 [عرض الشارت على TradingView]({tv_link})"
@@ -386,16 +373,15 @@ def scan_smc():
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تفعيل استراتيجية SMC 2.0 المؤسسية بنجاح!")
+    print("✅ تم تثبيت القواعد الفنية الصارمة بنجاح!")
     send_telegram(
-        f"🛡️ *تم تفعيل استراتيجية SMC 2.0 المؤسسية (+A Setups)!* 🚀\n\n"
-        f"💼 رصيد باينانس: `${bal:,.2f}` USDT\n"
-        f"🎯 *أهم التحديثات لتفادي ضرب وقف الخسارة:*\n"
-        f"1. التداول في الاتجاه الصاعد فقط (فوق EMA 200).\n"
-        f"2. اشتراط فوليوم مؤسسي قوي (Volume Spike).\n"
-        f"3. فلترة مؤشر RSI لتفادي الشراء في القمم.\n"
-        f"4. حماية ضد هبوط البيتكوين.\n"
-        f"💬 أرسل كلمة (تقرير) في أي وقت لاستلام كشف الحساب لحظياً!"
+        f"🎯 *تم تفعيل البوت بالقواعد الفنية الصارمة المعتمدة!* 🟢\n\n"
+        f"💼 رصيد باينانس: `${bal:,.2f}` USDT (دخول 10% لكل صفقة).\n"
+        f"1. فحص الكسر والفوليوم على الشمعة السابقة المكتملة 100%.\n"
+        f"2. فلتر الاتجاه: الشراء فقط فوق EMA 50.\n"
+        f"3. وقف الخسارة الفني: أسفل قاع الـ Order Block والـ FVG مباشرة (1.5% إلى 3.2%).\n"
+        f"4. نسبة عائد إلى مخاطرة عالية: 1:1.6 و 1:2.8 للأهداف.\n"
+        f"💬 أرسل كلمة (تقرير) في أي وقت لتحديث كشف الحساب لحظياً!"
     )
 
     last_night_day = -1
