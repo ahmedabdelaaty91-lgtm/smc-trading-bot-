@@ -31,5 +31,7 @@ jobs:
           pip install ccxt pandas requests
 
       - name: تشغيل البوت
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
           python -u smc_tracker_bot.py
