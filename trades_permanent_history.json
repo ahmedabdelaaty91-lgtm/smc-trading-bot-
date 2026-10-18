@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 967.3886934106102,
-  "total_profit_usdt": -32.61130658938991,
+  "current_balance": 977.5786191653273,
+  "total_profit_usdt": -22.421380834672924,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -9,6 +9,13 @@
       "exit": 0.005010208,
       "profit": 5.239124235294118,
       "time": "2026-10-17 21:39"
+    },
+    {
+      "symbol": "OSMO/USDT",
+      "entry": 0.0424,
+      "exit": 0.04682904,
+      "profit": 10.189925754716986,
+      "time": "2026-10-18 07:49"
     }
   ],
   "losing_trades": [
@@ -250,15 +257,6 @@
       "tp2": 83414.21096000001,
       "amount": 97.55,
       "time": "2026-10-18 01:38"
-    },
-    {
-      "symbol": "OSMO/USDT",
-      "entry": 0.0424,
-      "sl": 0.0408182,
-      "tp1": 0.0447727,
-      "tp2": 0.04682904,
-      "amount": 97.55,
-      "time": "2026-10-18 01:43"
     },
     {
       "symbol": "AAVE/USDT",
