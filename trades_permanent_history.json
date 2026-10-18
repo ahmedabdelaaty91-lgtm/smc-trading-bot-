@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 971.2701388177661,
-  "total_profit_usdt": -28.729861182233986,
+  "current_balance": 970.5199937778573,
+  "total_profit_usdt": -29.48000622214277,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -130,6 +130,13 @@
       "exit": 0.00467064,
       "loss": -4.185054918032779,
       "time": "2026-10-18 02:11"
+    },
+    {
+      "symbol": "KAVA/USDT",
+      "entry": 0.07016,
+      "exit": 0.06962048,
+      "loss": -0.7501450399087822,
+      "time": "2026-10-18 02:34"
     }
   ],
   "open_trades": [
@@ -231,15 +238,6 @@
       "tp2": 0.008320856000000003,
       "amount": 97.55,
       "time": "2026-10-18 01:07"
-    },
-    {
-      "symbol": "KAVA/USDT",
-      "entry": 0.07016,
-      "sl": 0.06962048,
-      "tp1": 0.07096928,
-      "tp2": 0.071670656,
-      "amount": 97.55,
-      "time": "2026-10-18 01:20"
     },
     {
       "symbol": "BTC/USDT",
