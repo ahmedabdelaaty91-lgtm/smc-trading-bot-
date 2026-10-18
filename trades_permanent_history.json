@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 978.0498059546725,
-  "total_profit_usdt": -21.950194045327724,
+  "current_balance": 977.1365731624647,
+  "total_profit_usdt": -22.86342683753551,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -186,18 +186,16 @@
       "exit": 0.00421156,
       "loss": -4.177800454545468,
       "time": "2026-10-18 11:42"
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "JST/USDT",
       "entry": 0.13552,
-      "sl": 0.1342809,
-      "tp1": 0.13737865,
-      "tp2": 0.13898947999999997,
-      "amount": 99.88,
-      "time": "2026-10-17 15:08"
-    },
+      "exit": 0.1342809,
+      "loss": -0.913232792207787,
+      "time": "2026-10-18 12:14"
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "EDU/USDT",
       "entry": 0.0773,
