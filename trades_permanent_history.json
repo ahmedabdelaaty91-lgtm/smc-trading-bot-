@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 975.223742700607,
-  "total_profit_usdt": -24.77625729939333,
+  "current_balance": 973.8549218310418,
+  "total_profit_usdt": -26.14507816895855,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -200,6 +200,13 @@
       "exit": 0.1889214,
       "loss": -1.9128304618578205,
       "time": "2026-10-18 12:32"
+    },
+    {
+      "symbol": "COMP/USDT",
+      "entry": 21.62,
+      "exit": 21.31728,
+      "loss": -1.3688208695652209,
+      "time": "2026-10-18 12:46"
     }
   ],
   "open_trades": [
@@ -265,15 +272,6 @@
       "tp2": 0.07274364799999998,
       "amount": 96.95,
       "time": "2026-10-18 04:16"
-    },
-    {
-      "symbol": "COMP/USDT",
-      "entry": 21.62,
-      "sl": 21.31728,
-      "tp1": 22.074080000000002,
-      "tp2": 22.467616000000003,
-      "amount": 97.76,
-      "time": "2026-10-18 10:07"
     },
     {
       "symbol": "ONT/USDT",
