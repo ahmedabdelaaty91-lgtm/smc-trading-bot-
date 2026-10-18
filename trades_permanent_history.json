@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 977.5786191653273,
-  "total_profit_usdt": -22.421380834672924,
+  "current_balance": 976.0200051597251,
+  "total_profit_usdt": -23.979994840275157,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -165,6 +165,13 @@
       "exit": 0.09202558,
       "loss": -1.0261210514998385,
       "time": "2026-10-18 05:48"
+    },
+    {
+      "symbol": "BANANA/USDT",
+      "entry": 3.57,
+      "exit": 3.51296,
+      "loss": -1.5586140056022344,
+      "time": "2026-10-18 11:06"
     }
   ],
   "open_trades": [
@@ -212,15 +219,6 @@
       "tp2": 0.022989752000000006,
       "amount": 99.67,
       "time": "2026-10-17 19:20"
-    },
-    {
-      "symbol": "BANANA/USDT",
-      "entry": 3.57,
-      "sl": 3.51296,
-      "tp1": 3.6555599999999995,
-      "tp2": 3.7297119999999993,
-      "amount": 97.55,
-      "time": "2026-10-17 23:01"
     },
     {
       "symbol": "UNI/USDT",
