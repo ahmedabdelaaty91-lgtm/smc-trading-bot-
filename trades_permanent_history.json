@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 962.5443973334529,
-  "total_profit_usdt": -37.45560266654742,
+  "current_balance": 960.8745149289308,
+  "total_profit_usdt": -39.12548507106949,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -242,18 +242,16 @@
       "exit": 718.457206,
       "loss": -0.7100929116197853,
       "time": "2026-10-18 13:33"
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "BCH/USDT",
       "entry": 275.98,
-      "sl": 271.3562,
-      "tp1": 282.9157,
-      "tp2": 288.9266400000001,
-      "amount": 99.67,
-      "time": "2026-10-17 19:01"
-    },
+      "exit": 271.3562,
+      "loss": -1.669882404522073,
+      "time": "2026-10-18 14:04"
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "SENT/USDT",
       "entry": 0.02125,
