@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 955.4773814767819,
-  "total_profit_usdt": -44.52261852321838,
+  "current_balance": 963.6374323868996,
+  "total_profit_usdt": -36.36256761310071,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -23,6 +23,13 @@
       "exit": 0.089029816,
       "profit": 6.207601249492903,
       "time": "2026-10-18 11:12"
+    },
+    {
+      "symbol": "SENT/USDT",
+      "entry": 0.02125,
+      "exit": 0.022989752000000006,
+      "profit": 8.160050910117667,
+      "time": "2026-10-18 23:27"
     }
   ],
   "losing_trades": [
@@ -280,15 +287,6 @@
     }
   ],
   "open_trades": [
-    {
-      "symbol": "SENT/USDT",
-      "entry": 0.02125,
-      "sl": 0.02062866,
-      "tp1": 0.022182010000000002,
-      "tp2": 0.022989752000000006,
-      "amount": 99.67,
-      "time": "2026-10-17 19:20"
-    },
     {
       "symbol": "KAVA/USDT",
       "entry": 0.07031,
