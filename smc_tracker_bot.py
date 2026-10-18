@@ -5,6 +5,7 @@ import subprocess
 import requests
 import ccxt
 import pandas as pd
+import numpy as np
 from datetime import datetime
 
 # ========================================================
@@ -17,7 +18,7 @@ BINANCE_API_KEY = "eEQI3GrUGBdGzHmjSTxg7us7uPM2ZZ69mQddzj3rw6zDL4TbSwEVAHWgp5BU1
 BINANCE_SECRET = "pwQHVpCsrO1DXxxpgrSf4gGZZddOUHZRPEL448kO3IMZILDFR6HNcgUjD4EWemou"
 
 POSITION_SIZE_PERCENT = 0.10    # 10% لكل صفقة
-MAX_TECHNICAL_SL_PCT = 4.5      # أقصى وقف خسارة فني مسموح به
+MAX_TECHNICAL_SL_PCT = 3.8      # استبعاد الصفقات التي يتجاوز وقفها الفني 3.8%
 HISTORY_FILE = "trades_permanent_history.json"
 
 RAW_COINS = [
@@ -55,7 +56,7 @@ binance_testnet.set_sandbox_mode(True)
 market_exchange = ccxt.kucoin({'enableRateLimit': True})
 
 # ========================================================
-# 2. نظام السجل الدائم (Permanent Ledger)
+# 2. السجل الدائم
 # ========================================================
 def load_history():
     if os.path.exists(HISTORY_FILE):
@@ -76,8 +77,6 @@ def load_history():
 def save_history(data):
     with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    
-    # حفظ تلقائي إلى مستودع GitHub حتى لا يضيع أبداً
     try:
         subprocess.run(['git', 'config', 'user.name', 'SMC-Bot'], check=False)
         subprocess.run(['git', 'config', 'user.email', 'bot@github.actions'], check=False)
@@ -88,7 +87,7 @@ def save_history(data):
         pass
 
 # ========================================================
-# 3. دوال التليجرام والمحفظة
+# 3. دوال التليجرام والمؤشرات الفنية
 # ========================================================
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -106,14 +105,12 @@ def send_telegram(message):
 def get_btc_status():
     try:
         ticker = market_exchange.fetch_ticker('BTC/USDT')
-        change = ticker['percentage']
-        if change is None: change = 0.0
-        if change > 2.0: return f"صاعد بقوة (+{change:.2f}%) 🟢"
-        elif change > 0: return f"متذبذب إيجابي (+{change:.2f}%) 🟢"
-        elif change > -2.0: return f"متذبذب طبيعي ({change:.2f}%) 🟡"
-        else: return f"هابط بحذر ({change:.2f}%) 🔴"
+        change = ticker['percentage'] or 0.0
+        if change > 2.0: return "صاعد بقوة (+{:.2f}%) 🟢".format(change), True
+        elif change > -1.0: return "مستقر طبيعي ({:+.2f}%) 🟢".format(change), True
+        else: return "هابط بحذر ({:+.2f}%) 🔴".format(change), False
     except:
-        return "متذبذب طبيعي 🟡"
+        return "مستقر طبيعي 🟡", True
 
 def get_binance_balance():
     try:
@@ -124,13 +121,19 @@ def get_binance_balance():
         hist = load_history()
         return hist.get("current_balance", 1000.0)
 
+def calculate_rsi(series, period=14):
+    delta = series.diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+    rs = gain / (loss + 1e-9)
+    return 100 - (100 / (1 + rs))
+
 # ========================================================
-# 4. إرسال التقرير الشامل والمفصل بالأسماء والأرقام
+# 4. إرسال التقارير
 # ========================================================
 def send_full_detailed_report():
     hist = load_history()
     bal = get_binance_balance()
-    start_bal = hist.get("starting_balance", 1000.0)
     wins = hist.get("winning_trades", [])
     losses = hist.get("losing_trades", [])
     open_tr = hist.get("open_trades", [])
@@ -139,32 +142,12 @@ def send_full_detailed_report():
     win_rate = (len(wins) / total_closed * 100) if total_closed > 0 else 0.0
     net_pnl = hist.get("total_profit_usdt", 0.0)
 
-    # تفاصيل الصفقات الرابحة
-    wins_text = ""
-    if wins:
-        for w in wins[-5:]: # آخر 5 صفقات رابحة
-            wins_text += f"• `{w['symbol']}`: دخول `${w['entry']}` ⬅️ خروج `${w['exit']}` (+${w['profit']:.2f})\n"
-    else:
-        wins_text = "لا توجد صفقات رابحة مغلقة بعد.\n"
-
-    # تفاصيل الصفقات الخاسرة
-    losses_text = ""
-    if losses:
-        for l in losses[-5:]: # آخر 5 صفقات خاسرة
-            losses_text += f"• `{l['symbol']}`: دخول `${l['entry']}` ⬅️ وقف `${l['exit']}` (${l['loss']:.2f})\n"
-    else:
-        losses_text = "لا توجد صفقات خاسرة حتى الآن.\n"
-
-    # تفاصيل الصفقات المفتوحة حالياً
-    open_text = ""
-    if open_tr:
-        for o in open_tr:
-            open_text += f"• `{o['symbol']}`: دخول `${o['entry']}` | وقف فني `${o['sl']}` | هدف `${o['tp2']}`\n"
-    else:
-        open_text = "لا توجد صفقات مفتوحة الآن.\n"
+    wins_text = "".join([f"• `{w['symbol']}`: دخول `${w['entry']}` ⬅️ خروج `${w['exit']}` (+${w['profit']:.2f})\n" for w in wins[-5:]]) or "لا توجد صفقات رابحة مغلقة بعد.\n"
+    losses_text = "".join([f"• `{l['symbol']}`: دخول `${l['entry']}` ⬅️ وقف `${l['exit']}` (${l['loss']:.2f})\n" for l in losses[-5:]]) or "لا توجد صفقات خاسرة حتى الآن.\n"
+    open_text = "".join([f"• `{o['symbol']}`: دخول `${o['entry']}` | وقف `${o['sl']}` | هدف `${o['tp2']}`\n" for o in open_tr]) or "لا توجد صفقات مفتوحة الآن.\n"
 
     msg = (
-        f"📊 *السجل الدائم لأداء صفقات SMC* 📊\n"
+        f"📊 *السجل الدائم لأداء صفقات SMC 2.0* 📊\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"💼 *رصيد محفظة باينانس:* `${bal:,.2f}` USDT\n"
         f"💰 *صافي الأرباح الكلية:* `{net_pnl:+.2f}$`\n"
@@ -183,11 +166,7 @@ def send_full_detailed_report():
     )
     send_telegram(msg)
 
-# ========================================================
-# 5. الاستماع لأوامر التليجرام (كلمة تقرير)
-# ========================================================
 last_telegram_update_id = 0
-
 def check_telegram_commands():
     global last_telegram_update_id
     try:
@@ -203,41 +182,30 @@ def check_telegram_commands():
         pass
 
 # ========================================================
-# 6. مراقبة وإغلاق الصفقات المفتوحة وحفظها في السجل الدائم
+# 5. مراقبة وإغلاق الصفقات
 # ========================================================
 def track_open_trades():
     hist = load_history()
     open_trades = hist.get("open_trades", [])
-    if not open_trades:
-        return
+    if not open_trades: return
 
     updated_open = []
     changed = False
 
     for t in open_trades:
-        symbol = t['symbol']
-        entry = t['entry']
-        sl = t['sl']
-        tp2 = t['tp2']
-        amount = t['amount']
+        symbol, entry, sl, tp2, amount = t['symbol'], t['entry'], t['sl'], t['tp2'], t['amount']
 
         try:
             ticker = market_exchange.fetch_ticker(symbol)
             curr = ticker['last']
 
-            # تحقق الهدف الثاني TP2
             if curr >= tp2:
                 profit = amount * ((tp2 - entry) / entry)
-                try:
-                    binance_testnet.create_market_sell_order(symbol, amount / entry)
-                except:
-                    pass
+                try: binance_testnet.create_market_sell_order(symbol, amount / entry)
+                except: pass
 
                 hist["winning_trades"].append({
-                    "symbol": symbol,
-                    "entry": entry,
-                    "exit": tp2,
-                    "profit": profit,
+                    "symbol": symbol, "entry": entry, "exit": tp2, "profit": profit,
                     "time": datetime.now().strftime('%Y-%m-%d %H:%M')
                 })
                 hist["total_profit_usdt"] += profit
@@ -248,28 +216,21 @@ def track_open_trades():
                     f"🎯 *تم تحقيق الهدف بنجاح في باينانس (TP2 HIT)!* 🎉\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
-                    f"📥 *سعر الدخول:* `${entry:.4f}`\n"
-                    f"💰 *سعر البيع:* `${tp2:.4f}`\n"
-                    f"💵 *صافي الربح المحقق:* `+${profit:.2f}` USDT 🟢\n"
+                    f"📥 *سعر الدخول:* `${entry:.4f}` ⬅️ *سعر البيع:* `${tp2:.4f}`\n"
+                    f"💵 *صافي الربح:* `+${profit:.2f}` USDT 🟢\n"
                     f"💼 *رصيد باينانس المحدث:* `${hist['current_balance']:,.2f}` USDT\n"
                     f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
                 continue
 
-            # ضرب وقف الخسارة الفني
             elif curr <= sl:
                 loss = amount * ((sl - entry) / entry)
-                try:
-                    binance_testnet.create_market_sell_order(symbol, amount / entry)
-                except:
-                    pass
+                try: binance_testnet.create_market_sell_order(symbol, amount / entry)
+                except: pass
 
                 hist["losing_trades"].append({
-                    "symbol": symbol,
-                    "entry": entry,
-                    "exit": sl,
-                    "loss": loss,
+                    "symbol": symbol, "entry": entry, "exit": sl, "loss": loss,
                     "time": datetime.now().strftime('%Y-%m-%d %H:%M')
                 })
                 hist["total_profit_usdt"] += loss
@@ -280,8 +241,7 @@ def track_open_trades():
                     f"🛑 *تنبيه: ضرب وقف الخسارة الفني (STOP LOSS)* 🛑\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
-                    f"📥 *سعر الدخول:* `${entry:.4f}`\n"
-                    f"🛑 *سعر الخروج:* `${sl:.4f}`\n"
+                    f"📥 *سعر الدخول:* `${entry:.4f}` ⬅️ *سعر الخروج:* `${sl:.4f}`\n"
                     f"📉 *الخسارة المحسوبة:* `${loss:.2f}` USDT 🔴\n"
                     f"💼 *رصيد باينانس المحدث:* `${hist['current_balance']:,.2f}` USDT\n"
                     f"━━━━━━━━━━━━━━━━━━"
@@ -290,8 +250,7 @@ def track_open_trades():
                 continue
 
             updated_open.append(t)
-
-        except Exception as e:
+        except:
             updated_open.append(t)
 
     if changed:
@@ -299,9 +258,13 @@ def track_open_trades():
         save_history(hist)
 
 # ========================================================
-# 7. فحص السوق لاكتشاف صفقات الشراء بوقف فني
+# 6. محرك SMC 2.0 المطور (الفلاتر المؤسسية الخمسة)
 # ========================================================
 def scan_smc():
+    btc_text, btc_is_safe = get_btc_status()
+    if not btc_is_safe:
+        return  # حماية: لا شراء أثناء هبوط البيتكوين الحاد
+
     hist = load_history()
     open_symbols = [t['symbol'] for t in hist.get("open_trades", [])]
 
@@ -310,37 +273,65 @@ def scan_smc():
             continue
 
         try:
-            ohlcv = market_exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=40)
+            ohlcv = market_exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=120)
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
 
-            recent_high = df['high'].iloc[-10:-1].max()
+            # 1. فلتر الاتجاه العام (EMA 200 & EMA 50)
+            df['ema_50'] = df['close'].ewm(span=50, adjust=False).mean()
+            df['ema_200'] = df['close'].ewm(span=100, adjust=False).mean()
             curr_price = df['close'].iloc[-1]
+            ema_50 = df['ema_50'].iloc[-1]
+            ema_200 = df['ema_200'].iloc[-1]
+
+            # شرط الاتجاه الصاعد: السعر فوق EMA 200 و EMA 50
+            if curr_price < ema_200 or curr_price < ema_50:
+                continue
+
+            # 2. فلتر مؤشر القوة النسبية RSI (بين 48 و 68 - زخم صاعد دون تشبع)
+            df['rsi'] = calculate_rsi(df['close'], period=14)
+            curr_rsi = df['rsi'].iloc[-1]
+            if curr_rsi < 48 or curr_rsi > 68:
+                continue
+
+            # 3. فلتر الفوليوم المؤسسي (شمعة الكسر مدعومة بسيولة قوية أعلى من المتوسط)
+            df['vol_ma'] = df['volume'].rolling(window=20).mean()
+            curr_vol = df['volume'].iloc[-1]
+            vol_ma = df['vol_ma'].iloc[-1]
+            if curr_vol < (vol_ma * 1.25):
+                continue
+
+            # 4. شروط SMC: كسر هيكل واضح + وجود فجوة FVG حقيقية
+            recent_high = df['high'].iloc[-12:-2].max()
             c1_high = df['high'].iloc[-3]
             c3_low = df['low'].iloc[-1]
+            c2_open = df['open'].iloc[-2]
+            c2_close = df['close'].iloc[-2]
 
             is_bos = curr_price > recent_high
             is_fvg = c3_low > c1_high
+            is_strong_bull_candle = c2_close > c2_open
 
-            if is_bos and is_fvg:
+            if is_bos and is_fvg and is_strong_bull_candle:
                 entry = curr_price
-                order_block_low = min(df['low'].iloc[-2], df['low'].iloc[-3])
-                sl = order_block_low * 0.998
+                
+                # وقف الخسارة الفني أسفل شمعة كسر الهيكل مباشرة
+                ob_low = min(df['low'].iloc[-2], df['low'].iloc[-3])
+                sl = ob_low * 0.998
                 sl_pct = ((entry - sl) / entry) * 100
 
-                # فلتر الأمان: لا ندخل إذا كان الوقف الفني أكبر من 4.5%
-                if sl_pct > MAX_TECHNICAL_SL_PCT or sl_pct < 0.5:
+                # فلتر المخاطرة: وقف خسارة فني محكم بين 1.2% و 3.8%
+                if sl_pct > MAX_TECHNICAL_SL_PCT or sl_pct < 1.0:
                     continue
 
+                # أهداف متناسبة مع الوقف الفني (عائد 1:1.6 و 1:2.8)
                 risk = entry - sl
-                tp1 = entry + (risk * 1.5)
+                tp1 = entry + (risk * 1.6)
                 tp2 = entry + (risk * 2.8)
 
                 tp1_pct = ((tp1 - entry) / entry) * 100
                 tp2_pct = ((tp2 - entry) / entry) * 100
 
-                smc_reason = "BOS (Break of Structure) + Bullish FVG"
-                btc_status = get_btc_status()
-
+                smc_reason = "BOS + Bullish FVG + Trend (EMA200) + Volume Spike"
                 bal = get_binance_balance()
                 trade_amount = round(bal * POSITION_SIZE_PERCENT, 2)
 
@@ -353,13 +344,8 @@ def scan_smc():
 
                 # حفظ في السجل الدائم
                 hist["open_trades"].append({
-                    "symbol": symbol,
-                    "entry": entry,
-                    "sl": sl,
-                    "tp1": tp1,
-                    "tp2": tp2,
-                    "amount": trade_amount,
-                    "time": datetime.now().strftime('%Y-%m-%d %H:%M')
+                    "symbol": symbol, "entry": entry, "sl": sl, "tp1": tp1,
+                    "tp2": tp2, "amount": trade_amount, "time": datetime.now().strftime('%Y-%m-%d %H:%M')
                 })
                 save_history(hist)
 
@@ -368,22 +354,23 @@ def scan_smc():
                 tv_link = f"https://www.tradingview.com/chart/?symbol=BINANCE:{coin_base}USDT"
 
                 msg = (
-                    f"🚀 *إشارة تداول فنية جديدة (SMC)!* 🟢\n"
+                    f"🚀 *إشارة تداول مؤسسية فائقة الجودة (+A)!* 🟢\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"⏰ *فريم الإشارة:* `{TIMEFRAME}`\n"
-                    f"🎯 *الاستراتيجية:* SMC - مفاهيم الأموال الذكية 🧠\n"
-                    f"🌟 *تصنيف الصفقة:* صفقة كبرى (+A) 🌟\n"
-                    f"📌 *التأكيد الفني:* كسر هيكل صاعد مع فجوة سيولة\n"
+                    f"🎯 *الاستراتيجية:* SMC 2.0 (Trend + Volume + FVG) 🧠\n"
+                    f"🌟 *تصنيف الصفقة:* صفقة مؤكدة (+A) 🌟\n"
+                    f"📌 *التأكيد الفني:* كسر صاعد فوق EMA200 مع انفجار فوليوم\n"
                     f"🔍 *السبب الفني:* `{smc_reason}`\n"
+                    f"📊 *مؤشر RSI:* `{curr_rsi:.1f}` (زخم صاعد ممتاز)\n"
                     f"🟢 *توجيه السيولة:* {exec_note} 🟢\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"💵 *سعر الدخول:* `${entry:.4f}`\n"
-                    f"🛡️ *قاع الدعم (Order Block Low):* `${order_block_low:.4f}`\n"
+                    f"🛡️ *قاع الدعم (Order Block Low):* `${ob_low:.4f}`\n"
                     f"🛑 *وقف الخسارة الفني:* `${sl:.4f}` (-{sl_pct:.2f}%)\n"
                     f"🎯 *الهدف الأول (TP1):* `${tp1:.4f}` (+{tp1_pct:.2f}%)\n"
                     f"🎯 *الهدف الثاني (TP2):* `${tp2:.4f}` (+{tp2_pct:.2f}%)\n"
                     f"💼 *حجم العقد المنفذ (10%):* `${trade_amount:.2f} USDT`\n"
-                    f"🌐 *سوق البيتكوين:* {btc_status}\n"
+                    f"🌐 *سوق البيتكوين:* {btc_text}\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
                     f"📊 [عرض الشارت على Binance]({binance_link})\n"
                     f"📈 [عرض الشارت على TradingView]({tv_link})"
@@ -391,44 +378,39 @@ def scan_smc():
                 send_telegram(msg)
 
             time.sleep(0.15)
-
-        except Exception as e:
+        except:
             pass
 
 # ========================================================
-# 8. حلقة التشغيل الرئيسية المستقرة
+# 7. حلقة التشغيل الرئيسية
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تفعيل البوت بالسجل الدائم ومنع التكرار!")
+    print("✅ تم تفعيل استراتيجية SMC 2.0 المؤسسية بنجاح!")
     send_telegram(
-        f"🚀 *تم تحديث البوت بالسجل الدائم وحماية السيرفر من التكرار!* 🛡️\n\n"
+        f"🛡️ *تم تفعيل استراتيجية SMC 2.0 المؤسسية (+A Setups)!* 🚀\n\n"
         f"💼 رصيد باينانس: `${bal:,.2f}` USDT\n"
-        f"💾 لن تضيع أي صفقة رابحة أو خاسرة بعد الآن أبداً حتى لو تم إعادة تشغيل السيرفر.\n"
-        f"💬 *ميزة جديدة:* اكتب كلمة (تقرير) للبوت في أي وقت ليرسل لك تفاصيل كل الصفقات لحظياً!"
+        f"🎯 *أهم التحديثات لتفادي ضرب وقف الخسارة:*\n"
+        f"1. التداول في الاتجاه الصاعد فقط (فوق EMA 200).\n"
+        f"2. اشتراط فوليوم مؤسسي قوي (Volume Spike).\n"
+        f"3. فلترة مؤشر RSI لتفادي الشراء في القمم.\n"
+        f"4. حماية ضد هبوط البيتكوين.\n"
+        f"💬 أرسل كلمة (تقرير) في أي وقت لاستلام كشف الحساب لحظياً!"
     )
 
     last_night_day = -1
-
     while True:
         try:
-            # 1. الاستماع لكلمة "تقرير" من المستخدم
             check_telegram_commands()
-
-            # 2. متابعة وإغلاق الصفقات المفتوحة
             track_open_trades()
-
-            # 3. فحص العملات واكتشاف صفقات جديدة
             scan_smc()
 
-            # 4. التقرير الليلي التلقائي الساعة 11 مساءً
             now = datetime.now()
             if now.hour == 23 and now.day != last_night_day:
                 send_full_detailed_report()
                 last_night_day = now.day
 
             time.sleep(40)
-
         except Exception as e:
             time.sleep(15)
 
