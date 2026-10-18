@@ -8,7 +8,7 @@ import pandas as pd
 from datetime import datetime
 
 # ========================================================
-# 1. إعدادات التليجرام ومفاتيح Binance Testnet
+# 1. إعدادات التليجرام وبيانات Binance Testnet
 # ========================================================
 TELEGRAM_BOT_TOKEN = "8783526256:AAG_-1qx7O3UFuHNAvUM5W9GFZaO4yPx70c"
 TELEGRAM_CHAT_ID = "7760401819"
@@ -56,7 +56,7 @@ binance_testnet.set_sandbox_mode(True)
 market_exchange = ccxt.kucoin({'enableRateLimit': True})
 
 # ========================================================
-# 2. السجل الدائم
+# 2. إدارة السجل الدائم للصفقات
 # ========================================================
 def load_history():
     if os.path.exists(HISTORY_FILE):
@@ -87,7 +87,7 @@ def save_history(data):
         pass
 
 # ========================================================
-# 3. دوال التليجرام والمحفظة
+# 3. دوال التليجرام
 # ========================================================
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -123,7 +123,7 @@ def get_binance_balance():
         return hist.get("current_balance", 1000.0)
 
 # ========================================================
-# 4. إرسال التقارير
+# 4. تقرير الأداء الشامل عند إرسال كلمة (تقرير)
 # ========================================================
 def send_full_detailed_report():
     hist = load_history()
@@ -131,7 +131,7 @@ def send_full_detailed_report():
     wins = hist.get("winning_trades", [])
     losses = hist.get("losing_trades", [])
     open_tr = hist.get("open_trades", [])
-    
+
     total_closed = len(wins) + len(losses)
     win_rate = (len(wins) / total_closed * 100) if total_closed > 0 else 0.0
     net_pnl = hist.get("total_profit_usdt", 0.0)
@@ -176,7 +176,7 @@ def check_telegram_commands():
         pass
 
 # ========================================================
-# 5. مراقبة وإغلاق الصفقات
+# 5. متابعة وتحديث الصفقات المفتوحة
 # ========================================================
 def track_open_trades():
     hist = load_history()
@@ -254,11 +254,20 @@ def track_open_trades():
         save_history(hist)
 
 # ========================================================
-# 6. محرك SMC الفني الدقيق لتنفيذ شروطك الأربعة
+# 6. محرك SMC الهجين الذكي (EMA 20 + حماية البيتكوين)
 # ========================================================
 def scan_smc():
     hist = load_history()
     open_symbols = [t['symbol'] for t in hist.get("open_trades", [])]
+
+    # أمان البيتكوين: تجنب الشراء إذا كان البيتكوين في هبوط حاد مستمر (أكثر من -4%)
+    try:
+        btc_ticker = market_exchange.fetch_ticker('BTC/USDT')
+        btc_change_24h = btc_ticker.get('percentage', 0.0) or 0.0
+        if btc_change_24h < -4.0:
+            return
+    except:
+        pass
 
     for symbol in SYMBOLS:
         if symbol in open_symbols:
@@ -268,25 +277,25 @@ def scan_smc():
             ohlcv = market_exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=70)
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
 
-            # 1. فلتر الاتجاه: السعر فوق متوسط EMA 50
-            df['ema_50'] = df['close'].ewm(span=50, adjust=False).mean()
+            # 1. فلتر الاتجاه التوازني السريع (EMA 20 لالتقاط الارتدادات المبكرة)
+            df['ema_20'] = df['close'].ewm(span=20, adjust=False).mean()
             curr_price = df['close'].iloc[-1]
-            ema_50 = df['ema_50'].iloc[-1]
+            ema_20 = df['ema_20'].iloc[-1]
 
-            if curr_price < ema_50:
+            if curr_price < ema_20:
                 continue
 
             # 2. فحص الكسر والفوليوم على الشمعة السابقة المكتملة 100% (df.iloc[-2])
             breakout_candle_close = df['close'].iloc[-2]
             breakout_candle_vol = df['volume'].iloc[-2]
             vol_ma20 = df['volume'].rolling(window=20).mean().iloc[-2]
-            
-            # قمة الشموع السابقة للاختراق
-            prev_high = df['high'].iloc[-14:-2].max()
+
+            # قمة الشموع السابقة للاختراق (آخر 12 شمعة)
+            prev_high = df['high'].iloc[-12:-2].max()
 
             # تحقق كسر القمة السابقة (BOS) مع فوليوم تأكيد
             is_bos = breakout_candle_close > prev_high
-            is_vol_confirmed = breakout_candle_vol >= (vol_ma20 * 0.95)
+            is_vol_confirmed = breakout_candle_vol >= (vol_ma20 * 0.90)
 
             # 3. فحص فجوة الـ FVG الحقيقية
             c1_high = df['high'].iloc[-3]
@@ -295,12 +304,12 @@ def scan_smc():
 
             if is_bos and is_vol_confirmed and is_fvg:
                 entry = curr_price
-                
+
                 # 4. وقف الخسارة الفني: أسفل قاع الـ Order Block أو الـ FVG مباشرة
                 ob_low = df['low'].iloc[-3]        # قاع شمعة الأوردر بلوك
                 fvg_low = df['low'].iloc[-2]       # قاع شمعة الاختراق والـ FVG
                 technical_low = min(ob_low, fvg_low)
-                
+
                 # الوقف أسفل القاع الفني بـ 0.2% كهامش أمان ضد الذيول
                 sl = technical_low * 0.998
                 sl_pct = ((entry - sl) / entry) * 100
@@ -342,12 +351,12 @@ def scan_smc():
                 tv_link = f"https://www.tradingview.com/chart/?symbol=BINANCE:{coin_base}USDT"
 
                 msg = (
-                    f"🚀 *إشارة تداول فنية جديدة (SMC)!* 🟢\n"
+                    f"🚀 *إشارة تداول فنية جديدة (SMC Hybrid)!* 🟢\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"⏰ *فريم الإشارة:* `{TIMEFRAME}`\n"
                     f"🎯 *الاستراتيجية:* SMC - مفاهيم الأموال الذكية 🧠\n"
                     f"🌟 *تصنيف الصفقة:* صفقة مؤكدة (+A) 🌟\n"
-                    f"📌 *التأكيد الفني:* كسر هيكل صاعد فوق EMA50 وتأكيد فوليوم الشمعة المكتملة\n"
+                    f"📌 *التأكيد الفني:* كسر هيكل صاعد فوق EMA20 وتأكيد فوليوم الشمعة المكتملة\n"
                     f"🔍 *السبب الفني:* `{smc_reason}`\n"
                     f"🟢 *توجيه السيولة:* {exec_note} 🟢\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
@@ -369,18 +378,19 @@ def scan_smc():
             pass
 
 # ========================================================
-# 7. حلقة التشغيل الرئيسية
+# 7. نقطة الانطلاق الرئيسية
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تثبيت القواعد الفنية الصارمة بنجاح!")
+    print("✅ تم تثبيت القواعد الفنية الهجينة (EMA 20 + حماية البيتكوين) بنجاح!")
     send_telegram(
-        f"🎯 *تم تفعيل البوت بالقواعد الفنية الصارمة المعتمدة!* 🟢\n\n"
+        f"🎯 *تم تفعيل البوت بالقواعد الهجينة الذكية (EMA 20 + حماية البيتكوين)!* 🟢\n\n"
         f"💼 رصيد باينانس: `${bal:,.2f}` USDT (دخول 10% لكل صفقة).\n"
         f"1. فحص الكسر والفوليوم على الشمعة السابقة المكتملة 100%.\n"
-        f"2. فلتر الاتجاه: الشراء فقط فوق EMA 50.\n"
-        f"3. وقف الخسارة الفني: أسفل قاع الـ Order Block والـ FVG مباشرة (1.5% إلى 3.2%).\n"
-        f"4. نسبة عائد إلى مخاطرة عالية: 1:1.6 و 1:2.8 للأهداف.\n"
+        f"2. فلتر الاتجاه التوازني: الشراء فوق EMA 20 لحصد الارتدادات المبكرة.\n"
+        f"3. درع حماية البيتكوين: إيقاف الشراء تلقائياً أثناء انهيار السوق الحاد.\n"
+        f"4. وقف الخسارة الفني: أسفل قاع الـ Order Block والـ FVG مباشرة (1.5% إلى 3.2%).\n"
+        f"5. أهداف بنسبة عائد عالية: 1:1.6 و 1:2.8.\n"
         f"💬 أرسل كلمة (تقرير) في أي وقت لتحديث كشف الحساب لحظياً!"
     )
 
