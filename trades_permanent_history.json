@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 976.0200051597251,
-  "total_profit_usdt": -23.979994840275157,
+  "current_balance": 982.227606409218,
+  "total_profit_usdt": -17.772393590782254,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -16,6 +16,13 @@
       "exit": 0.04682904,
       "profit": 10.189925754716986,
       "time": "2026-10-18 07:49"
+    },
+    {
+      "symbol": "HBAR/USDT",
+      "entry": 0.08381,
+      "exit": 0.089029816,
+      "profit": 6.207601249492903,
+      "time": "2026-10-18 11:12"
     }
   ],
   "losing_trades": [
@@ -201,15 +208,6 @@
       "tp2": 288.9266400000001,
       "amount": 99.67,
       "time": "2026-10-17 19:01"
-    },
-    {
-      "symbol": "HBAR/USDT",
-      "entry": 0.08381,
-      "sl": 0.08194578,
-      "tp1": 0.08660633,
-      "tp2": 0.089029816,
-      "amount": 99.67,
-      "time": "2026-10-17 19:17"
     },
     {
       "symbol": "SENT/USDT",
