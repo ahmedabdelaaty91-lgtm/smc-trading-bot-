@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 913.7265401017289,
-  "total_profit_usdt": -86.27345989827145,
+  "current_balance": 911.393818574307,
+  "total_profit_usdt": -88.6061814256933,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -452,6 +452,13 @@
       "exit": 0.06944084,
       "loss": -1.1984790499217666,
       "time": "2026-10-19 16:12"
+    },
+    {
+      "symbol": "DOT/USDT",
+      "entry": 1.1706,
+      "exit": 1.140714,
+      "loss": -2.332721527421841,
+      "time": "2026-10-19 18:11"
     }
   ],
   "open_trades": [
@@ -787,15 +794,6 @@
       "tp2": 0.032037832,
       "amount": 91.49,
       "time": "2026-10-19 16:11"
-    },
-    {
-      "symbol": "DOT/USDT",
-      "entry": 1.1706,
-      "sl": 1.140714,
-      "tp1": 1.2184176000000002,
-      "tp2": 1.2542808000000003,
-      "amount": 91.37,
-      "time": "2026-10-19 17:00"
     },
     {
       "symbol": "CETUS/USDT",
