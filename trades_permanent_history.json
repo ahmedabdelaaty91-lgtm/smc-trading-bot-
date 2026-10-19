@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 909.8892523116322,
-  "total_profit_usdt": -90.11074768836811,
+  "current_balance": 907.4411369270168,
+  "total_profit_usdt": -92.55886307298348,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -466,6 +466,13 @@
       "exit": 2.0480956,
       "loss": -1.5045662626748173,
       "time": "2026-10-19 18:16"
+    },
+    {
+      "symbol": "GMX/USDT",
+      "entry": 8.45,
+      "exit": 8.2335,
+      "loss": -2.4481153846153836,
+      "time": "2026-10-19 18:26"
     }
   ],
   "open_trades": [
@@ -477,15 +484,6 @@
       "tp2": 1.4060924000000006,
       "amount": 95.55,
       "time": "2026-10-18 23:01"
-    },
-    {
-      "symbol": "GMX/USDT",
-      "entry": 8.45,
-      "sl": 8.2335,
-      "tp1": 8.796399999999998,
-      "tp2": 9.056199999999999,
-      "amount": 95.55,
-      "time": "2026-10-18 23:02"
     },
     {
       "symbol": "SOL/USDT",
