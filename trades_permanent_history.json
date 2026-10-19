@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 911.393818574307,
-  "total_profit_usdt": -88.6061814256933,
+  "current_balance": 909.8892523116322,
+  "total_profit_usdt": -90.11074768836811,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -459,6 +459,13 @@
       "exit": 1.140714,
       "loss": -2.332721527421841,
       "time": "2026-10-19 18:11"
+    },
+    {
+      "symbol": "PENDLE/USDT",
+      "entry": 2.0809,
+      "exit": 2.0480956,
+      "loss": -1.5045662626748173,
+      "time": "2026-10-19 18:16"
     }
   ],
   "open_trades": [
@@ -722,15 +729,6 @@
       "tp2": 1.7959608000000002,
       "amount": 95.44,
       "time": "2026-10-19 06:03"
-    },
-    {
-      "symbol": "PENDLE/USDT",
-      "entry": 2.0809,
-      "sl": 2.0480956,
-      "tp1": 2.1333870400000006,
-      "tp2": 2.172752320000001,
-      "amount": 95.44,
-      "time": "2026-10-19 06:04"
     },
     {
       "symbol": "JASMY/USDT",
