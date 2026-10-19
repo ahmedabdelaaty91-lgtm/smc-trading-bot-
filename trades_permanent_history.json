@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 954.3683834738376,
-  "total_profit_usdt": -45.631616526162624,
+  "current_balance": 951.3663835385103,
+  "total_profit_usdt": -48.63361646149003,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -319,6 +319,13 @@
       "exit": 0.04461059999999999,
       "loss": -1.466458807947034,
       "time": "2026-10-19 05:03"
+    },
+    {
+      "symbol": "SAND/USDT",
+      "entry": 0.06185,
+      "exit": 0.05991992,
+      "loss": -3.0019999353274063,
+      "time": "2026-10-19 08:01"
     }
   ],
   "open_trades": [
@@ -654,15 +661,6 @@
       "tp2": 0.045816210400000015,
       "amount": 96.36,
       "time": "2026-10-19 03:00"
-    },
-    {
-      "symbol": "SAND/USDT",
-      "entry": 0.06185,
-      "sl": 0.05991992,
-      "tp1": 0.064938128,
-      "tp2": 0.067254224,
-      "amount": 96.2,
-      "time": "2026-10-19 04:02"
     },
     {
       "symbol": "VANA/USDT",
