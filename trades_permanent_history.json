@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 959.1553419610524,
-  "total_profit_usdt": -40.84465803894785,
+  "current_balance": 957.4687613008582,
+  "total_profit_usdt": -42.53123869914202,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -298,6 +298,13 @@
       "exit": 0.039149544,
       "loss": -2.852909482450914,
       "time": "2026-10-19 04:13"
+    },
+    {
+      "symbol": "PIXEL/USDT",
+      "entry": 0.00515,
+      "exit": 0.00505986,
+      "loss": -1.6865806601941717,
+      "time": "2026-10-19 04:29"
     }
   ],
   "open_trades": [
@@ -534,15 +541,6 @@
       "tp2": 0.04723032000000002,
       "amount": 96.36,
       "time": "2026-10-19 01:21"
-    },
-    {
-      "symbol": "PIXEL/USDT",
-      "entry": 0.00515,
-      "sl": 0.00505986,
-      "tp1": 0.005294224,
-      "tp2": 0.005402392,
-      "amount": 96.36,
-      "time": "2026-10-19 01:31"
     },
     {
       "symbol": "NEAR/USDT",
