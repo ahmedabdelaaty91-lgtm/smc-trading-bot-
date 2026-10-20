@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 900.2600042555225,
-  "total_profit_usdt": -99.73999574447777,
+  "current_balance": 898.0596166146039,
+  "total_profit_usdt": -101.94038338539634,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -501,6 +501,13 @@
       "exit": 2.1706499999999997,
       "loss": -1.3697105263158071,
       "time": "2026-10-20 01:10"
+    },
+    {
+      "symbol": "GRT/USDT",
+      "entry": 0.02395,
+      "exit": 0.0234031,
+      "loss": -2.2003876409185783,
+      "time": "2026-10-20 01:12"
     }
   ],
   "open_trades": [
@@ -692,15 +699,6 @@
       "tp2": 0.20645543999999996,
       "amount": 96.36,
       "time": "2026-10-19 02:01"
-    },
-    {
-      "symbol": "GRT/USDT",
-      "entry": 0.02395,
-      "sl": 0.0234031,
-      "tp1": 0.02482504,
-      "tp2": 0.02548132,
-      "amount": 96.36,
-      "time": "2026-10-19 02:02"
     },
     {
       "symbol": "ZAMA/USDT",
