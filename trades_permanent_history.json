@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 905.1858347434587,
-  "total_profit_usdt": -94.81416525654156,
+  "current_balance": 903.3110049229607,
+  "total_profit_usdt": -96.68899507703954,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -480,6 +480,13 @@
       "exit": 0.4489004,
       "loss": -2.2553021835580704,
       "time": "2026-10-19 18:31"
+    },
+    {
+      "symbol": "TRUMP/USDT",
+      "entry": 1.727,
+      "exit": 1.69161,
+      "loss": -1.874829820497975,
+      "time": "2026-10-20 00:18"
     }
   ],
   "open_trades": [
@@ -761,15 +768,6 @@
       "tp2": 0.14524749600000003,
       "amount": 91.88,
       "time": "2026-10-19 14:04"
-    },
-    {
-      "symbol": "TRUMP/USDT",
-      "entry": 1.727,
-      "sl": 1.69161,
-      "tp1": 1.783624,
-      "tp2": 1.8260920000000003,
-      "amount": 91.49,
-      "time": "2026-10-19 15:00"
     },
     {
       "symbol": "PORTAL/USDT",
