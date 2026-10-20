@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 887.90187337714,
-  "total_profit_usdt": -112.0981266228603,
+  "current_balance": 895.5776771873388,
+  "total_profit_usdt": -104.42232281266143,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -30,6 +30,13 @@
       "exit": 0.022989752000000006,
       "profit": 8.160050910117667,
       "time": "2026-10-18 23:27"
+    },
+    {
+      "symbol": "WLD/USDT",
+      "entry": 0.5079,
+      "exit": 0.5487480800000001,
+      "profit": 7.675803810198869,
+      "time": "2026-10-20 04:17"
     }
   ],
   "losing_trades": [
@@ -779,15 +786,6 @@
       "tp2": 0.005041294400000002,
       "amount": 95.44,
       "time": "2026-10-19 07:00"
-    },
-    {
-      "symbol": "WLD/USDT",
-      "entry": 0.5079,
-      "sl": 0.4933114,
-      "tp1": 0.53124176,
-      "tp2": 0.5487480800000001,
-      "amount": 95.44,
-      "time": "2026-10-19 08:00"
     },
     {
       "symbol": "JST/USDT",
