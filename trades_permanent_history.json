@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 911.8032507179739,
-  "total_profit_usdt": -88.19674928202635,
+  "current_balance": 918.1489789887588,
+  "total_profit_usdt": -81.85102101124146,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -79,6 +79,13 @@
       "exit": 0.0751654,
       "profit": 5.0249096304591125,
       "time": "2026-10-20 14:15"
+    },
+    {
+      "symbol": "JASMY/USDT",
+      "entry": 0.004727,
+      "exit": 0.005041294400000002,
+      "profit": 6.345728270784884,
+      "time": "2026-10-20 14:30"
     }
   ],
   "losing_trades": [
@@ -821,15 +828,6 @@
       "tp2": 1.7959608000000002,
       "amount": 95.44,
       "time": "2026-10-19 06:03"
-    },
-    {
-      "symbol": "JASMY/USDT",
-      "entry": 0.004727,
-      "sl": 0.004614752,
-      "tp1": 0.004906596800000001,
-      "tp2": 0.005041294400000002,
-      "amount": 95.44,
-      "time": "2026-10-19 07:00"
     },
     {
       "symbol": "JST/USDT",
