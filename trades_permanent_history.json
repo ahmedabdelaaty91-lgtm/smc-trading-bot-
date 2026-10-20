@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 884.9688450101683,
-  "total_profit_usdt": -115.03115498983198,
+  "current_balance": 889.0143205737276,
+  "total_profit_usdt": -110.98567942627265,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -37,6 +37,13 @@
       "exit": 0.5487480800000001,
       "profit": 7.675803810198869,
       "time": "2026-10-20 04:17"
+    },
+    {
+      "symbol": "THETA/USDT",
+      "entry": 0.1888,
+      "exit": 0.19740216,
+      "profit": 4.045475563559322,
+      "time": "2026-10-20 10:57"
     }
   ],
   "losing_trades": [
@@ -902,15 +909,6 @@
       "tp2": 0.00015178080000000002,
       "amount": 88.79,
       "time": "2026-10-20 04:03"
-    },
-    {
-      "symbol": "THETA/USDT",
-      "entry": 0.1888,
-      "sl": 0.1857278,
-      "tp1": 0.19371552,
-      "tp2": 0.19740216,
-      "amount": 88.79,
-      "time": "2026-10-20 04:09"
     },
     {
       "symbol": "AVNT/USDT",
