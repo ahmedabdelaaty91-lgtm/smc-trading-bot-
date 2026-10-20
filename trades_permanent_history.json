@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 883.1353815140095,
-  "total_profit_usdt": -116.86461848599072,
+  "current_balance": 891.7369251786802,
+  "total_profit_usdt": -108.26307482132,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -44,6 +44,13 @@
       "exit": 0.19740216,
       "profit": 4.045475563559322,
       "time": "2026-10-20 10:57"
+    },
+    {
+      "symbol": "PEPE/USDT",
+      "entry": 4.008e-06,
+      "exit": 4.365772800000003e-06,
+      "profit": 8.601543664670714,
+      "time": "2026-10-20 14:02"
     }
   ],
   "losing_trades": [
@@ -696,15 +703,6 @@
       "tp2": 0.008662856000000002,
       "amount": 96.36,
       "time": "2026-10-19 00:02"
-    },
-    {
-      "symbol": "PEPE/USDT",
-      "entry": 4.008e-06,
-      "sl": 3.8802239999999995e-06,
-      "tp1": 4.2124416000000015e-06,
-      "tp2": 4.365772800000003e-06,
-      "amount": 96.36,
-      "time": "2026-10-19 00:05"
     },
     {
       "symbol": "CHZ/USDT",
