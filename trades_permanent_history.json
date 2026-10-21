@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1105.6689459380834,
-  "total_profit_usdt": 105.6689459380835,
+  "current_balance": 1107.7782370094037,
+  "total_profit_usdt": 107.77823700940368,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1624,11 +1624,13 @@
     {
       "symbol": "VTHO/USDT",
       "entry": 0.000659,
-      "sl": 0.0006407159999999999,
+      "sl": 0.000659,
       "tp1": 0.0006882544,
       "tp2": 0.0007101952,
-      "amount": 95.03,
-      "time": "2026-10-21 04:02"
+      "amount": 47.52,
+      "time": "2026-10-21 04:02",
+      "tp1_hit": true,
+      "profit_locked": 2.1092910713201873
     },
     {
       "symbol": "BOME/USDT",
