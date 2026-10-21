@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 953.5154110270523,
-  "total_profit_usdt": -46.48458897294798,
+  "current_balance": 950.5027337651476,
+  "total_profit_usdt": -49.49726623485275,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -732,6 +732,13 @@
       "exit": 0.02181628,
       "loss": -2.8102411377777727,
       "time": "2026-10-21 05:40"
+    },
+    {
+      "symbol": "LSK/USDT",
+      "entry": 0.2016,
+      "exit": 0.1952088,
+      "loss": -3.012677261904768,
+      "time": "2026-10-21 13:34"
     }
   ],
   "open_trades": [
@@ -1571,15 +1578,6 @@
       "tp2": 0.0007101952,
       "amount": 95.03,
       "time": "2026-10-21 04:02"
-    },
-    {
-      "symbol": "LSK/USDT",
-      "entry": 0.2016,
-      "sl": 0.1952088,
-      "tp1": 0.21182592000000003,
-      "tp2": 0.21949536000000003,
-      "amount": 95.03,
-      "time": "2026-10-21 04:04"
     },
     {
       "symbol": "BOME/USDT",
