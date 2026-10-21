@@ -21,7 +21,7 @@ jobs:
       - name: تحميل المشروع
         uses: actions/checkout@v4
 
-      - name: إعداد بايثون
+      - name: تثبيت بايثون
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
