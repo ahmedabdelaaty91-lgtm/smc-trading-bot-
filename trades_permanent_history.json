@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 950.2577254128706,
-  "total_profit_usdt": -49.74227458712964,
+  "current_balance": 948.3347096985849,
+  "total_profit_usdt": -51.665290301415354,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -711,6 +711,13 @@
       "exit": 0.2094802,
       "loss": -2.590609058004637,
       "time": "2026-10-20 17:43"
+    },
+    {
+      "symbol": "EDEN/USDT",
+      "entry": 0.0602,
+      "exit": 0.0589818,
+      "loss": -1.9230157142857074,
+      "time": "2026-10-21 04:50"
     }
   ],
   "open_trades": [
@@ -1559,15 +1566,6 @@
       "tp2": 0.000742036,
       "amount": 94.47,
       "time": "2026-10-20 21:00"
-    },
-    {
-      "symbol": "EDEN/USDT",
-      "entry": 0.0602,
-      "sl": 0.0589818,
-      "tp1": 0.06214911999999999,
-      "tp2": 0.06361095999999998,
-      "amount": 95.03,
-      "time": "2026-10-21 02:34"
     },
     {
       "symbol": "VTHO/USDT",
