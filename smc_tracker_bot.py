@@ -10,8 +10,7 @@ from datetime import datetime
 # ========================================================
 # 1. إعدادات التليجرام وبيانات Binance Testnet
 # ========================================================
-TELEGRAM_BOT_TOKEN = "8783526256:AAG_-1qx7O3UFuHNAvUM5W9GFZaO4yPx70c"
-TELEGRAM_CHAT_ID = "7760401819"
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN1")TELEGRAM_CHAT_ID = "7760401819"
 
 BINANCE_API_KEY = "eEQI3GrUGBdGzHmjSTxg7us7uPM2ZZ69mQddzj3rw6zDL4TbSwEVAHWgp5BU1cAO"
 BINANCE_SECRET = "pwQHVpCsrO1DXxxpgrSf4gGZZddOUHZRPEL448kO3IMZILDFR6HNcgUjD4EWemou"
