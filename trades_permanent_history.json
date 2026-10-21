@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1103.535029172671,
-  "total_profit_usdt": 103.53502917267117,
+  "current_balance": 1105.6689459380834,
+  "total_profit_usdt": 105.6689459380835,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1848,11 +1848,13 @@
     {
       "symbol": "GRT/USDT",
       "entry": 0.02498,
-      "sl": 0.02432126,
+      "sl": 0.02498,
       "tp1": 0.026033983999999996,
       "tp2": 0.02682447199999999,
-      "amount": 101.15,
-      "time": "2026-10-21 16:02"
+      "amount": 50.58,
+      "time": "2026-10-21 16:02",
+      "tp1_hit": true,
+      "profit_locked": 2.133916765412325
     },
     {
       "symbol": "FLUX/USDT",
