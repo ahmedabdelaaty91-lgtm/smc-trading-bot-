@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1037.8226579782438,
-  "total_profit_usdt": 37.822657978243356,
+  "current_balance": 1043.6389826134368,
+  "total_profit_usdt": 43.63898261343649,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -226,6 +226,13 @@
       "exit": 0.05356569600000002,
       "profit": 4.01112171684521,
       "time": "2026-10-21 20:03"
+    },
+    {
+      "symbol": "MBL/USDT",
+      "entry": 0.000699,
+      "exit": 0.000742036,
+      "profit": 5.816324635193132,
+      "time": "2026-10-21 20:19"
     }
   ],
   "losing_trades": [
@@ -1552,15 +1559,6 @@
       "tp2": 0.008718124800000001,
       "amount": 93.69,
       "time": "2026-10-20 19:55"
-    },
-    {
-      "symbol": "MBL/USDT",
-      "entry": 0.000699,
-      "sl": 0.00068363,
-      "tp1": 0.000723592,
-      "tp2": 0.000742036,
-      "amount": 94.47,
-      "time": "2026-10-20 21:00"
     },
     {
       "symbol": "VTHO/USDT",
