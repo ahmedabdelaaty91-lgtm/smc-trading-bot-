@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 950.5027337651476,
-  "total_profit_usdt": -49.49726623485275,
+  "current_balance": 958.7201223281105,
+  "total_profit_usdt": -41.2798776718898,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -135,6 +135,13 @@
       "exit": 5.324467199999999,
       "profit": 7.990942466245147,
       "time": "2026-10-21 10:51"
+    },
+    {
+      "symbol": "SUPER/USDT",
+      "entry": 0.189,
+      "exit": 0.20570703999999998,
+      "profit": 8.217388562962952,
+      "time": "2026-10-21 14:35"
     }
   ],
   "losing_trades": [
@@ -1461,15 +1468,6 @@
       "tp2": 0.04828962799999998,
       "amount": 92.96,
       "time": "2026-10-20 15:22"
-    },
-    {
-      "symbol": "SUPER/USDT",
-      "entry": 0.189,
-      "sl": 0.1830332,
-      "tp1": 0.19854687999999998,
-      "tp2": 0.20570703999999998,
-      "amount": 92.96,
-      "time": "2026-10-20 15:23"
     },
     {
       "symbol": "BANANA/USDT",
