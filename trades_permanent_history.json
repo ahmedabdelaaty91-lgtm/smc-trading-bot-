@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 958.7201223281105,
-  "total_profit_usdt": -41.2798776718898,
+  "current_balance": 965.873293175123,
+  "total_profit_usdt": -34.12670682487734,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -142,6 +142,13 @@
       "exit": 0.20570703999999998,
       "profit": 8.217388562962952,
       "time": "2026-10-21 14:35"
+    },
+    {
+      "symbol": "JUP/USDT",
+      "entry": 0.3046,
+      "exit": 0.32921983999999993,
+      "profit": 7.15317084701246,
+      "time": "2026-10-21 14:48"
     }
   ],
   "losing_trades": [
@@ -964,15 +971,6 @@
       "tp2": 0.118618424,
       "amount": 89.56,
       "time": "2026-10-20 04:31"
-    },
-    {
-      "symbol": "JUP/USDT",
-      "entry": 0.3046,
-      "sl": 0.2958072,
-      "tp1": 0.31866848,
-      "tp2": 0.32921983999999993,
-      "amount": 88.5,
-      "time": "2026-10-20 12:00"
     },
     {
       "symbol": "BB/USDT",
