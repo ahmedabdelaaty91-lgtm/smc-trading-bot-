@@ -101,7 +101,7 @@ def send_telegram(message, chat_id=None):
     }
     try:
         r = requests.post(url, json=payload, timeout=10)
-        # إذا رفض تليجرام الرسالة بسبب رمز خاص في الماركداون، أرسلها كنص عادي فوراً لضمان وصولها دائماً
+        # إرسال كنص عادي فوراً إذا رفض تليجرام تنسيق الماركداون
         if r.status_code != 200:
             payload.pop("parse_mode", None)
             requests.post(url, json=payload, timeout=10)
@@ -114,7 +114,7 @@ def get_btc_status():
         change = ticker['percentage'] or 0.0
         if change > 2.0: return "صاعد بقوة (+{:.2f}%) 🟢".format(change)
         elif change > 0: return "متذبذب إيجابي (+{:.2f}%) 🟢".format(change)
-        elif change > -2.0: return "متذبذب طبيعي ({:+.2f}%) 🟡".format(change)
+        elif change > -2.0: return "تصحيح طبيعي ({:+.2f}%) 🟡".format(change)
         else: return "هابط بحذر ({:+.2f}%) 🔴".format(change)
     except:
         return "متذبذب طبيعي 🟡"
@@ -129,7 +129,51 @@ def get_binance_balance():
         return hist.get("current_balance", 1000.0)
 
 # ========================================================
-# 4. تقرير الأداء الشامل عند إرسال كلمة (تقرير)
+# 4. رادار نبض السوق الساعي (يبعث كل ساعة لتوضيح حالة السوق)
+# ========================================================
+last_scan_stats = {
+    "below_ema": 0,
+    "no_bos": 0,
+    "low_vol": 0,
+    "rsi_fail": 0,
+    "total": len(SYMBOLS)
+}
+
+def send_hourly_market_radar(chat_id=None):
+    hist = load_history()
+    bal = hist.get("current_balance", 1000.0)
+    open_count = len(hist.get("open_trades", []))
+    btc_status = get_btc_status()
+    
+    try:
+        ticker = market_exchange.fetch_ticker('BTC/USDT')
+        btc_price = ticker.get('last', 0.0)
+        btc_change = ticker.get('percentage', 0.0) or 0.0
+    except:
+        btc_price = 0.0
+        btc_change = 0.0
+
+    b_ema = last_scan_stats.get("below_ema", 0)
+    
+    msg = (
+        f"📡 *رادار السوق ونبض شمعة الساعة* ⏰\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"🪙 *البيتكوين (BTC):* `${btc_price:,.1f}` ({btc_change:+.2f}%)\n"
+        f"🌐 *حالة السوق اللحظية:* {btc_status}\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"🔍 *تشخيص الفحص (لماذا لا توجد صفقات في هذه الشمعة؟):*\n"
+        f"• *فلتر الاتجاه (EMA20):* `{b_ema}` عملة تحت المتوسط (تم استبعادها لحمايتك من الشراء في مسار هابط).\n"
+        f"• *فلتر الفوليوم والكسر:* العملات الصاعدة لم تحقق كسر قمة حقيقي (BOS) مع فوليوم مؤسساتي (+115%).\n"
+        f"• *فلتر الزخم:* استبعاد القمم المعلقة ومناطق التشبع الشرائي (RSI > 68).\n"
+        f"━━━━━━━━━━━━━━━━━━\n"
+        f"💼 *المحفظة:* `{open_count}/{MAX_OPEN_TRADES}` صفقات نشطة (في وضع الترصد والجاهزية)\n"
+        f"💵 *إجمالي الرصيد المتاح:* `${bal:,.2f}` USDT\n"
+        f"🛡️ *سيرفر البوت شغال 24/7 ويراقب إغلاق كل شمعة لاقتناص أي فرصة مؤكدة فور اكتمالها!*"
+    )
+    send_telegram(msg, chat_id=chat_id)
+
+# ========================================================
+# 5. تقرير الأداء الشامل عند إرسال كلمة (تقرير)
 # ========================================================
 def send_full_detailed_report(chat_id=None):
     hist = load_history()
@@ -162,7 +206,7 @@ def send_full_detailed_report(chat_id=None):
         f"⏳ *الصفقات النشطة بالمحفظة ({len(open_tr)}/{MAX_OPEN_TRADES}):* 🟡\n"
         f"{open_text}"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"💡 *أرسل كلمة (تقرير) في أي وقت لتحديث كشف الحساب فوراً!*"
+        f"💡 *أرسل كلمة (تقرير) أو (رادار) في أي وقت لتحديث كشف الحساب فوراً!*"
     )
     send_telegram(msg, chat_id=chat_id)
 
@@ -179,14 +223,17 @@ def check_telegram_commands():
                 text = msg_obj.get('text', '').strip().lower()
                 sender_chat_id = msg_obj.get('chat', {}).get('id')
                 
-                # يستجيب بذكاء لأي صيغة أو أمر
+                # تقرير كشف الحساب
                 if any(w in text for w in ['تقرير', 'report', 'صفقات', 'trades', 'ارباح', 'أرباح', 'رصيد', 'balance']):
                     send_full_detailed_report(chat_id=sender_chat_id)
+                # رادار نبض السوق
+                elif any(w in text for w in ['رادار', 'radar', 'السوق', 'market', 'وضع السوق']):
+                    send_hourly_market_radar(chat_id=sender_chat_id)
     except Exception as e:
         pass
 
 # ========================================================
-# 5. متابعة الصفقات مع حجز الأرباح ونقل الوقف وإظهار إجمالي الرصيد
+# 6. متابعة الصفقات مع حجز الأرباح ونقل الوقف وإظهار إجمالي الرصيد
 # ========================================================
 def track_open_trades():
     hist = load_history()
@@ -218,7 +265,6 @@ def track_open_trades():
                 except:
                     pass
 
-                # تعديل الصفقة: نقل الوقف لنقطة الدخول، وتقليص حجم العقد للنصف المتبقي
                 t['sl'] = entry
                 t['tp1_hit'] = True
                 t['amount'] = round(amount * 0.5, 2)
@@ -283,7 +329,6 @@ def track_open_trades():
                 except:
                     pass
 
-                # حالة أ: خروج على سعر الدخول بعد تحقيق الهدف الأول سابقاً (صفقة رابحة بصافي ربح النصف الأول)
                 if tp1_hit:
                     hist["winning_trades"].append({
                         "symbol": symbol, "entry": entry, "exit": sl,
@@ -304,8 +349,6 @@ def track_open_trades():
                     )
                     send_telegram(msg)
                     continue
-
-                # حالة ب: ضرب وقف الخسارة الأصلي قبل الهدف الأول
                 else:
                     loss = amount * ((sl - entry) / entry)
                     hist["losing_trades"].append({
@@ -338,28 +381,34 @@ def track_open_trades():
         save_history(hist)
 
 # ========================================================
-# 6. محرك SMC الفائق (Max 10 صفقات + RSI + 115% فوليوم)
+# 7. محرك SMC الفائق (Max 10 صفقات + إحصائيات الفحص)
 # ========================================================
 def scan_smc():
+    global last_scan_stats
     hist = load_history()
     open_trades = hist.get("open_trades", [])
     open_symbols = [t['symbol'] for t in open_trades]
 
-    # الشرط الصارم الأول: الحد الأقصى للصفقات المتزامنة (10 صفقات كحد أقصى)
-    if len(open_trades) >= MAX_OPEN_TRADES:
-        return
+    below_ema_c = 0
+    no_bos_c = 0
+    low_vol_c = 0
+    rsi_fail_c = 0
+    new_opened = 0
 
-    # أمان البيتكوين: منع الشراء إذا كان البيتكوين في هبوط حاد مستمر (أكثر من -4%)
+    # سقف الـ 10 صفقات
+    if len(open_trades) >= MAX_OPEN_TRADES:
+        return 0
+
+    # أمان البيتكوين
     try:
         btc_ticker = market_exchange.fetch_ticker('BTC/USDT')
         btc_change_24h = btc_ticker.get('percentage', 0.0) or 0.0
         if btc_change_24h < -4.0:
-            return
+            return 0
     except:
         pass
 
     for symbol in SYMBOLS:
-        # فحص السقف مجدداً قبل فتح أي صفقة جديدة
         if len(open_trades) >= MAX_OPEN_TRADES:
             break
 
@@ -370,15 +419,16 @@ def scan_smc():
             ohlcv = market_exchange.fetch_ohlcv(symbol, timeframe=TIMEFRAME, limit=70)
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
 
-            # 1. فلتر الاتجاه التوازني السريع (EMA 20)
+            # 1. فلتر الاتجاه التوازني (EMA 20)
             df['ema_20'] = df['close'].ewm(span=20, adjust=False).mean()
             curr_price = df['close'].iloc[-1]
             ema_20 = df['ema_20'].iloc[-1]
 
             if curr_price < ema_20:
+                below_ema_c += 1
                 continue
 
-            # 2. فلتر عزم المومنتوم RSI(14): تحكم المشترين وتجنب القمم المعلقة
+            # 2. فلتر عزم المومنتوم RSI(14)
             delta = df['close'].diff()
             gain = delta.clip(lower=0)
             loss = -delta.clip(upper=0)
@@ -388,8 +438,8 @@ def scan_smc():
             df['rsi'] = 100 - (100 / (1 + rs))
             rsi = df['rsi'].iloc[-1]
 
-            # الشرط الذهبي: RSI بين 50 و 68 فقط
             if rsi < 50.0 or rsi > 68.0:
+                rsi_fail_c += 1
                 continue
 
             # 3. فحص الكسر والفوليوم على الشمعة السابقة المكتملة 100% (df.iloc[-2])
@@ -397,14 +447,18 @@ def scan_smc():
             breakout_candle_vol = df['volume'].iloc[-2]
             vol_ma20 = df['volume'].rolling(window=20).mean().iloc[-2]
 
-            # قمة الشموع السابقة للاختراق (آخر 12 شمعة)
             prev_high = df['high'].iloc[-12:-2].max()
-
-            # كسر القمة (BOS) مع فوليوم مؤسساتي قوي (+115% من المتوسط)
             is_bos = breakout_candle_close > prev_high
             is_vol_confirmed = breakout_candle_vol >= (vol_ma20 * 1.15)
 
-            # 4. فحص فجوة الـ FVG الحقيقية
+            if not is_bos:
+                no_bos_c += 1
+                continue
+            if not is_vol_confirmed:
+                low_vol_c += 1
+                continue
+
+            # 4. فحص فجوة الـ FVG
             c1_high = df['high'].iloc[-3]
             c3_low = df['low'].iloc[-1]
             is_fvg = c3_low >= (c1_high * 0.999)
@@ -412,7 +466,7 @@ def scan_smc():
             if is_bos and is_vol_confirmed and is_fvg:
                 entry = curr_price
 
-                # 5. وقف الخسارة الفني: أسفل قاع الـ Order Block أو الـ FVG مباشرة
+                # 5. وقف الخسارة الفني
                 ob_low = df['low'].iloc[-3]
                 fvg_low = df['low'].iloc[-2]
                 technical_low = min(ob_low, fvg_low)
@@ -420,11 +474,9 @@ def scan_smc():
                 sl = technical_low * 0.998
                 sl_pct = ((entry - sl) / entry) * 100
 
-                # شرط وقف الخسارة الفني بين 1.5% إلى 3.2% فقط
                 if sl_pct < MIN_TECHNICAL_SL_PCT or sl_pct > MAX_TECHNICAL_SL_PCT:
                     continue
 
-                # الأهداف الفنية: عائد 1:1.6 (TP1) و 1:2.8 (TP2)
                 risk = entry - sl
                 tp1 = entry + (risk * 1.6)
                 tp2 = entry + (risk * 2.8)
@@ -445,7 +497,6 @@ def scan_smc():
                 except:
                     exec_note = "⚡ تم التتبع آلياً بأسعار باينانس"
 
-                # حفظ في السجل الدائم مع ميزة الـ Breakeven
                 new_trade = {
                     "symbol": symbol, "entry": entry, "sl": sl, "original_sl": sl,
                     "tp1": tp1, "tp2": tp2, "amount": trade_amount,
@@ -456,6 +507,7 @@ def scan_smc():
                 open_trades.append(new_trade)
                 open_symbols.append(symbol)
                 save_history(hist)
+                new_opened += 1
 
                 coin_base = symbol.split('/')[0]
                 binance_link = f"https://www.binance.com/en/trade/{coin_base}_USDT"
@@ -489,31 +541,51 @@ def scan_smc():
         except:
             pass
 
+    last_scan_stats = {
+        "below_ema": below_ema_c,
+        "no_bos": no_bos_c,
+        "low_vol": low_vol_c,
+        "rsi_fail": rsi_fail_c,
+        "total": len(SYMBOLS)
+    }
+    return new_opened
+
 # ========================================================
-# 7. نقطة الانطلاق الرئيسية
+# 8. نقطة الانطلاق الرئيسية
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تثبيت المحرك الفائق بنجاح (Max 10 صفقات + حجز الأرباح ونقل الوقف + RSI)!")
+    print("✅ تم تثبيت المحرك الفائق بنجاح (Max 10 صفقات + رادار نبض السوق الساعي)!")
     send_telegram(
-        f"🎯 *تم ترقية البوت إلى المحرك الفائق (SMC Elite Pro)!* 🟢\n\n"
+        f"🎯 *تم تفعيل البوت بالمحرك الفائق مع ميزة (رادار نبض السوق الساعي)!* 🟢\n\n"
         f"💼 رصيد باينانس: `${bal:,.2f}` USDT (دخول 10% لكل صفقة).\n"
-        f"1. سقف المحفظة الصارم: 10 صفقات فقط في نفس الوقت (10 × 10% = 100%).\n"
-        f"2. حجز الأرباح الذكي: عند الهدف الأول TP1 يتم إغلاق 50% ونقل الوقف لسعر الدخول (Breakeven).\n"
-        f"3. فلتر الزخم (RSI 50 - 68): دخول آمن مع المشترين وتجنب القمم المعلقة.\n"
-        f"4. فوليوم مؤسساتي حقيقي: +115% من متوسط 20 شمعة على الشمعة المكتملة 100%.\n"
-        f"5. وقف الخسارة الفني: أسفل قاع الـ Order Block والـ FVG مباشرة (1.5% إلى 3.2%).\n"
-        f"💬 أرسل كلمة (تقرير) في أي وقت لتحديث كشف الحساب لحظياً!"
+        f"1. سقف المحفظة الصارم: 10 صفقات فقط متزامنة.\n"
+        f"2. حجز الأرباح الذكي: حجز 50% ونقل الوقف للدخول عند TP1.\n"
+        f"3. رادار السوق الساعي: يرسل لك تقريراً آلياً كل ساعة بحالة السوق وسبب عدم الدخول إن لم تكن هناك صفقات!\n"
+        f"💬 أرسل كلمة (تقرير) لكشف الحساب أو (رادار) لنبض السوق في أي وقت!"
     )
 
     last_night_day = -1
+    last_hourly_radar_hour = -1
+    hourly_trades_count = 0
+
     while True:
         try:
             check_telegram_commands()
             track_open_trades()
-            scan_smc()
+            opened_now = scan_smc()
+            hourly_trades_count += opened_now
 
             now = datetime.now()
+
+            # إرسال رادار نبض السوق الساعي عند الدقيقة 2 من كل ساعة جديدة إذا لم تُفتح صفقات
+            if now.hour != last_hourly_radar_hour and now.minute >= 2:
+                if hourly_trades_count == 0:
+                    send_hourly_market_radar()
+                hourly_trades_count = 0
+                last_hourly_radar_hour = now.hour
+
+            # التقرير الليلي الشامل الساعة 23:00
             if now.hour == 23 and now.day != last_night_day:
                 send_full_detailed_report()
                 last_night_day = now.day
