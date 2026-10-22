@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1000.6525426082563,
-  "total_profit_usdt": 0.6525426082561658,
+  "current_balance": 1003.5372098679406,
+  "total_profit_usdt": 3.537209867940519,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -422,6 +422,13 @@
       "exit": 276.77,
       "profit": 2.2445122231455708,
       "time": "2026-10-22 07:32"
+    },
+    {
+      "symbol": "PROM/USDT",
+      "entry": 5.576,
+      "exit": 5.909020799999999,
+      "profit": 4.53287791104733,
+      "time": "2026-10-22 07:38"
     }
   ],
   "losing_trades": [
@@ -1695,17 +1702,6 @@
       "tp2": 0.07830432000000001,
       "amount": 95.35,
       "time": "2026-10-21 12:41"
-    },
-    {
-      "symbol": "PROM/USDT",
-      "entry": 5.576,
-      "sl": 5.576,
-      "tp1": 5.766297599999999,
-      "tp2": 5.909020799999999,
-      "amount": 48.3,
-      "time": "2026-10-21 15:04",
-      "tp1_hit": true,
-      "profit_locked": 1.6482106513629773
     }
   ]
 }
