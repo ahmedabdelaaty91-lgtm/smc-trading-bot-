@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1049.757931122383,
-  "total_profit_usdt": 49.757931122382864,
+  "current_balance": 1047.1777441657202,
+  "total_profit_usdt": 47.17774416571998,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1110,6 +1110,13 @@
       "exit": 3.109768e-06,
       "loss": -2.474850899968644,
       "time": "2026-10-22 04:36"
+    },
+    {
+      "symbol": "SEI/USDT",
+      "entry": 0.06161,
+      "exit": 0.059899959999999995,
+      "loss": -2.5801869566628834,
+      "time": "2026-10-22 04:39"
     }
   ],
   "open_trades": [
@@ -1568,15 +1575,6 @@
       "time": "2026-10-20 15:13",
       "tp1_hit": true,
       "profit_locked": 1.964868071778133
-    },
-    {
-      "symbol": "SEI/USDT",
-      "entry": 0.06161,
-      "sl": 0.059899959999999995,
-      "tp1": 0.06434606400000001,
-      "tp2": 0.06639811200000001,
-      "amount": 92.96,
-      "time": "2026-10-20 15:13"
     },
     {
       "symbol": "FLOW/USDT",
