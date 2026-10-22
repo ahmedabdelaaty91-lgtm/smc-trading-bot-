@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1011.7187566553084,
-  "total_profit_usdt": 11.71875665530827,
+  "current_balance": 1009.0880746040264,
+  "total_profit_usdt": 9.088074604026218,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1320,6 +1320,13 @@
       "exit": 0.0144211,
       "loss": -2.6848851178451247,
       "time": "2026-10-22 06:32"
+    },
+    {
+      "symbol": "MINA/USDT",
+      "entry": 0.0741,
+      "exit": 0.0720556,
+      "loss": -2.6306820512820535,
+      "time": "2026-10-22 06:32"
     }
   ],
   "open_trades": [
@@ -1693,15 +1700,6 @@
       "tp2": 0.044038,
       "amount": 95.35,
       "time": "2026-10-21 11:00"
-    },
-    {
-      "symbol": "MINA/USDT",
-      "entry": 0.0741,
-      "sl": 0.0720556,
-      "tp1": 0.07737104,
-      "tp2": 0.07982432,
-      "amount": 95.35,
-      "time": "2026-10-21 12:02"
     },
     {
       "symbol": "EDU/USDT",
