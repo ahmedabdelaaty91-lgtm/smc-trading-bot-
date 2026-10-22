@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 993.7030048318555,
-  "total_profit_usdt": -6.296995168144559,
+  "current_balance": 991.9434918295776,
+  "total_profit_usdt": -8.056508170422454,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1418,6 +1418,13 @@
       "exit": 0.02176638,
       "loss": -2.3829093518104707,
       "time": "2026-10-22 08:26"
+    },
+    {
+      "symbol": "CAKE/USDT",
+      "entry": 2.195,
+      "exit": 2.151688,
+      "loss": -1.759513002277896,
+      "time": "2026-10-22 08:36"
     }
   ],
   "open_trades": [
@@ -1518,15 +1525,6 @@
       "tp2": 0.0922106,
       "amount": 88.31,
       "time": "2026-10-20 14:00"
-    },
-    {
-      "symbol": "CAKE/USDT",
-      "entry": 2.195,
-      "sl": 2.151688,
-      "tp1": 2.2642991999999995,
-      "tp2": 2.3162735999999993,
-      "amount": 89.17,
-      "time": "2026-10-20 14:02"
     },
     {
       "symbol": "BNB/USDT",
