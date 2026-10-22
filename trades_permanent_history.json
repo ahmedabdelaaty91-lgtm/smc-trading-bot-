@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1018.9259402220553,
-  "total_profit_usdt": 18.92594022205503,
+  "current_balance": 1017.350747905671,
+  "total_profit_usdt": 17.35074790567085,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1299,6 +1299,13 @@
       "exit": 0.004989002,
       "loss": -1.803216850176957,
       "time": "2026-10-22 05:55"
+    },
+    {
+      "symbol": "QTUM/USDT",
+      "entry": 0.885,
+      "exit": 0.870256,
+      "loss": -1.5751923163841786,
+      "time": "2026-10-22 06:25"
     }
   ],
   "open_trades": [
@@ -1681,15 +1688,6 @@
       "tp2": 0.008718124800000001,
       "amount": 93.69,
       "time": "2026-10-20 19:55"
-    },
-    {
-      "symbol": "QTUM/USDT",
-      "entry": 0.885,
-      "sl": 0.870256,
-      "tp1": 0.9085904,
-      "tp2": 0.9262832,
-      "amount": 94.55,
-      "time": "2026-10-21 08:07"
     },
     {
       "symbol": "KMNO/USDT",
