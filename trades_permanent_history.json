@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1055.1543686119471,
-  "total_profit_usdt": 55.15436861194688,
+  "current_balance": 1049.757931122383,
+  "total_profit_usdt": 49.757931122382864,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1096,6 +1096,20 @@
       "exit": 0.015498940000000001,
       "loss": -3.1121390988735924,
       "time": "2026-10-22 04:12"
+    },
+    {
+      "symbol": "ARB/USDT",
+      "entry": 0.1903,
+      "exit": 0.1845302,
+      "loss": -2.9215865895953717,
+      "time": "2026-10-22 04:36"
+    },
+    {
+      "symbol": "BONK/USDT",
+      "entry": 3.189e-06,
+      "exit": 3.109768e-06,
+      "loss": -2.474850899968644,
+      "time": "2026-10-22 04:36"
     }
   ],
   "open_trades": [
@@ -1195,15 +1209,6 @@
       "time": "2026-10-19 00:42",
       "tp1_hit": true,
       "profit_locked": 1.2624828574972187
-    },
-    {
-      "symbol": "ARB/USDT",
-      "entry": 0.1903,
-      "sl": 0.1845302,
-      "tp1": 0.19953168,
-      "tp2": 0.20645543999999996,
-      "amount": 96.36,
-      "time": "2026-10-19 02:01"
     },
     {
       "symbol": "VANA/USDT",
@@ -1796,15 +1801,6 @@
       "time": "2026-10-21 15:04",
       "tp1_hit": true,
       "profit_locked": 1.6482106513629773
-    },
-    {
-      "symbol": "BONK/USDT",
-      "entry": 3.189e-06,
-      "sl": 3.109768e-06,
-      "tp1": 3.3157712e-06,
-      "tp2": 3.4108496e-06,
-      "amount": 99.61,
-      "time": "2026-10-21 15:34"
     },
     {
       "symbol": "SENT/USDT",
