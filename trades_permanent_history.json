@@ -4,5 +4,30 @@
   "total_profit_usdt": 0.0,
   "winning_trades": [],
   "losing_trades": [],
-  "open_trades": []
+  "open_trades": [
+    {
+      "symbol": "DASH/USDT",
+      "entry": 52.32,
+      "sl": 50.6485,
+      "original_sl": 50.6485,
+      "tp1": 54.994400000000006,
+      "tp2": 57.00020000000001,
+      "amount": 100.0,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-22 22:12"
+    },
+    {
+      "symbol": "DASH/USDT",
+      "entry": 52.32,
+      "sl": 50.6485,
+      "original_sl": 50.6485,
+      "tp1": 54.994400000000006,
+      "tp2": 57.00020000000001,
+      "amount": 100.0,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-22 22:12"
+    }
+  ]
 }
