@@ -10,7 +10,7 @@ from datetime import datetime
 # ========================================================
 # 1. إعدادات التليجرام وبيانات Binance Testnet
 # ========================================================
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN1")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN") or os.getenv("TELEGRAM_BOT_TOKEN1")
 TELEGRAM_CHAT_ID = "7760401819"
 
 BINANCE_API_KEY = "eEQI3GrUGBdGzHmjSTxg7us7uPM2ZZ69mQddzj3rw6zDL4TbSwEVAHWgp5BU1cAO"
@@ -88,18 +88,23 @@ def save_history(data):
         pass
 
 # ========================================================
-# 3. دوال التليجرام
+# 3. دوال التليجرام فائقة الموثوقية
 # ========================================================
-def send_telegram(message):
+def send_telegram(message, chat_id=None):
+    cid = chat_id or TELEGRAM_CHAT_ID
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
+        "chat_id": cid,
         "text": message,
         "parse_mode": "Markdown",
-        "disable_web_page_preview": False
+        "disable_web_page_preview": True
     }
     try:
-        requests.post(url, json=payload, timeout=10)
+        r = requests.post(url, json=payload, timeout=10)
+        # إذا رفض تليجرام الرسالة بسبب رمز خاص في الماركداون، أرسلها كنص عادي فوراً لضمان وصولها دائماً
+        if r.status_code != 200:
+            payload.pop("parse_mode", None)
+            requests.post(url, json=payload, timeout=10)
     except Exception as e:
         print(f"Telegram error: {e}")
 
@@ -126,9 +131,9 @@ def get_binance_balance():
 # ========================================================
 # 4. تقرير الأداء الشامل عند إرسال كلمة (تقرير)
 # ========================================================
-def send_full_detailed_report():
+def send_full_detailed_report(chat_id=None):
     hist = load_history()
-    bal = get_binance_balance()
+    bal = hist.get("current_balance", 1000.0)
     wins = hist.get("winning_trades", [])
     losses = hist.get("losing_trades", [])
     open_tr = hist.get("open_trades", [])
@@ -144,8 +149,8 @@ def send_full_detailed_report():
     msg = (
         f"📊 *السجل الدائم لأداء صفقات SMC Pro* 📊\n"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"💼 *رصيد محفظة باينانس:* `${bal:,.2f}` USDT\n"
-        f"💰 *صافي الأرباح الكلية:* `{net_pnl:+.2f}$`\n"
+        f"💼 *إجمالي رصيد المحفظة الحالي:* `${bal:,.2f}` USDT 💵\n"
+        f"💰 *صافي الأرباح الكلية المحققة:* `{net_pnl:+.2f}$` USDT 🟢\n"
         f"🎯 *نسبة الفوز الحقيقية:* `{win_rate:.1f}%`\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"✅ *الصفقات الرابحة ({len(wins)}):* 🟢\n"
@@ -154,12 +159,12 @@ def send_full_detailed_report():
         f"❌ *الصفقات التي ضربت الوقف ({len(losses)}):* 🔴\n"
         f"{losses_text}"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"⏳ *الصفقات النشطة حالياً ({len(open_tr)}/{MAX_OPEN_TRADES}):* 🟡\n"
+        f"⏳ *الصفقات النشطة بالمحفظة ({len(open_tr)}/{MAX_OPEN_TRADES}):* 🟡\n"
         f"{open_text}"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"💡 *أرسل كلمة (تقرير) في أي وقت لاستلام هذا التقرير فوراً!*"
+        f"💡 *أرسل كلمة (تقرير) في أي وقت لتحديث كشف الحساب فوراً!*"
     )
-    send_telegram(msg)
+    send_telegram(msg, chat_id=chat_id)
 
 last_telegram_update_id = 0
 def check_telegram_commands():
@@ -170,14 +175,18 @@ def check_telegram_commands():
         if res.get('ok') and res.get('result'):
             for item in res['result']:
                 last_telegram_update_id = item['update_id']
-                text = item.get('message', {}).get('text', '').strip()
-                if text in ['تقرير', '/report', 'صفقات', '/trades', 'الارباح']:
-                    send_full_detailed_report()
-    except:
+                msg_obj = item.get('message') or item.get('edited_message') or {}
+                text = msg_obj.get('text', '').strip().lower()
+                sender_chat_id = msg_obj.get('chat', {}).get('id')
+                
+                # يستجيب بذكاء لأي صيغة أو أمر
+                if any(w in text for w in ['تقرير', 'report', 'صفقات', 'trades', 'ارباح', 'أرباح', 'رصيد', 'balance']):
+                    send_full_detailed_report(chat_id=sender_chat_id)
+    except Exception as e:
         pass
 
 # ========================================================
-# 5. متابعة الصفقات مع حجز الأرباح ونقل الوقف للدخول (Breakeven)
+# 5. متابعة الصفقات مع حجز الأرباح ونقل الوقف وإظهار إجمالي الرصيد
 # ========================================================
 def track_open_trades():
     hist = load_history()
@@ -226,6 +235,9 @@ def track_open_trades():
                     f"📥 *الدخول:* `${entry:.4f}` ⬅️ *سعر الهدف الأول:* `${tp1:.4f}`\n"
                     f"💵 *تم حجز ربح (50%):* `+${profit_50:.2f}` USDT 🟢\n"
                     f"🛡️ *تم نقل وقف الخسارة إلى سعر الدخول (Breakeven):* `${entry:.4f}`\n"
+                    f"💼 *إجمالي رصيد المحفظة المحدث:* `${hist['current_balance']:,.2f}` USDT 💵\n"
+                    f"💰 *صافي أرباح المحفظة الكلية:* `${hist['total_profit_usdt']:+.2f}` USDT\n"
+                    f"━━━━━━━━━━━━━━━━━━\n"
                     f"🚀 *الصفقة الآن خالية من أي مخاطرة تماماً وننتظر الهدف الثاني TP2!*"
                 )
                 send_telegram(msg)
@@ -256,7 +268,8 @@ def track_open_trades():
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"📥 *سعر الدخول:* `${entry:.4f}` ⬅️ *سعر الخروج الأقصى:* `${tp2:.4f}`\n"
                     f"💵 *صافي الربح الكلي للصفقة:* `+${total_win:.2f}` USDT 🟢\n"
-                    f"💼 *رصيد باينانس المحدث:* `${hist['current_balance']:,.2f}` USDT\n"
+                    f"💼 *إجمالي رصيد المحفظة المحدث:* `${hist['current_balance']:,.2f}` USDT 💵\n"
+                    f"💰 *صافي أرباح المحفظة الكلية:* `${hist['total_profit_usdt']:+.2f}` USDT\n"
                     f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
@@ -284,7 +297,10 @@ def track_open_trades():
                         f"━━━━━━━━━━━━━━━━━━\n"
                         f"🪙 *العملة:* `#{symbol}`\n"
                         f"💡 النصف المتبقي خرج على سعر الدخول `${entry:.4f}` بدون أي خسارة.\n"
-                        f"💰 *الصفقة انتهت بربح صافي من الهدف الأول:* `+${t.get('profit_locked', 0.0):.2f}` USDT 🟢"
+                        f"💰 *الصفقة انتهت بربح صافي من الهدف الأول:* `+${t.get('profit_locked', 0.0):.2f}` USDT 🟢\n"
+                        f"💼 *إجمالي رصيد المحفظة المحدث:* `${hist['current_balance']:,.2f}` USDT 💵\n"
+                        f"💰 *صافي أرباح المحفظة الكلية:* `${hist['total_profit_usdt']:+.2f}` USDT\n"
+                        f"━━━━━━━━━━━━━━━━━━"
                     )
                     send_telegram(msg)
                     continue
@@ -306,7 +322,8 @@ def track_open_trades():
                         f"🪙 *العملة:* `#{symbol}`\n"
                         f"📥 *سعر الدخول:* `${entry:.4f}` ⬅️ *سعر الخروج:* `${sl:.4f}`\n"
                         f"📉 *الخسارة المحسوبة:* `${loss:.2f}` USDT 🔴\n"
-                        f"💼 *رصيد باينانس المحدث:* `${hist['current_balance']:,.2f}` USDT\n"
+                        f"💼 *إجمالي رصيد المحفظة المحدث:* `${hist['current_balance']:,.2f}` USDT 💵\n"
+                        f"💰 *صافي أرباح المحفظة الكلية:* `${hist['total_profit_usdt']:+.2f}` USDT\n"
                         f"━━━━━━━━━━━━━━━━━━"
                     )
                     send_telegram(msg)
