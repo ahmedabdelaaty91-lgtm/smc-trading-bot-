@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1047.1777441657202,
-  "total_profit_usdt": 47.17774416571998,
+  "current_balance": 1045.4417441657201,
+  "total_profit_usdt": 45.44174416571998,
   "winning_trades": [
     {
       "symbol": "SKL/USDT",
@@ -1117,6 +1117,13 @@
       "exit": 0.059899959999999995,
       "loss": -2.5801869566628834,
       "time": "2026-10-22 04:39"
+    },
+    {
+      "symbol": "XEC/USDT",
+      "entry": 6.71e-06,
+      "exit": 6.5868e-06,
+      "loss": -1.7359999999999989,
+      "time": "2026-10-22 04:45"
     }
   ],
   "open_trades": [
@@ -1732,15 +1739,6 @@
       "tp2": 0.0053575944,
       "amount": 94.55,
       "time": "2026-10-21 07:23"
-    },
-    {
-      "symbol": "XEC/USDT",
-      "entry": 6.71e-06,
-      "sl": 6.5868e-06,
-      "tp1": 6.90712e-06,
-      "tp2": 7.05496e-06,
-      "amount": 94.55,
-      "time": "2026-10-21 08:01"
     },
     {
       "symbol": "QTUM/USDT",
