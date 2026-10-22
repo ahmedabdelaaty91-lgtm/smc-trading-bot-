@@ -3,10 +3,8 @@ name: SMC Trading Bot 24-7
 on:
   workflow_dispatch:
   schedule:
-    # يعاد تنشيطه كل 6 ساعات بانتظام بدون أي تكرار
     - cron: '0 */6 * * *'
 
-# يمنع تكرار السيرفرات: يلغي أي سيرفر قديم فوراً ويبقي سيرفراً واحداً فقط نشطاً
 concurrency:
   group: smc-trading-bot
   cancel-in-progress: true
@@ -32,6 +30,7 @@ jobs:
 
       - name: تشغيل البوت
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN1 }}
+          TELEGRAM_BOT_TOKEN1: ${{ secrets.TELEGRAM_BOT_TOKEN1 }}
         run: |
           python -u smc_tracker_bot.py
