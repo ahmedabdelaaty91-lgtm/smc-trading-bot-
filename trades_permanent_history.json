@@ -143,6 +143,30 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 11:03"
+    },
+    {
+      "symbol": "BANANA/USDT",
+      "entry": 3.53,
+      "sl": 3.4431000000000003,
+      "original_sl": 3.4431000000000003,
+      "tp1": 3.669039999999999,
+      "tp2": 3.7733199999999987,
+      "amount": 102.2,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 12:14"
+    },
+    {
+      "symbol": "BANANA/USDT",
+      "entry": 3.53,
+      "sl": 3.4431000000000003,
+      "original_sl": 3.4431000000000003,
+      "tp1": 3.669039999999999,
+      "tp2": 3.7733199999999987,
+      "amount": 102.2,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 12:14"
     }
   ]
 }
