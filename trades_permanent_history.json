@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1010.9821203165098,
-  "total_profit_usdt": 10.982120316509821,
+  "current_balance": 1005.0803466975934,
+  "total_profit_usdt": 5.080346697593403,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -25,7 +25,22 @@
       "time": "2026-10-23 11:35"
     }
   ],
-  "losing_trades": [],
+  "losing_trades": [
+    {
+      "symbol": "ZEC/USDT",
+      "entry": 1252.841,
+      "exit": 1218.699716,
+      "loss": -2.7550852920681725,
+      "time": "2026-10-23 14:17"
+    },
+    {
+      "symbol": "ENA/USDT",
+      "entry": 0.2056,
+      "exit": 0.1992008,
+      "loss": -3.1466883268482455,
+      "time": "2026-10-23 14:17"
+    }
+  ],
   "open_trades": [
     {
       "symbol": "SENT/USDT",
@@ -88,36 +103,12 @@
       "time": "2026-10-23 12:14"
     },
     {
-      "symbol": "ZEC/USDT",
-      "entry": 1252.841,
-      "sl": 1218.699716,
-      "original_sl": 1218.699716,
-      "tp1": 1307.4670543999996,
-      "tp2": 1348.4365951999994,
-      "amount": 101.1,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 14:01"
-    },
-    {
       "symbol": "COMP/USDT",
       "entry": 24.69,
       "sl": 24.281339999999997,
       "original_sl": 24.281339999999997,
       "tp1": 25.34385600000001,
       "tp2": 25.834248000000013,
-      "amount": 101.1,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 14:04"
-    },
-    {
-      "symbol": "ENA/USDT",
-      "entry": 0.2056,
-      "sl": 0.1992008,
-      "original_sl": 0.1992008,
-      "tp1": 0.21583871999999998,
-      "tp2": 0.22351775999999998,
       "amount": 101.1,
       "tp1_hit": false,
       "profit_locked": 0.0,
