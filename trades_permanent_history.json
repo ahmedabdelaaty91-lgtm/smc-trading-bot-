@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1021.9642406330197,
-  "total_profit_usdt": 21.96424063301964,
+  "current_balance": 1010.9821203165098,
+  "total_profit_usdt": 10.982120316509821,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -11,32 +11,11 @@
       "time": "2026-10-23 03:24"
     },
     {
-      "symbol": "ONE/USDT",
-      "entry": 0.001444,
-      "exit": 0.0015079744,
-      "profit": 3.4989718337950104,
-      "time": "2026-10-23 03:24"
-    },
-    {
       "symbol": "DASH/USDT",
       "entry": 52.32,
       "exit": 52.32,
       "profit": 2.5558103975535222,
       "time": "2026-10-23 11:01"
-    },
-    {
-      "symbol": "DASH/USDT",
-      "entry": 52.32,
-      "exit": 52.32,
-      "profit": 2.5558103975535222,
-      "time": "2026-10-23 11:01"
-    },
-    {
-      "symbol": "BONK/USDT",
-      "entry": 3.1e-06,
-      "exit": 3.2934072e-06,
-      "profit": 4.9273380851612885,
-      "time": "2026-10-23 11:35"
     },
     {
       "symbol": "BONK/USDT",
@@ -61,18 +40,6 @@
       "time": "2026-10-23 01:10"
     },
     {
-      "symbol": "SENT/USDT",
-      "entry": 0.02219,
-      "sl": 0.02149692,
-      "original_sl": 0.02149692,
-      "tp1": 0.023298928000000003,
-      "tp2": 0.024130624000000007,
-      "amount": 100.0,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 01:10"
-    },
-    {
       "symbol": "CELO/USDT",
       "entry": 0.0825,
       "sl": 0.0806384,
@@ -83,30 +50,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 01:47"
-    },
-    {
-      "symbol": "CELO/USDT",
-      "entry": 0.0825,
-      "sl": 0.0806384,
-      "original_sl": 0.0806384,
-      "tp1": 0.08547856000000001,
-      "tp2": 0.08771248000000002,
-      "amount": 100.51,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 01:47"
-    },
-    {
-      "symbol": "BCH/USDT",
-      "entry": 283.56,
-      "sl": 275.60768,
-      "original_sl": 275.60768,
-      "tp1": 296.283712,
-      "tp2": 305.82649599999996,
-      "amount": 101.21,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 03:24"
     },
     {
       "symbol": "BCH/USDT",
@@ -133,18 +76,6 @@
       "time": "2026-10-23 11:03"
     },
     {
-      "symbol": "KMNO/USDT",
-      "entry": 0.039523,
-      "sl": 0.038616612,
-      "original_sl": 0.038616612,
-      "tp1": 0.0409732208,
-      "tp2": 0.042060886400000004,
-      "amount": 101.57,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 11:03"
-    },
-    {
       "symbol": "BANANA/USDT",
       "entry": 3.53,
       "sl": 3.4431000000000003,
@@ -157,16 +88,16 @@
       "time": "2026-10-23 12:14"
     },
     {
-      "symbol": "BANANA/USDT",
-      "entry": 3.53,
-      "sl": 3.4431000000000003,
-      "original_sl": 3.4431000000000003,
-      "tp1": 3.669039999999999,
-      "tp2": 3.7733199999999987,
-      "amount": 102.2,
+      "symbol": "ZEC/USDT",
+      "entry": 1252.841,
+      "sl": 1218.699716,
+      "original_sl": 1218.699716,
+      "tp1": 1307.4670543999996,
+      "tp2": 1348.4365951999994,
+      "amount": 101.1,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-23 12:14"
+      "time": "2026-10-23 14:01"
     }
   ]
 }
