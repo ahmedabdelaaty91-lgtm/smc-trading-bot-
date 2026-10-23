@@ -76,6 +76,30 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 01:47"
+    },
+    {
+      "symbol": "ONE/USDT",
+      "entry": 0.001444,
+      "sl": 0.001421152,
+      "original_sl": 0.001421152,
+      "tp1": 0.0014805568,
+      "tp2": 0.0015079744,
+      "amount": 100.51,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 02:01"
+    },
+    {
+      "symbol": "ONE/USDT",
+      "entry": 0.001444,
+      "sl": 0.001421152,
+      "original_sl": 0.001421152,
+      "tp1": 0.0014805568,
+      "tp2": 0.0015079744,
+      "amount": 100.51,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 02:01"
     }
   ]
 }
