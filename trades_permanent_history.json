@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1016.6872038534667,
-  "total_profit_usdt": 16.687203853466684,
+  "current_balance": 1018.4008096168619,
+  "total_profit_usdt": 18.400809616861913,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -44,6 +44,13 @@
       "exit": 0.004713,
       "profit": 1.2845830579248914,
       "time": "2026-10-23 19:08"
+    },
+    {
+      "symbol": "AVNT/USDT",
+      "entry": 0.1131,
+      "exit": 0.1131,
+      "profit": 1.7136057633952275,
+      "time": "2026-10-23 20:17"
     }
   ],
   "losing_trades": [
@@ -153,18 +160,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 16:06"
-    },
-    {
-      "symbol": "AVNT/USDT",
-      "entry": 0.1131,
-      "sl": 0.1131,
-      "original_sl": 0.11071812,
-      "tp1": 0.11691100800000001,
-      "tp2": 0.11976926400000001,
-      "amount": 50.85,
-      "tp1_hit": true,
-      "profit_locked": 1.7136057633952275,
-      "time": "2026-10-23 18:56"
     }
   ]
 }
