@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1012.1095644626971,
-  "total_profit_usdt": 12.109564462697065,
+  "current_balance": 1015.6928561994714,
+  "total_profit_usdt": 15.692856199471255,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -95,25 +95,25 @@
     {
       "symbol": "BONK/USDT",
       "entry": 3.1e-06,
-      "sl": 3.030926e-06,
+      "sl": 3.1e-06,
       "original_sl": 3.030926e-06,
       "tp1": 3.2105184e-06,
       "tp2": 3.2934072e-06,
-      "amount": 100.51,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.26,
+      "tp1_hit": true,
+      "profit_locked": 1.7916458683870948,
       "time": "2026-10-23 02:02"
     },
     {
       "symbol": "BONK/USDT",
       "entry": 3.1e-06,
-      "sl": 3.030926e-06,
+      "sl": 3.1e-06,
       "original_sl": 3.030926e-06,
       "tp1": 3.2105184e-06,
       "tp2": 3.2934072e-06,
-      "amount": 100.51,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.26,
+      "tp1_hit": true,
+      "profit_locked": 1.7916458683870948,
       "time": "2026-10-23 02:02"
     },
     {
