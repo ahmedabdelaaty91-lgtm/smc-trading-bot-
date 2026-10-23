@@ -76,13 +76,13 @@
     {
       "symbol": "KMNO/USDT",
       "entry": 0.039523,
-      "sl": 0.038616612,
+      "sl": 0.039523,
       "original_sl": 0.038616612,
       "tp1": 0.0409732208,
       "tp2": 0.042060886400000004,
-      "amount": 101.57,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.78,
+      "tp1_hit": true,
+      "profit_locked": 1.8634583237102431,
       "time": "2026-10-23 11:03"
     },
     {
