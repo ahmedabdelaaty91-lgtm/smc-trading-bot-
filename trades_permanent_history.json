@@ -1,32 +1,32 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1000.0,
-  "total_profit_usdt": 0.0,
+  "current_balance": 1005.111620795107,
+  "total_profit_usdt": 5.1116207951070445,
   "winning_trades": [],
   "losing_trades": [],
   "open_trades": [
     {
       "symbol": "DASH/USDT",
       "entry": 52.32,
-      "sl": 50.6485,
+      "sl": 52.32,
       "original_sl": 50.6485,
       "tp1": 54.994400000000006,
       "tp2": 57.00020000000001,
-      "amount": 100.0,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.0,
+      "tp1_hit": true,
+      "profit_locked": 2.5558103975535222,
       "time": "2026-10-22 22:12"
     },
     {
       "symbol": "DASH/USDT",
       "entry": 52.32,
-      "sl": 50.6485,
+      "sl": 52.32,
       "original_sl": 50.6485,
       "tp1": 54.994400000000006,
       "tp2": 57.00020000000001,
-      "amount": 100.0,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.0,
+      "tp1_hit": true,
+      "profit_locked": 2.5558103975535222,
       "time": "2026-10-22 22:12"
     },
     {
