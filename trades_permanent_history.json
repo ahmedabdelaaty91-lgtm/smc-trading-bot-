@@ -100,6 +100,30 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 02:01"
+    },
+    {
+      "symbol": "BONK/USDT",
+      "entry": 3.1e-06,
+      "sl": 3.030926e-06,
+      "original_sl": 3.030926e-06,
+      "tp1": 3.2105184e-06,
+      "tp2": 3.2934072e-06,
+      "amount": 100.51,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 02:02"
+    },
+    {
+      "symbol": "BONK/USDT",
+      "entry": 3.1e-06,
+      "sl": 3.030926e-06,
+      "original_sl": 3.030926e-06,
+      "tp1": 3.2105184e-06,
+      "tp2": 3.2934072e-06,
+      "amount": 100.51,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 02:02"
     }
   ]
 }
