@@ -117,13 +117,13 @@
     {
       "symbol": "JASMY/USDT",
       "entry": 0.004713,
-      "sl": 0.004637706,
+      "sl": 0.004713,
       "original_sl": 0.004637706,
       "tp1": 0.0048334704000000004,
       "tp2": 0.0049238232,
-      "amount": 100.51,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.26,
+      "tp1_hit": true,
+      "profit_locked": 1.2845830579248914,
       "time": "2026-10-23 14:17"
     }
   ]
