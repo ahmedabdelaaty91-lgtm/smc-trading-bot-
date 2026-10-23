@@ -115,6 +115,30 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 02:02"
+    },
+    {
+      "symbol": "BCH/USDT",
+      "entry": 283.56,
+      "sl": 275.60768,
+      "original_sl": 275.60768,
+      "tp1": 296.283712,
+      "tp2": 305.82649599999996,
+      "amount": 101.21,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 03:24"
+    },
+    {
+      "symbol": "BCH/USDT",
+      "entry": 283.56,
+      "sl": 275.60768,
+      "original_sl": 275.60768,
+      "tp1": 296.283712,
+      "tp2": 305.82649599999996,
+      "amount": 101.21,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 03:24"
     }
   ]
 }
