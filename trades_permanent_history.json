@@ -110,6 +110,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 14:04"
+    },
+    {
+      "symbol": "ENA/USDT",
+      "entry": 0.2056,
+      "sl": 0.1992008,
+      "original_sl": 0.1992008,
+      "tp1": 0.21583871999999998,
+      "tp2": 0.22351775999999998,
+      "amount": 101.1,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 14:04"
     }
   ]
 }
