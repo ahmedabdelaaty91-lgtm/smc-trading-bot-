@@ -163,6 +163,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 16:06"
+    },
+    {
+      "symbol": "AVNT/USDT",
+      "entry": 0.1131,
+      "sl": 0.11071812,
+      "original_sl": 0.11071812,
+      "tp1": 0.11691100800000001,
+      "tp2": 0.11976926400000001,
+      "amount": 101.71,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 18:56"
     }
   ]
 }
