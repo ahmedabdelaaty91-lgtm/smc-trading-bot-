@@ -57,13 +57,55 @@ binance_testnet.set_sandbox_mode(True)
 market_exchange = ccxt.kucoin({'enableRateLimit': True})
 
 # ========================================================
-# 2. إدارة السجل الدائم للصفقات
+# 2. إدارة السجل الدائم للصفقات مع نظام الحماية من التكرار
 # ========================================================
+def deduplicate_ledger(data):
+    if not isinstance(data, dict):
+        return data
+
+    # 1. تنقية الصفقات المفتوحة من أي تكرار
+    seen_open = set()
+    clean_open = []
+    for t in data.get("open_trades", []):
+        sym = t.get("symbol")
+        if sym and sym not in seen_open:
+            seen_open.add(sym)
+            clean_open.append(t)
+    data["open_trades"] = clean_open
+
+    # 2. تنقية الصفقات الرابحة من أي تكرار
+    seen_wins = set()
+    clean_wins = []
+    for w in data.get("winning_trades", []):
+        key = (w.get("symbol"), w.get("entry"), w.get("time"))
+        if key not in seen_wins:
+            seen_wins.add(key)
+            clean_wins.append(w)
+    data["winning_trades"] = clean_wins
+
+    # 3. تنقية الصفقات الخاسرة من أي تكرار
+    seen_losses = set()
+    clean_losses = []
+    for l in data.get("losing_trades", []):
+        key = (l.get("symbol"), l.get("entry"), l.get("time"))
+        if key not in seen_losses:
+            seen_losses.add(key)
+            clean_losses.append(l)
+    data["losing_trades"] = clean_losses
+
+    # 4. إعادة احتساب الأرباح والرصيد بدقة رياضية متناهية
+    total_profit = sum(w.get("profit", 0.0) for w in clean_wins) + sum(l.get("loss", 0.0) for l in clean_losses)
+    data["total_profit_usdt"] = total_profit
+    data["current_balance"] = data.get("starting_balance", 1000.0) + total_profit
+
+    return data
+
 def load_history():
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                data = json.load(f)
+                return deduplicate_ledger(data)
         except:
             pass
     return {
@@ -76,6 +118,7 @@ def load_history():
     }
 
 def save_history(data):
+    data = deduplicate_ledger(data)
     with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     try:
@@ -86,7 +129,6 @@ def save_history(data):
         subprocess.run(['git', 'push'], check=False)
     except:
         pass
-
 # ========================================================
 # 3. دوال التليجرام فائقة الموثوقية
 # ========================================================
@@ -503,10 +545,9 @@ def scan_smc():
                     "tp1_hit": False, "profit_locked": 0.0,
                     "time": datetime.now().strftime('%Y-%m-%d %H:%M')
                 }
-                hist["open_trades"].append(new_trade)
-                open_trades.append(new_trade)
-                open_symbols.append(symbol)
-                save_history(hist)
+               hist["open_trades"].append(new_trade)
+open_symbols.append(symbol)
+save_history(hist)
                 new_opened += 1
 
                 coin_base = symbol.split('/')[0]
