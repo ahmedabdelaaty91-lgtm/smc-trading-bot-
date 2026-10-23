@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1018.4008096168619,
-  "total_profit_usdt": 18.400809616861913,
+  "current_balance": 1015.4013538259627,
+  "total_profit_usdt": 15.401353825962678,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -74,6 +74,13 @@
       "exit": 24.281339999999997,
       "loss": -1.6733708383961308,
       "time": "2026-10-23 20:00"
+    },
+    {
+      "symbol": "CRV/USDT",
+      "entry": 0.3692,
+      "exit": 0.3581822,
+      "loss": -2.999455790899233,
+      "time": "2026-10-23 21:29"
     }
   ],
   "open_trades": [
@@ -124,18 +131,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 15:01"
-    },
-    {
-      "symbol": "CRV/USDT",
-      "entry": 0.3692,
-      "sl": 0.3581822,
-      "original_sl": 0.3581822,
-      "tp1": 0.3868284799999999,
-      "tp2": 0.4000498399999999,
-      "amount": 100.51,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 15:03"
     },
     {
       "symbol": "NOT/USDT",
