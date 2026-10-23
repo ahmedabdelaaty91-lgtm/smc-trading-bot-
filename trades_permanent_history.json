@@ -156,6 +156,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 15:14"
+    },
+    {
+      "symbol": "XAI/USDT",
+      "entry": 0.00835,
+      "sl": 0.00810376,
+      "original_sl": 0.00810376,
+      "tp1": 0.008743984,
+      "tp2": 0.009039472,
+      "amount": 101.2,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 16:06"
     }
   ]
 }
