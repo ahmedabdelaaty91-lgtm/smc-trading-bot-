@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1008.4258317824185,
-  "total_profit_usdt": 8.425831782418573,
+  "current_balance": 1005.9099167682543,
+  "total_profit_usdt": 5.909916768254281,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -102,6 +102,13 @@
       "exit": 0.0003886212,
       "loss": -1.7231593019726956,
       "time": "2026-10-23 22:32"
+    },
+    {
+      "symbol": "BANANA/USDT",
+      "entry": 3.53,
+      "exit": 3.4431000000000003,
+      "loss": -2.5159150141642925,
+      "time": "2026-10-23 22:51"
     }
   ],
   "open_trades": [
@@ -116,18 +123,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 03:24"
-    },
-    {
-      "symbol": "BANANA/USDT",
-      "entry": 3.53,
-      "sl": 3.4431000000000003,
-      "original_sl": 3.4431000000000003,
-      "tp1": 3.669039999999999,
-      "tp2": 3.7733199999999987,
-      "amount": 102.2,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 12:14"
     },
     {
       "symbol": "OGN/USDT",
