@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1015.4013538259627,
-  "total_profit_usdt": 15.401353825962678,
+  "current_balance": 1010.1489910843912,
+  "total_profit_usdt": 10.14899108439127,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -81,21 +81,23 @@
       "exit": 0.3581822,
       "loss": -2.999455790899233,
       "time": "2026-10-23 21:29"
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "CELO/USDT",
       "entry": 0.0825,
-      "sl": 0.0806384,
-      "original_sl": 0.0806384,
-      "tp1": 0.08547856000000001,
-      "tp2": 0.08771248000000002,
-      "amount": 100.51,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 01:47"
+      "exit": 0.0806384,
+      "loss": -2.267992921212127,
+      "time": "2026-10-23 22:31"
     },
+    {
+      "symbol": "XAI/USDT",
+      "entry": 0.00835,
+      "exit": 0.00810376,
+      "loss": -2.9843698203592814,
+      "time": "2026-10-23 22:31"
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "BCH/USDT",
       "entry": 283.56,
@@ -143,18 +145,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 15:14"
-    },
-    {
-      "symbol": "XAI/USDT",
-      "entry": 0.00835,
-      "sl": 0.00810376,
-      "original_sl": 0.00810376,
-      "tp1": 0.008743984,
-      "tp2": 0.009039472,
-      "amount": 101.2,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 16:06"
     }
   ]
 }
