@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1005.0803466975934,
-  "total_profit_usdt": 5.080346697593403,
+  "current_balance": 1011.9518023082288,
+  "total_profit_usdt": 11.951802308228839,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -23,6 +23,13 @@
       "exit": 3.2934072e-06,
       "profit": 4.9273380851612885,
       "time": "2026-10-23 11:35"
+    },
+    {
+      "symbol": "SENT/USDT",
+      "entry": 0.02219,
+      "exit": 0.024130624000000007,
+      "profit": 6.871455610635437,
+      "time": "2026-10-23 15:50"
     }
   ],
   "losing_trades": [
@@ -42,18 +49,6 @@
     }
   ],
   "open_trades": [
-    {
-      "symbol": "SENT/USDT",
-      "entry": 0.02219,
-      "sl": 0.02219,
-      "original_sl": 0.02149692,
-      "tp1": 0.023298928000000003,
-      "tp2": 0.024130624000000007,
-      "amount": 50.0,
-      "tp1_hit": true,
-      "profit_locked": 2.4987111311401575,
-      "time": "2026-10-23 01:10"
-    },
     {
       "symbol": "CELO/USDT",
       "entry": 0.0825,
