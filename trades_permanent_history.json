@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1011.9518023082288,
-  "total_profit_usdt": 11.951802308228839,
+  "current_balance": 1017.075991633938,
+  "total_profit_usdt": 17.07599163393792,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -30,6 +30,13 @@
       "exit": 0.024130624000000007,
       "profit": 6.871455610635437,
       "time": "2026-10-23 15:50"
+    },
+    {
+      "symbol": "KMNO/USDT",
+      "entry": 0.039523,
+      "exit": 0.042060886400000004,
+      "profit": 5.1241893257090805,
+      "time": "2026-10-23 18:37"
     }
   ],
   "losing_trades": [
@@ -72,18 +79,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 03:24"
-    },
-    {
-      "symbol": "KMNO/USDT",
-      "entry": 0.039523,
-      "sl": 0.039523,
-      "original_sl": 0.038616612,
-      "tp1": 0.0409732208,
-      "tp2": 0.042060886400000004,
-      "amount": 50.78,
-      "tp1_hit": true,
-      "profit_locked": 1.8634583237102431,
-      "time": "2026-10-23 11:03"
     },
     {
       "symbol": "BANANA/USDT",
