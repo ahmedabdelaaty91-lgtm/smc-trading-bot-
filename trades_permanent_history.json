@@ -45,13 +45,13 @@
     {
       "symbol": "SENT/USDT",
       "entry": 0.02219,
-      "sl": 0.02149692,
+      "sl": 0.02219,
       "original_sl": 0.02149692,
       "tp1": 0.023298928000000003,
       "tp2": 0.024130624000000007,
-      "amount": 100.0,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.0,
+      "tp1_hit": true,
+      "profit_locked": 2.4987111311401575,
       "time": "2026-10-23 01:10"
     },
     {
