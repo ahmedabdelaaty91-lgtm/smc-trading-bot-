@@ -137,6 +137,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 15:01"
+    },
+    {
+      "symbol": "CRV/USDT",
+      "entry": 0.3692,
+      "sl": 0.3581822,
+      "original_sl": 0.3581822,
+      "tp1": 0.3868284799999999,
+      "tp2": 0.4000498399999999,
+      "amount": 100.51,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 15:03"
     }
   ]
 }
