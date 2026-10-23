@@ -52,6 +52,30 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 01:10"
+    },
+    {
+      "symbol": "CELO/USDT",
+      "entry": 0.0825,
+      "sl": 0.0806384,
+      "original_sl": 0.0806384,
+      "tp1": 0.08547856000000001,
+      "tp2": 0.08771248000000002,
+      "amount": 100.51,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 01:47"
+    },
+    {
+      "symbol": "CELO/USDT",
+      "entry": 0.0825,
+      "sl": 0.0806384,
+      "original_sl": 0.0806384,
+      "tp1": 0.08547856000000001,
+      "tp2": 0.08771248000000002,
+      "amount": 100.51,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 01:47"
     }
   ]
 }
