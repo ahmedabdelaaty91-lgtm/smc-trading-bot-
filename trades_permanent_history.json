@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1010.1489910843912,
-  "total_profit_usdt": 10.14899108439127,
+  "current_balance": 1008.4258317824185,
+  "total_profit_usdt": 8.425831782418573,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -95,6 +95,13 @@
       "exit": 0.00810376,
       "loss": -2.9843698203592814,
       "time": "2026-10-23 22:31"
+    },
+    {
+      "symbol": "NOT/USDT",
+      "entry": 0.0003954,
+      "exit": 0.0003886212,
+      "loss": -1.7231593019726956,
+      "time": "2026-10-23 22:32"
     }
   ],
   "open_trades": [
@@ -133,18 +140,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 15:01"
-    },
-    {
-      "symbol": "NOT/USDT",
-      "entry": 0.0003954,
-      "sl": 0.0003886212,
-      "original_sl": 0.0003886212,
-      "tp1": 0.0004062460800000001,
-      "tp2": 0.0004143806400000001,
-      "amount": 100.51,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 15:14"
     }
   ]
 }
