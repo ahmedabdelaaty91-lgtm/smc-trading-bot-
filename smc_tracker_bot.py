@@ -539,7 +539,7 @@ def scan_smc():
                 except:
                     exec_note = "⚡ تم التتبع آلياً بأسعار باينانس"
 
-                               new_trade = {
+new_trade = {
                     "symbol": symbol, "entry": entry, "sl": sl, "original_sl": sl,
                     "tp1": tp1, "tp2": tp2, "amount": trade_amount,
                     "tp1_hit": False, "profit_locked": 0.0,
