@@ -28,6 +28,30 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-22 22:12"
+    },
+    {
+      "symbol": "SENT/USDT",
+      "entry": 0.02219,
+      "sl": 0.02149692,
+      "original_sl": 0.02149692,
+      "tp1": 0.023298928000000003,
+      "tp2": 0.024130624000000007,
+      "amount": 100.0,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 01:10"
+    },
+    {
+      "symbol": "SENT/USDT",
+      "entry": 0.02219,
+      "sl": 0.02149692,
+      "original_sl": 0.02149692,
+      "tp1": 0.023298928000000003,
+      "tp2": 0.024130624000000007,
+      "amount": 100.0,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-23 01:10"
     }
   ]
 }
