@@ -539,15 +539,15 @@ def scan_smc():
                 except:
                     exec_note = "⚡ تم التتبع آلياً بأسعار باينانس"
 
-                new_trade = {
+                               new_trade = {
                     "symbol": symbol, "entry": entry, "sl": sl, "original_sl": sl,
                     "tp1": tp1, "tp2": tp2, "amount": trade_amount,
                     "tp1_hit": False, "profit_locked": 0.0,
                     "time": datetime.now().strftime('%Y-%m-%d %H:%M')
                 }
-               hist["open_trades"].append(new_trade)
-open_symbols.append(symbol)
-save_history(hist)
+                hist["open_trades"].append(new_trade)
+                open_symbols.append(symbol)
+                save_history(hist)
                 new_opened += 1
 
                 coin_base = symbol.split('/')[0]
