@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1001.3063873805065,
-  "total_profit_usdt": 1.3063873805064752,
+  "current_balance": 998.4679958330386,
+  "total_profit_usdt": -1.5320041669614284,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -123,21 +123,16 @@
       "exit": 0.000144211,
       "loss": -1.7017498295841829,
       "time": "2026-10-24 07:32"
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "BCH/USDT",
       "entry": 283.56,
-      "sl": 275.60768,
-      "original_sl": 275.60768,
-      "tp1": 296.283712,
-      "tp2": 305.82649599999996,
-      "amount": 101.21,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-23 03:24"
-    },
+      "exit": 275.60768,
+      "loss": -2.8383915474679027,
+      "time": "2026-10-24 08:07"
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "ANIME/USDT",
       "entry": 0.002996,
