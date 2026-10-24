@@ -130,6 +130,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 03:24"
+    },
+    {
+      "symbol": "HMSTR/USDT",
+      "entry": 0.0001467,
+      "sl": 0.000144211,
+      "original_sl": 0.000144211,
+      "tp1": 0.0001506824,
+      "tp2": 0.00015366919999999998,
+      "amount": 100.3,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-24 05:08"
     }
   ]
 }
