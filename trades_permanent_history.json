@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1003.0081372100907,
-  "total_profit_usdt": 3.008137210090659,
+  "current_balance": 1001.3063873805065,
+  "total_profit_usdt": 1.3063873805064752,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -116,6 +116,13 @@
       "exit": 0.028133619999999998,
       "loss": -2.901779558163622,
       "time": "2026-10-24 00:50"
+    },
+    {
+      "symbol": "HMSTR/USDT",
+      "entry": 0.0001467,
+      "exit": 0.000144211,
+      "loss": -1.7017498295841829,
+      "time": "2026-10-24 07:32"
     }
   ],
   "open_trades": [
@@ -130,18 +137,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-23 03:24"
-    },
-    {
-      "symbol": "HMSTR/USDT",
-      "entry": 0.0001467,
-      "sl": 0.000144211,
-      "original_sl": 0.000144211,
-      "tp1": 0.0001506824,
-      "tp2": 0.00015366919999999998,
-      "amount": 100.3,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-24 05:08"
     }
   ]
 }
