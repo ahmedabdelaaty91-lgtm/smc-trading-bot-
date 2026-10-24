@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1002.8707890399811,
-  "total_profit_usdt": 2.870789039981137,
+  "current_balance": 1005.3054115921608,
+  "total_profit_usdt": 5.30541159216078,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -58,6 +58,13 @@
       "exit": 0.003163675199999999,
       "profit": 4.402793206942564,
       "time": "2026-10-24 08:14"
+    },
+    {
+      "symbol": "ANIME/USDT",
+      "entry": 0.003028,
+      "exit": 0.003028,
+      "profit": 2.4346225521796447,
+      "time": "2026-10-24 11:36"
     }
   ],
   "losing_trades": [
@@ -140,18 +147,6 @@
     }
   ],
   "open_trades": [
-    {
-      "symbol": "ANIME/USDT",
-      "entry": 0.003028,
-      "sl": 0.003028,
-      "original_sl": 0.0029361160000000003,
-      "tp1": 0.003175014399999999,
-      "tp2": 0.0032852751999999986,
-      "amount": 50.15,
-      "tp1_hit": true,
-      "profit_locked": 2.4346225521796447,
-      "time": "2026-10-24 08:23"
-    },
     {
       "symbol": "ZK/USDT",
       "entry": 0.01282,
