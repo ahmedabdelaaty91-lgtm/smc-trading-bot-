@@ -163,6 +163,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-24 10:01"
+    },
+    {
+      "symbol": "SHELL/USDT",
+      "entry": 0.02307,
+      "sl": 0.02271448,
+      "original_sl": 0.02271448,
+      "tp1": 0.023638832000000002,
+      "tp2": 0.024065456000000006,
+      "amount": 100.29,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-24 11:01"
     }
   ]
 }
