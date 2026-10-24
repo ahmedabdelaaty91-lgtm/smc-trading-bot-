@@ -160,5 +160,18 @@
       "time": "2026-10-24 13:19"
     }
   ],
-  "open_trades": []
+  "open_trades": [
+    {
+      "symbol": "ZEC/USDT",
+      "entry": 1187.508,
+      "sl": 1146.03334,
+      "original_sl": 1146.03334,
+      "tp1": 1253.8674560000002,
+      "tp2": 1303.6370480000003,
+      "amount": 100.19,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-24 19:09"
+    }
+  ]
 }
