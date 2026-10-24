@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1003.4653013113495,
-  "total_profit_usdt": 3.4653013113495525,
+  "current_balance": 1001.9197832879426,
+  "total_profit_usdt": 1.919783287942522,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -151,20 +151,14 @@
       "exit": 0.01258478,
       "loss": -1.8401102808112288,
       "time": "2026-10-24 13:03"
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "SHELL/USDT",
       "entry": 0.02307,
-      "sl": 0.02271448,
-      "original_sl": 0.02271448,
-      "tp1": 0.023638832000000002,
-      "tp2": 0.024065456000000006,
-      "amount": 100.29,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-24 11:01"
+      "exit": 0.02271448,
+      "loss": -1.5455180234070287,
+      "time": "2026-10-24 13:19"
     }
-  ]
+  ],
+  "open_trades": []
 }
