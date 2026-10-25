@@ -317,6 +317,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 16:01"
+    },
+    {
+      "symbol": "TIA/USDT",
+      "entry": 0.5383,
+      "sl": 0.523451,
+      "original_sl": 0.523451,
+      "tp1": 0.5620584,
+      "tp2": 0.5798772,
+      "amount": 100.31,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 16:02"
     }
   ],
   "cooldown_until": 1792931705.2109568
