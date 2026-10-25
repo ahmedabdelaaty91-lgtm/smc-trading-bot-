@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1001.140621748649,
-  "total_profit_usdt": 1.140621748649039,
+  "current_balance": 1003.0687080737149,
+  "total_profit_usdt": 3.0687080737148946,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -79,6 +79,13 @@
       "exit": 7.134344e-06,
       "profit": 5.733155476691733,
       "time": "2026-10-25 07:06"
+    },
+    {
+      "symbol": "CHIP/USDT",
+      "entry": 0.044028,
+      "exit": 0.044028,
+      "profit": 1.928086325065855,
+      "time": "2026-10-25 14:05"
     }
   ],
   "losing_trades": [
@@ -226,18 +233,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-24 19:09"
-    },
-    {
-      "symbol": "CHIP/USDT",
-      "entry": 0.044028,
-      "sl": 0.044028,
-      "original_sl": 0.04296889,
-      "tp1": 0.04572257599999999,
-      "tp2": 0.04699350799999998,
-      "amount": 50.09,
-      "tp1_hit": true,
-      "profit_locked": 1.928086325065855,
-      "time": "2026-10-24 21:00"
     },
     {
       "symbol": "ENA/USDT",
