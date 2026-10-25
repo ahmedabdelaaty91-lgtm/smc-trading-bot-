@@ -329,6 +329,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 16:02"
+    },
+    {
+      "symbol": "ZK/USDT",
+      "entry": 0.01225,
+      "sl": 0.0119261,
+      "original_sl": 0.0119261,
+      "tp1": 0.01276824,
+      "tp2": 0.01315692,
+      "amount": 100.31,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 16:06"
     }
   ],
   "cooldown_until": 1792931705.2109568
