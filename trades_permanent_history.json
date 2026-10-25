@@ -293,6 +293,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 16:00"
+    },
+    {
+      "symbol": "UNI/USDT",
+      "entry": 6.8592,
+      "sl": 6.7021688,
+      "original_sl": 6.7021688,
+      "tp1": 7.1104499200000015,
+      "tp2": 7.298887360000002,
+      "amount": 100.31,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 16:00"
     }
   ],
   "cooldown_until": 1792931705.2109568
