@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1008.2888508197055,
-  "total_profit_usdt": 8.288850819705594,
+  "current_balance": 1007.3339337591033,
+  "total_profit_usdt": 7.333933759103324,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -93,6 +93,13 @@
       "exit": 0.20611896000000002,
       "profit": 5.220142745990698,
       "time": "2026-10-25 17:08"
+    },
+    {
+      "symbol": "INJ/USDT",
+      "entry": 7.799,
+      "exit": 7.799,
+      "profit": 2.050286709578161,
+      "time": "2026-10-25 23:30"
     }
   ],
   "losing_trades": [
@@ -226,6 +233,14 @@
       "loss": -2.2826887336696324,
       "time": "2026-10-25 10:35",
       "timestamp": 1792924505.2109568
+    },
+    {
+      "symbol": "BOME/USDT",
+      "entry": 0.0006318,
+      "exit": 0.0006128718,
+      "loss": -3.0052037701804273,
+      "time": "2026-10-25 23:30",
+      "timestamp": 1792971050.8862388
     }
   ],
   "open_trades": [
@@ -302,18 +317,6 @@
       "time": "2026-10-25 16:00"
     },
     {
-      "symbol": "BOME/USDT",
-      "entry": 0.0006318,
-      "sl": 0.0006128718,
-      "original_sl": 0.0006128718,
-      "tp1": 0.0006620851199999998,
-      "tp2": 0.0006847989599999998,
-      "amount": 100.31,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-25 16:01"
-    },
-    {
       "symbol": "TIA/USDT",
       "entry": 0.5383,
       "sl": 0.523451,
@@ -336,19 +339,7 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 16:06"
-    },
-    {
-      "symbol": "INJ/USDT",
-      "entry": 7.799,
-      "sl": 7.799,
-      "original_sl": 7.6007679999999995,
-      "tp1": 8.116171200000002,
-      "tp2": 8.354049600000003,
-      "amount": 50.41,
-      "tp1_hit": true,
-      "profit_locked": 2.050286709578161,
-      "time": "2026-10-25 17:08"
     }
   ],
-  "cooldown_until": 1792931705.2109568
+  "cooldown_until": 1792978250.8862388
 }
