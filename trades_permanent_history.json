@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1003.4233104823187,
-  "total_profit_usdt": 3.4233104823186693,
+  "current_balance": 1001.140621748649,
+  "total_profit_usdt": 1.140621748649039,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -204,6 +204,14 @@
       "loss": -2.5019313554987312,
       "time": "2026-10-25 10:24",
       "timestamp": 1792923871.5767977
+    },
+    {
+      "symbol": "INJ/USDT",
+      "entry": 7.731,
+      "exit": 7.554860000000001,
+      "loss": -2.2826887336696324,
+      "time": "2026-10-25 10:35",
+      "timestamp": 1792924505.2109568
     }
   ],
   "open_trades": [
@@ -242,19 +250,7 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-24 23:01"
-    },
-    {
-      "symbol": "INJ/USDT",
-      "entry": 7.731,
-      "sl": 7.554860000000001,
-      "original_sl": 7.554860000000001,
-      "tp1": 8.012823999999998,
-      "tp2": 8.224191999999999,
-      "amount": 100.19,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-25 00:24"
     }
   ],
-  "cooldown_until": 1792931071.5767977
+  "cooldown_until": 1792931705.2109568
 }
