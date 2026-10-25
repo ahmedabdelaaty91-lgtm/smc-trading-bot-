@@ -244,6 +244,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 01:08"
+    },
+    {
+      "symbol": "LSK/USDT",
+      "entry": 0.1743,
+      "sl": 0.1682628,
+      "original_sl": 0.1682628,
+      "tp1": 0.18395952000000004,
+      "tp2": 0.19120416000000007,
+      "amount": 100.19,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 01:31"
     }
   ]
 }
