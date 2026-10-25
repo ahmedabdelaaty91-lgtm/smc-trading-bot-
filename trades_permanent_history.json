@@ -256,6 +256,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 01:31"
+    },
+    {
+      "symbol": "MANTRA/USDT",
+      "entry": 0.00391,
+      "sl": 0.00381236,
+      "original_sl": 0.00381236,
+      "tp1": 0.004066224000000001,
+      "tp2": 0.004183392000000001,
+      "amount": 100.19,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 01:32"
     }
   ]
 }
