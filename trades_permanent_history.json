@@ -220,6 +220,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 00:24"
+    },
+    {
+      "symbol": "SKL/USDT",
+      "entry": 0.00409,
+      "sl": 0.003992,
+      "original_sl": 0.003992,
+      "tp1": 0.0042468,
+      "tp2": 0.0043644,
+      "amount": 100.19,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 01:05"
     }
   ]
 }
