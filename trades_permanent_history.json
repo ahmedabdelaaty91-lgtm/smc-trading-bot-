@@ -232,6 +232,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 01:05"
+    },
+    {
+      "symbol": "XEC/USDT",
+      "entry": 6.65e-06,
+      "sl": 6.47702e-06,
+      "original_sl": 6.47702e-06,
+      "tp1": 6.926768e-06,
+      "tp2": 7.134344e-06,
+      "amount": 100.19,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 01:08"
     }
   ]
 }
