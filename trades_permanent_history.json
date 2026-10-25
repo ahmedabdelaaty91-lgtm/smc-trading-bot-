@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1003.0687080737149,
-  "total_profit_usdt": 3.0687080737148946,
+  "current_balance": 1008.2888508197055,
+  "total_profit_usdt": 8.288850819705594,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -86,6 +86,13 @@
       "exit": 0.044028,
       "profit": 1.928086325065855,
       "time": "2026-10-25 14:05"
+    },
+    {
+      "symbol": "ENA/USDT",
+      "entry": 0.1933,
+      "exit": 0.20611896000000002,
+      "profit": 5.220142745990698,
+      "time": "2026-10-25 17:08"
     }
   ],
   "losing_trades": [
@@ -233,18 +240,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-24 19:09"
-    },
-    {
-      "symbol": "ENA/USDT",
-      "entry": 0.1933,
-      "sl": 0.1933,
-      "original_sl": 0.1887218,
-      "tp1": 0.20062512000000002,
-      "tp2": 0.20611896000000002,
-      "amount": 50.09,
-      "tp1_hit": true,
-      "profit_locked": 1.8983543010863988,
-      "time": "2026-10-24 23:01"
     },
     {
       "symbol": "PYTH/USDT",
