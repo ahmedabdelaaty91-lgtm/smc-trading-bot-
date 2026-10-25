@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1005.9252418378175,
-  "total_profit_usdt": 5.925241837817403,
+  "current_balance": 1003.4233104823187,
+  "total_profit_usdt": 3.4233104823186693,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -196,6 +196,14 @@
       "loss": -3.495348466413172,
       "time": "2026-10-25 06:27",
       "timestamp": 1792909656.6722136
+    },
+    {
+      "symbol": "MANTRA/USDT",
+      "entry": 0.00391,
+      "exit": 0.00381236,
+      "loss": -2.5019313554987312,
+      "time": "2026-10-25 10:24",
+      "timestamp": 1792923871.5767977
     }
   ],
   "open_trades": [
@@ -246,19 +254,7 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 00:24"
-    },
-    {
-      "symbol": "MANTRA/USDT",
-      "entry": 0.00391,
-      "sl": 0.00381236,
-      "original_sl": 0.00381236,
-      "tp1": 0.004066224000000001,
-      "tp2": 0.004183392000000001,
-      "amount": 100.19,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-25 01:32"
     }
   ],
-  "cooldown_until": 1792916856.6722136
+  "cooldown_until": 1792931071.5767977
 }
