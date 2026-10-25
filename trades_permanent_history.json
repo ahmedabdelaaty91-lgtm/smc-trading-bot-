@@ -281,6 +281,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 15:09"
+    },
+    {
+      "symbol": "NEAR/USDT",
+      "entry": 4.5481,
+      "sl": 4.4123576,
+      "original_sl": 4.4123576,
+      "tp1": 4.765287839999999,
+      "tp2": 4.928178719999999,
+      "amount": 100.31,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 16:00"
     }
   ],
   "cooldown_until": 1792931705.2109568
