@@ -336,6 +336,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 16:06"
+    },
+    {
+      "symbol": "INJ/USDT",
+      "entry": 7.799,
+      "sl": 7.6007679999999995,
+      "original_sl": 7.6007679999999995,
+      "tp1": 8.116171200000002,
+      "tp2": 8.354049600000003,
+      "amount": 100.83,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-25 17:08"
     }
   ],
   "cooldown_until": 1792931705.2109568
