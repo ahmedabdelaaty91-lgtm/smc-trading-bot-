@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1007.1576991304648,
-  "total_profit_usdt": 7.157699130464842,
+  "current_balance": 1003.6874348275388,
+  "total_profit_usdt": 3.687434827538837,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -173,6 +173,14 @@
       "loss": -2.400640586797066,
       "time": "2026-10-25 06:03",
       "timestamp": 1792908201.5629447
+    },
+    {
+      "symbol": "LSK/USDT",
+      "entry": 0.1743,
+      "exit": 0.1682628,
+      "loss": -3.470264302926001,
+      "time": "2026-10-25 06:12",
+      "timestamp": 1792908760.0201623
     }
   ],
   "open_trades": [
@@ -249,18 +257,6 @@
       "time": "2026-10-25 01:08"
     },
     {
-      "symbol": "LSK/USDT",
-      "entry": 0.1743,
-      "sl": 0.1682628,
-      "original_sl": 0.1682628,
-      "tp1": 0.18395952000000004,
-      "tp2": 0.19120416000000007,
-      "amount": 100.19,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-25 01:31"
-    },
-    {
       "symbol": "MANTRA/USDT",
       "entry": 0.00391,
       "sl": 0.00381236,
@@ -273,5 +269,5 @@
       "time": "2026-10-25 01:32"
     }
   ],
-  "cooldown_until": 1792915401.5629447
+  "cooldown_until": 1792915960.0201623
 }
