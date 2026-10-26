@@ -327,6 +327,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 16:02"
+    },
+    {
+      "symbol": "EDEN/USDT",
+      "entry": 0.0567,
+      "sl": 0.05489,
+      "original_sl": 0.05489,
+      "tp1": 0.059595999999999996,
+      "tp2": 0.061767999999999997,
+      "amount": 99.87,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-26 05:00"
     }
   ],
   "cooldown_until": 1792989807.3027303
