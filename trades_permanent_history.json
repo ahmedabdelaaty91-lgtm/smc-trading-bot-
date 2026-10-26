@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 995.951804250786,
-  "total_profit_usdt": -4.048195749213924,
+  "current_balance": 993.264003530325,
+  "total_profit_usdt": -6.735996469675001,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -273,6 +273,14 @@
       "loss": -2.7670503250975296,
       "time": "2026-10-26 06:07",
       "timestamp": 1792994851.028406
+    },
+    {
+      "symbol": "PROM/USDT",
+      "entry": 5.552,
+      "exit": 5.4021740000000005,
+      "loss": -2.6878007204610794,
+      "time": "2026-10-26 20:22",
+      "timestamp": 1793046157.2870789
     }
   ],
   "open_trades": [
@@ -349,18 +357,6 @@
       "time": "2026-10-26 12:01"
     },
     {
-      "symbol": "PROM/USDT",
-      "entry": 5.552,
-      "sl": 5.4021740000000005,
-      "original_sl": 5.4021740000000005,
-      "tp1": 5.791721599999998,
-      "tp2": 5.9715127999999975,
-      "amount": 99.6,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-26 12:05"
-    },
-    {
       "symbol": "DASH/USDT",
       "entry": 53.06,
       "sl": 51.6964,
@@ -397,5 +393,5 @@
       "time": "2026-10-26 13:04"
     }
   ],
-  "cooldown_until": 1793002051.028406
+  "cooldown_until": 1793053357.2870789
 }
