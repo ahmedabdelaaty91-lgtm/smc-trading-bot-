@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 998.7188545758836,
-  "total_profit_usdt": -1.2811454241163958,
+  "current_balance": 995.951804250786,
+  "total_profit_usdt": -4.048195749213924,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -265,6 +265,14 @@
       "loss": -2.6522782857142877,
       "time": "2026-10-26 02:43",
       "timestamp": 1792982607.3027303
+    },
+    {
+      "symbol": "TIA/USDT",
+      "entry": 0.5383,
+      "exit": 0.523451,
+      "loss": -2.7670503250975296,
+      "time": "2026-10-26 06:07",
+      "timestamp": 1792994851.028406
     }
   ],
   "open_trades": [
@@ -317,18 +325,6 @@
       "time": "2026-10-25 16:00"
     },
     {
-      "symbol": "TIA/USDT",
-      "entry": 0.5383,
-      "sl": 0.523451,
-      "original_sl": 0.523451,
-      "tp1": 0.5620584,
-      "tp2": 0.5798772,
-      "amount": 100.31,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-25 16:02"
-    },
-    {
       "symbol": "EDEN/USDT",
       "entry": 0.0567,
       "sl": 0.05489,
@@ -341,5 +337,5 @@
       "time": "2026-10-26 05:00"
     }
   ],
-  "cooldown_until": 1792989807.3027303
+  "cooldown_until": 1793002051.028406
 }
