@@ -315,13 +315,13 @@
     {
       "symbol": "UNI/USDT",
       "entry": 6.8592,
-      "sl": 6.7021688,
+      "sl": 6.8592,
       "original_sl": 6.7021688,
       "tp1": 7.1104499200000015,
       "tp2": 7.298887360000002,
-      "amount": 100.31,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 50.16,
+      "tp1_hit": true,
+      "profit_locked": 1.8371588140891149,
       "time": "2026-10-25 16:00"
     },
     {
