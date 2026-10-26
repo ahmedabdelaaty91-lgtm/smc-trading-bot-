@@ -371,6 +371,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-26 13:00"
+    },
+    {
+      "symbol": "CELO/USDT",
+      "entry": 0.0784,
+      "sl": 0.07664639999999999,
+      "original_sl": 0.07664639999999999,
+      "tp1": 0.08120576000000002,
+      "tp2": 0.08331008000000002,
+      "amount": 99.6,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-26 13:03"
     }
   ],
   "cooldown_until": 1793002051.028406
