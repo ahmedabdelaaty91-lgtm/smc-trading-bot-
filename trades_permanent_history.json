@@ -391,6 +391,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-26 13:04"
+    },
+    {
+      "symbol": "EDU/USDT",
+      "entry": 0.06,
+      "sl": 0.0582832,
+      "original_sl": 0.0582832,
+      "tp1": 0.06274687999999999,
+      "tp2": 0.06480704,
+      "amount": 99.33,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-26 23:01"
     }
   ],
   "cooldown_until": 1793053357.2870789
