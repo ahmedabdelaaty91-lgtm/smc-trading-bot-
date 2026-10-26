@@ -359,6 +359,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-26 12:05"
+    },
+    {
+      "symbol": "DASH/USDT",
+      "entry": 53.06,
+      "sl": 51.6964,
+      "original_sl": 51.6964,
+      "tp1": 55.24176000000001,
+      "tp2": 56.87808000000002,
+      "amount": 99.6,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-26 13:00"
     }
   ],
   "cooldown_until": 1793002051.028406
