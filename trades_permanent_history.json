@@ -347,6 +347,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-26 12:01"
+    },
+    {
+      "symbol": "PROM/USDT",
+      "entry": 5.552,
+      "sl": 5.4021740000000005,
+      "original_sl": 5.4021740000000005,
+      "tp1": 5.791721599999998,
+      "tp2": 5.9715127999999975,
+      "amount": 99.6,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-26 12:05"
     }
   ],
   "cooldown_until": 1793002051.028406
