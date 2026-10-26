@@ -335,6 +335,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-26 05:00"
+    },
+    {
+      "symbol": "IOTX/USDT",
+      "entry": 0.003679,
+      "sl": 0.0035628599999999997,
+      "original_sl": 0.0035628599999999997,
+      "tp1": 0.003864824,
+      "tp2": 0.004004192000000001,
+      "amount": 99.6,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-26 12:01"
     }
   ],
   "cooldown_until": 1793002051.028406
