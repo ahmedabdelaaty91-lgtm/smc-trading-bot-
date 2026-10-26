@@ -383,6 +383,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-26 13:03"
+    },
+    {
+      "symbol": "JTO/USDT",
+      "entry": 0.433,
+      "sl": 0.421156,
+      "original_sl": 0.421156,
+      "tp1": 0.45195040000000003,
+      "tp2": 0.46616320000000006,
+      "amount": 99.6,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-26 13:04"
     }
   ],
   "cooldown_until": 1793002051.028406
