@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1001.3711328615979,
-  "total_profit_usdt": 1.3711328615978928,
+  "current_balance": 998.7188545758836,
+  "total_profit_usdt": -1.2811454241163958,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -257,6 +257,14 @@
       "loss": -2.849323178833522,
       "time": "2026-10-26 02:20",
       "timestamp": 1792981247.3974016
+    },
+    {
+      "symbol": "ZK/USDT",
+      "entry": 0.01225,
+      "exit": 0.0119261,
+      "loss": -2.6522782857142877,
+      "time": "2026-10-26 02:43",
+      "timestamp": 1792982607.3027303
     }
   ],
   "open_trades": [
@@ -319,19 +327,7 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-25 16:02"
-    },
-    {
-      "symbol": "ZK/USDT",
-      "entry": 0.01225,
-      "sl": 0.0119261,
-      "original_sl": 0.0119261,
-      "tp1": 0.01276824,
-      "tp2": 0.01315692,
-      "amount": 100.31,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-25 16:06"
     }
   ],
-  "cooldown_until": 1792988447.3974016
+  "cooldown_until": 1792989807.3027303
 }
