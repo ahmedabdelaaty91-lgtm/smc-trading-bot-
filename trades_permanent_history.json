@@ -394,6 +394,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-26 23:01"
+    },
+    {
+      "symbol": "AMP/USDT",
+      "entry": 0.00073,
+      "sl": 0.000710576,
+      "original_sl": 0.000710576,
+      "tp1": 0.0007610783999999999,
+      "tp2": 0.0007843872,
+      "amount": 99.22,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-27 08:00"
     }
   ],
   "cooldown_until": 1793078029.006972
