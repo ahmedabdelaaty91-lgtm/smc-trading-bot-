@@ -25,29 +25,33 @@ MAX_OPEN_TRADES = 10            # الحد الأقصى الصارم: 10 صفق�
 MIN_TECHNICAL_SL_PCT = 2.2      # رفع الحد الأدنى للوقف لمنع ضربه بالضجيج السعري (بين 2.2% إلى 3.5%)
 MAX_TECHNICAL_SL_PCT = 3.5      # الحد الأقصى لوقف الخسارة الفني
 BOS_VOLUME_MULTIPLIER = 1.30    # رفع شرط فوليوم الكسر إلى 130% لضمان الانطلاقة المؤسساتية
+MAX_CHASE_PCT = 1.010           # منع مطاردة السعر إذا ابتعد أكثر من 1.0% فوق إغلاق شمعة الكسر
 COOLDOWN_AFTER_LOSSES = 2       # عدد الخسائر المتتالية لتفعيل قاطع الأمان
 COOLDOWN_HOURS = 2              # عدد ساعات التهدئة عند تفعيل قاطع الأمان
 HISTORY_FILE = "trades_permanent_history.json"
 
+# قائمة العملات النقية عالية السيولة (تم استبعاد العملات الضعيفة وغير السائلة نهائياً)
 RAW_COINS = [
+    # القياديات والمشاريع المؤسساتية الكبرى
     'BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOGE', 'AVAX', 'LINK', 'DOT',
-    'POL', 'NEAR', 'SHIB', 'LTC', 'UNI', 'ICP', 'BCH', 'ATOM', 'XLM', 'ETC',
+    'NEAR', 'SHIB', 'LTC', 'UNI', 'ICP', 'BCH', 'ATOM', 'XLM', 'ETC',
     'FIL', 'HBAR', 'INJ', 'IMX', 'RENDER', 'OP', 'ARB', 'SUI', 'TIA', 'SEI',
-    'GRT', 'AAVE', 'ALGO', 'THETA', 'FLOW', 'CHZ', 'GALA', 'SAND', 'MANA', 'AXS',
-    'KAVA', 'CELO', 'AR', 'PYTH', 'MANTA', 'JUP', 'BONK', 'FLOKI', 'PEPE', 'WIF',
+    # قطاعات DeFi والمومنتوم عالي الفوليوم
+    'GRT', 'ALGO', 'THETA', 'FLOW', 'CHZ', 'GALA', 'SAND', 'MANA', 'AXS',
+    'KAVA', 'AR', 'PYTH', 'MANTA', 'JUP', 'BONK', 'FLOKI', 'PEPE', 'WIF',
     'NOT', 'TAO', 'FET', 'PIXEL', 'XEC', 'PENDLE', 'STRK', 'ALT', 'PORTAL', 'XAI',
     'NEXO', 'GMX', 'CRV', 'CAKE', '1INCH', 'SNX', 'COMP', 'ZK', 'ZRO', 'ENA',
+    # مشاريع متوسطة نشطة وعميقة السيولة
     'SAGA', 'IOST', 'JTO', 'QTUM', 'MINA', 'APT', 'BOME', 'GAS', 'TRUMP', 'ZIL',
-    'IOTA', 'DASH', 'ZEC', 'RVN', 'KSM', 'BICO', 'HMSTR', 'CVC', 'BAND', 'DUSK',
-    'LSK', 'SNDKB', 'XPL', 'VANA', 'AVA', 'OGN', 'OG', 'SENT', 'PUMP', 'ONT',
-    'WLD', 'HYPE', 'SKL', 'CATI', 'MUUB', 'JST', 'ONE', 'SUPER', 'AMP', 'OPG',
-    'EPIC', 'EDEN', 'BEAMX', 'GPS', 'AVNT', 'OPEN', 'OSMO', 'SPK', 'TRX', 'ADBEB',
-    'MBL', 'MUBARAK', 'QUICK', 'CHIP', 'AT', 'SHELL', 'BROCCOLI714', 'ERA', 'AGLD', 'GNS',
-    'IOTX', 'CETUS', 'PENGU', 'TUT', 'TWT', 'HOME', 'PEOPLE', 'CITY', 'RED', 'BANANA',
-    'VET', 'MOVE', 'BANK', '1000SATS', 'PSG', 'ATM', 'PORTO', 'MEME', 'NVDAB', '1000CAT',
-    'GTC', 'BB', 'HOT', 'C98', 'MANTRA', 'KMNO', 'SOLV', 'FLUX', 'HEMI', 'VTHO',
-    'CYPHB', 'ANIME', 'ZAMA', 'CRCLB', 'PROM', 'BLUR', 'COINB', 'ONDO', 'FF', 'EDU',
-    'ASTSB', 'AERO', 'JASMY'
+    'IOTA', 'ZEC', 'RVN', 'KSM', 'BICO', 'HMSTR', 'CVC', 'BAND',
+    'XPL', 'VANA', 'AVA', 'OGN', 'OG', 'PUMP', 'ONT',
+    'WLD', 'HYPE', 'SKL', 'CATI', 'JST', 'SUPER', 'AMP',
+    'EPIC', 'EDEN', 'BEAMX', 'OSMO', 'TRX',
+    'QUICK', 'CHIP', 'ERA', 'AGLD', 'GNS',
+    'IOTX', 'CETUS', 'PENGU', 'TWT', 'PEOPLE', 'BANANA',
+    'VET', 'MOVE', 'MEME',
+    'GTC', 'BB', 'HOT', 'C98', 'MANTRA', 'KMNO', 'FLUX', 'VTHO',
+    'ANIME', 'BLUR', 'ONDO', 'EDU', 'AERO', 'JASMY'
 ]
 
 SYMBOLS = list(dict.fromkeys([f"{coin.strip().upper()}/USDT" for coin in RAW_COINS]))
@@ -139,7 +143,7 @@ def save_history(data):
         pass
 
 # ========================================================
-# 3. دوال التليجرام وفحص صحة البيتكوين
+# 3. دوال التليجرام وفحص صحة البيتكوين المزدوج (4H + 1H)
 # ========================================================
 def send_telegram(message, chat_id=None):
     cid = chat_id or TELEGRAM_CHAT_ID
@@ -159,24 +163,52 @@ def send_telegram(message, chat_id=None):
         print(f"Telegram error: {e}")
 
 def check_btc_health():
-    """درع البيتكوين الصارم: فحص اتجاه البيتكوين اللحظي على فريم 1H لمنع الشراء في مسار هابط"""
+    """درع البيتكوين المزدوج الفائق (4H + 1H Trend Shield):
+    فحص اتجاه البيتكوين على الفريم الكلي (4H) والفريم اللحظي (1H).
+    إذا كان البيتكوين في مسار هابط كلي (تحت 4H EMA20) أو لحظي (تحت 1H EMA20)،
+    يتم حظر جميع صفقات الشراء الجديدة فوراً لحماية المحفظة من مصائد الثيران والنزيف الجماعي."""
     try:
-        btc_ohlcv = market_exchange.fetch_ohlcv('BTC/USDT', timeframe='1h', limit=35)
-        if btc_ohlcv and len(btc_ohlcv) >= 20:
-            df = pd.DataFrame(btc_ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
-            df['ema_20'] = df['close'].ewm(span=20, adjust=False).mean()
-            curr_c = df['close'].iloc[-1]
-            ema_20 = df['ema_20'].iloc[-1]
+        btc_4h = market_exchange.fetch_ohlcv('BTC/USDT', timeframe='4h', limit=35)
+        btc_1h = market_exchange.fetch_ohlcv('BTC/USDT', timeframe='1h', limit=35)
+        
+        ticker = market_exchange.fetch_ticker('BTC/USDT')
+        chg_24h = ticker.get('percentage', 0.0) or 0.0
+        curr_c = ticker.get('last', 0.0)
+        
+        is_4h_bullish = True
+        is_1h_bullish = True
+        ema_4h = 0.0
+        ema_1h = 0.0
+        
+        if btc_4h and len(btc_4h) >= 20:
+            df_4h = pd.DataFrame(btc_4h, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+            df_4h['ema_20'] = df_4h['close'].ewm(span=20, adjust=False).mean()
+            c_4h = df_4h['close'].iloc[-1]
+            ema_4h = df_4h['ema_20'].iloc[-1]
+            is_4h_bullish = c_4h >= (ema_4h * 0.998)
+            curr_c = c_4h
+            
+        if btc_1h and len(btc_1h) >= 20:
+            df_1h = pd.DataFrame(btc_1h, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+            df_1h['ema_20'] = df_1h['close'].ewm(span=20, adjust=False).mean()
+            c_1h = df_1h['close'].iloc[-1]
+            ema_1h = df_1h['ema_20'].iloc[-1]
+            is_1h_bullish = c_1h >= (ema_1h * 0.998)
+            curr_c = c_1h
 
-            ticker = market_exchange.fetch_ticker('BTC/USDT')
-            chg_24h = ticker.get('percentage', 0.0) or 0.0
+        is_macro_ok = chg_24h >= -3.0
+        is_healthy = is_4h_bullish and is_1h_bullish and is_macro_ok
 
-            # البيتكوين صحي فقط إذا كان سعره فوق متوسط EMA 20 ولم يهبط انهيارياً (> -3.0%)
-            is_above_ema = curr_c >= (ema_20 * 0.998)
-            is_macro_ok = chg_24h >= -3.0
+        if is_healthy:
+            status_str = f"صاعد فوق EMA20 (4H + 1H) 🟢 ({chg_24h:+.2f}%)"
+        elif not is_4h_bullish:
+            status_str = f"هابط كلياً تحت 4H EMA20 (${ema_4h:,.0f}) 🔴 مسار تصحيحي كلي"
+        elif not is_1h_bullish:
+            status_str = f"هابط لحظياً تحت 1H EMA20 (${ema_1h:,.0f}) 🟠 تصحيح ساعي"
+        else:
+            status_str = f"تراجع عنيف 24H ({chg_24h:+.2f}%) 🔴 مخاطرة عالية"
 
-            status_str = f"صاعد فوق EMA20 ({chg_24h:+.2f}%) 🟢" if is_above_ema else f"هابط تحت EMA20 ({chg_24h:+.2f}%) 🔴 مسار تصحيحي"
-            return (is_above_ema and is_macro_ok), status_str, curr_c, chg_24h
+        return is_healthy, status_str, curr_c, chg_24h
     except:
         pass
     return True, "طبيعي 🟡", 0.0, 0.0
@@ -198,6 +230,7 @@ last_scan_stats = {
     "no_bos": 0,
     "low_vol": 0,
     "rsi_fail": 0,
+    "overextended": 0,
     "btc_desc": "",
     "btc_blocked": False,
     "cooldown_active": False,
@@ -214,6 +247,7 @@ def send_hourly_market_radar(chat_id=None):
     b_ema = last_scan_stats.get("below_ema", 0)
     n_bos = last_scan_stats.get("no_bos", 0)
     l_vol = last_scan_stats.get("low_vol", 0)
+    o_ext = last_scan_stats.get("overextended", 0)
 
     # تشخيص حالة الأمان الخاصة
     safety_notes = []
@@ -222,7 +256,7 @@ def send_hourly_market_radar(chat_id=None):
         safety_notes.append(f"🛑 *قاطع أمان المحفظة نشط:* تجميد الشراء مؤقتاً لحماية رصيدك (متبقي `{rem}` دقيقة).")
     
     if last_scan_stats.get("btc_blocked", False) or not btc_ok:
-        safety_notes.append("🛡️ *درع البيتكوين مفعل:* البيتكوين تحت متوسط EMA20 (تم حظر صفقات الشراء لتجنب النزيف الجماعي).")
+        safety_notes.append(f"🛡️ *درع البيتكوين مفعل:* {btc_desc}\n*(تم حظر صفقات الشراء آلياً لتجنب النزيف الجماعي ومصائد الثيران)*.")
     
     safety_msg = "\n".join(safety_notes)
     if safety_msg:
@@ -232,13 +266,14 @@ def send_hourly_market_radar(chat_id=None):
         f"📡 *رادار السوق الدفاعي ونبض شمعة الساعة* ⏰\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"🪙 *البيتكوين (BTC):* `${btc_price:,.1f}` ({btc_chg:+.2f}%)\n"
-        f"🌐 *اتجاه البيتكوين اللحظي:* {btc_desc}\n"
+        f"🌐 *درع البيتكوين المزدوج (4H + 1H):* {btc_desc}\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"{safety_msg}"
-        f"🔍 *تشخيص الفحص المؤسساتي (+130% Volume):*\n"
+        f"🔍 *تشخيص الفحص المؤسساتي الصارم:*\n"
         f"• *فلتر الاتجاه (EMA20):* `{b_ema}` عملة تحت المسار الصاعد.\n"
         f"• *فلتر الكسر (BOS):* `{n_bos}` عملة لم تحقق كسر قمة فني حقيقي.\n"
-        f"• *فلتر السيولة المؤسساتية:* `{l_vol}` عملة فشلت في تحقيق شرط السيولة (+130%).\n"
+        f"• *فلتر السيولة المؤسساتية:* `{l_vol}` عملة فشلت في شرط الفوليوم (+130%).\n"
+        f"• *فلتر منع مطاردة السعر:* `{o_ext}` عملة مستبعدة بسبب التضخم بعيداً عن الدعم.\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"💼 *المحفظة:* `{open_count}/{MAX_OPEN_TRADES}` صفقات نشطة\n"
         f"💵 *إجمالي الرصيد المحمي:* `${bal:,.2f}` USDT\n"
@@ -436,7 +471,6 @@ def track_open_trades():
                     changed = True
 
                     # 🛡️ تفعيل قاطع الأمان التلقائي (Circuit Breaker)
-                    # فحص إذا حدثت خسارتان متتاليتان خلال آخر ساعتين (7200 ثانية)
                     recent_losses = [
                         l for l in hist.get("losing_trades", [])
                         if (now_ts - l.get("timestamp", now_ts)) <= 7200
@@ -475,7 +509,7 @@ def track_open_trades():
         save_history(hist)
 
 # ========================================================
-# 7. محرك SMC الفائق الدفاعي (Max 10 صفقات + درع البيتكوين)
+# 7. محرك SMC الفائق الدفاعي (درع البيتكوين 4H + 1H + منع المطاردة)
 # ========================================================
 def scan_smc():
     global last_scan_stats
@@ -487,6 +521,7 @@ def scan_smc():
     no_bos_c = 0
     low_vol_c = 0
     rsi_fail_c = 0
+    overextended_c = 0
     new_opened = 0
 
     # سقف الـ 10 صفقات
@@ -504,7 +539,7 @@ def scan_smc():
     else:
         last_scan_stats["cooldown_active"] = False
 
-    # 2. درع البيتكوين الصارم (منع الشراء إذا كان البيتكوين هابطاً تحت EMA20)
+    # 2. درع البيتكوين المزدوج (4H + 1H Trend Guard)
     btc_ok, btc_desc, btc_price, btc_chg = check_btc_health()
     last_scan_stats["btc_desc"] = btc_desc
     if not btc_ok:
@@ -560,6 +595,12 @@ def scan_smc():
                 continue
             if not is_vol_confirmed:
                 low_vol_c += 1
+                continue
+
+            # 3.5. فلتر منع مطاردة السعر (Anti-Chase / Overextension Filter)
+            # إذا تضخم السعر بأكثر من 1.0% فوق إغلاق شمعة الكسر، نلغي الدخول لتجنب الشراء عند قمة الذيل
+            if curr_price > (breakout_candle_close * MAX_CHASE_PCT):
+                overextended_c += 1
                 continue
 
             # 4. فحص فجوة الـ FVG المؤسساتية
@@ -618,10 +659,10 @@ def scan_smc():
                     f"🚀 *إشارة تداول فنية فائقة الجودة (+A SMC Defended)!* 🟢\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"⏰ *فريم الإشارة:* `{TIMEFRAME}`\n"
-                    f"🎯 *الاستراتيجية:* SMC Pro + RSI Momentum + BTC Health 🧠\n"
+                    f"🎯 *الاستراتيجية:* SMC Pro + RSI Momentum + Dual BTC Guard 🧠\n"
                     f"📊 *قوة الزخم (RSI):* `{rsi:.1f}` (منطقة الزخم الصاعد النقي)\n"
                     f"📌 *التأكيد الفني:* كسر هيكل صاعد فوق EMA20 بفوليوم مؤسساتي +130%\n"
-                    f"🛡️ *حالة البيتكوين:* {btc_desc}\n"
+                    f"🛡️ *درع البيتكوين (4H + 1H):* {btc_desc}\n"
                     f"🔍 *السبب الفني:* `{smc_reason}`\n"
                     f"🟢 *توجيه السيولة:* {exec_note} 🟢\n"
                     f"━━━━━━━━━━━━━━━━━━\n"
@@ -646,6 +687,7 @@ def scan_smc():
     last_scan_stats["no_bos"] = no_bos_c
     last_scan_stats["low_vol"] = low_vol_c
     last_scan_stats["rsi_fail"] = rsi_fail_c
+    last_scan_stats["overextended"] = overextended_c
     last_scan_stats["total"] = len(SYMBOLS)
     return new_opened
 
@@ -654,14 +696,15 @@ def scan_smc():
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تثبيت المحرك الدفاعي المطور بنجاح (درع البيتكوين + قاطع أمان المحفظة + فوليوم 130% + وقف منيع 2.2% إلى 3.5%)!")
+    print("✅ تم تثبيت المحرك الدفاعي المطور بنجاح (درع البيتكوين 4H+1H + منع مطاردة السعر + فوليوم 130% + قائمة العملات النقية)!")
     send_telegram(
-        f"🛡️ *تم تفعيل درع حماية الأرباح وقاطع الأمان الفائق للمحفظة!* 🟢\n\n"
+        f"🛡️ *تم تفعيل درع حماية الأرباح وقاطع الأمان المطور للمحفظة!* 🟢\n\n"
         f"💼 رصيد باينانس: `${bal:,.2f}` USDT (دخول 10% لكل صفقة).\n"
-        f"1. 🛡️ *درع البيتكوين الصارم:* منع أي شراء إذا كان البيتكوين تحت EMA20 على فريم الساعة.\n"
-        f"2. 🛑 *قاطع الأمان التلقائي (Circuit Breaker):* تجميد الشراء ساعتين عند حدوث خسارتين متتاليتين.\n"
-        f"3. 🎯 *فوليوم مؤسساتي +130%:* لا دخول إلا في الاختراقات الحقيقية ذات السيولة الهائلة.\n"
-        f"4. 🧱 *وقف خسارة منيع (2.2% - 3.5%):* عزل كامل ضد ذيول الشموع والضجيج السعري.\n"
+        f"1. 🛡️ *درع البيتكوين المزدوج (4H + 1H):* حظر كامل للشراء إذا كان البيتكوين تحت EMA20 على 4H أو 1H لمنع مصائد الثيران.\n"
+        f"2. 💎 *قائمة العملات المؤسساتية النقية:* استبعاد كامل للعملات ضعيفة السيولة وذيول التصفية العشوائية.\n"
+        f"3. 🎯 *فلتر منع مطاردة السعر:* الشراء فقط عند مستويات الدعم والكسر وإلغاء أي صفقة متضخمة بأكثر من 1.0%.\n"
+        f"4. 🛑 *قاطع الأمان التلقائي (Circuit Breaker):* تجميد الشراء ساعتين فور رصد خسارتين متتاليتين.\n"
+        f"5. 🧱 *وقف خسارة منيع (2.2% - 3.5%):* حماية الصفقات من ذيول التذبذب والضجيج.\n"
         f"💬 أرسل كلمة (تقرير) لكشف الحساب أو (رادار) لنبض السوق في أي وقت!"
     )
 
