@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 993.264003530325,
-  "total_profit_usdt": -6.735996469675001,
+  "current_balance": 995.2290700517516,
+  "total_profit_usdt": -4.770929948248394,
   "winning_trades": [
     {
       "symbol": "ONE/USDT",
@@ -100,6 +100,13 @@
       "exit": 7.799,
       "profit": 2.050286709578161,
       "time": "2026-10-25 23:30"
+    },
+    {
+      "symbol": "PYTH/USDT",
+      "entry": 0.07234,
+      "exit": 0.07234,
+      "profit": 1.9650665214266054,
+      "time": "2026-10-27 03:12"
     }
   ],
   "losing_trades": [
@@ -295,18 +302,6 @@
       "tp1_hit": true,
       "profit_locked": 2.7993722554458635,
       "time": "2026-10-24 19:09"
-    },
-    {
-      "symbol": "PYTH/USDT",
-      "entry": 0.07234,
-      "sl": 0.07234,
-      "original_sl": 0.07056857999999999,
-      "tp1": 0.07517427200000001,
-      "tp2": 0.07729997600000003,
-      "amount": 50.16,
-      "tp1_hit": true,
-      "profit_locked": 1.9650665214266054,
-      "time": "2026-10-25 15:01"
     },
     {
       "symbol": "NEAR/USDT",
