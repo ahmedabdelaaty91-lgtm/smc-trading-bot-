@@ -350,13 +350,13 @@
     {
       "symbol": "DASH/USDT",
       "entry": 53.06,
-      "sl": 51.6964,
+      "sl": 53.06,
       "original_sl": 51.6964,
       "tp1": 55.24176000000001,
       "tp2": 56.87808000000002,
-      "amount": 99.6,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
+      "amount": 49.8,
+      "tp1_hit": true,
+      "profit_locked": 2.0477129287599047,
       "time": "2026-10-26 13:00"
     },
     {
