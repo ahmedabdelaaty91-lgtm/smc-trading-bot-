@@ -112,6 +112,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-27 16:05"
+    },
+    {
+      "symbol": "JUP/USDT",
+      "entry": 0.2803,
+      "sl": 0.2740508,
+      "original_sl": 0.2740508,
+      "tp1": 0.29029872,
+      "tp2": 0.29779776,
+      "amount": 100.0,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-27 16:16"
     }
   ],
   "cooldown_until": 0
