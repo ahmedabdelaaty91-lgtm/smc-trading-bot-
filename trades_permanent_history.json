@@ -40,6 +40,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-27 13:13"
+    },
+    {
+      "symbol": "PEPE/USDT",
+      "entry": 4.4e-06,
+      "sl": 4.28641e-06,
+      "original_sl": 4.28641e-06,
+      "tp1": 4.581744000000001e-06,
+      "tp2": 4.718052000000001e-06,
+      "amount": 100.0,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-27 15:00"
     }
   ],
   "cooldown_until": 0
