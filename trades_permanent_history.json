@@ -88,6 +88,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-27 16:00"
+    },
+    {
+      "symbol": "XPL/USDT",
+      "entry": 0.0738,
+      "sl": 0.07215540000000001,
+      "original_sl": 0.07215540000000001,
+      "tp1": 0.07643136,
+      "tp2": 0.07840488,
+      "amount": 100.0,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-27 16:03"
     }
   ],
   "cooldown_until": 0
