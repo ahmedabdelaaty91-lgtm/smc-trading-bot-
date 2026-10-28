@@ -127,6 +127,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-28 02:02"
+    },
+    {
+      "symbol": "CHIP/USDT",
+      "entry": 0.054896,
+      "sl": 0.053000786,
+      "original_sl": 0.053000786,
+      "tp1": 0.0579283424,
+      "tp2": 0.0602025992,
+      "amount": 101.13,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-28 11:24"
     }
   ],
   "cooldown_until": 0
