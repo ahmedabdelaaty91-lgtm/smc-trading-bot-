@@ -47,7 +47,7 @@
     {
       "symbol": "FET/USDT",
       "entry": 0.1788,
-      "sl": 0.1815355,
+      "sl": 0.181634,
       "original_sl": 0.1734524,
       "tp1": 0.18735615999999997,
       "tp2": 0.19377327999999994,
@@ -56,7 +56,7 @@
       "profit_locked": 2.3926621923937303,
       "time": "2026-10-27 13:00",
       "timestamp": 1793106000.0,
-      "highest_price": 0.1843
+      "highest_price": 0.1844
     },
     {
       "symbol": "AERO/USDT",
@@ -96,7 +96,7 @@
       "profit_locked": 2.1762938668415885,
       "time": "2026-10-27 15:20",
       "timestamp": 1793114400.0,
-      "highest_price": 3.158e-06
+      "highest_price": 3.159e-06
     },
     {
       "symbol": "PUMP/USDT",
