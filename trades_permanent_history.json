@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1005.6795,
-  "total_profit_usdt": 5.679500000000017,
+  "current_balance": 1011.3223436018957,
+  "total_profit_usdt": 11.322343601895739,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -9,6 +9,13 @@
       "exit": 4.718052000000001e-06,
       "profit": 5.679500000000017,
       "time": "2026-10-28 01:29"
+    },
+    {
+      "symbol": "FLUX/USDT",
+      "entry": 0.0633,
+      "exit": 0.06784607999999999,
+      "profit": 5.642843601895723,
+      "time": "2026-10-28 11:11"
     }
   ],
   "losing_trades": [],
@@ -36,18 +43,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-27 13:00"
-    },
-    {
-      "symbol": "FLUX/USDT",
-      "entry": 0.0633,
-      "sl": 0.0633,
-      "original_sl": 0.0616764,
-      "tp1": 0.06589775999999999,
-      "tp2": 0.06784607999999999,
-      "amount": 50.0,
-      "tp1_hit": true,
-      "profit_locked": 2.051943127962078,
-      "time": "2026-10-27 13:13"
     },
     {
       "symbol": "CETUS/USDT",
