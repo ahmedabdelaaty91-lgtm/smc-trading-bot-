@@ -127,6 +127,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-27 16:16"
+    },
+    {
+      "symbol": "ICP/USDT",
+      "entry": 2.644,
+      "sl": 2.5628640000000003,
+      "original_sl": 2.5628640000000003,
+      "tp1": 2.7738176,
+      "tp2": 2.8711808,
+      "amount": 100.98,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-28 19:01"
     }
   ],
   "cooldown_until": 1793198287.5878208
