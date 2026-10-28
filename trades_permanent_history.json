@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1011.3223436018957,
-  "total_profit_usdt": 11.322343601895739,
+  "current_balance": 1007.8309600435308,
+  "total_profit_usdt": 7.830960043530832,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -18,7 +18,16 @@
       "time": "2026-10-28 11:11"
     }
   ],
-  "losing_trades": [],
+  "losing_trades": [
+    {
+      "symbol": "CHIP/USDT",
+      "entry": 0.054896,
+      "exit": 0.053000786,
+      "loss": -3.491383558364906,
+      "time": "2026-10-28 11:41",
+      "timestamp": 1793187714.3652403
+    }
+  ],
   "open_trades": [
     {
       "symbol": "FET/USDT",
@@ -127,18 +136,6 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-28 02:02"
-    },
-    {
-      "symbol": "CHIP/USDT",
-      "entry": 0.054896,
-      "sl": 0.053000786,
-      "original_sl": 0.053000786,
-      "tp1": 0.0579283424,
-      "tp2": 0.0602025992,
-      "amount": 101.13,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-28 11:24"
     }
   ],
   "cooldown_until": 0
