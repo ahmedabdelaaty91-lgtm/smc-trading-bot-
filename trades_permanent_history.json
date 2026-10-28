@@ -47,14 +47,16 @@
     {
       "symbol": "FET/USDT",
       "entry": 0.1788,
-      "sl": 0.1788,
+      "sl": 0.181437,
       "original_sl": 0.1734524,
       "tp1": 0.18735615999999997,
       "tp2": 0.19377327999999994,
       "amount": 50.0,
       "tp1_hit": true,
       "profit_locked": 2.3926621923937303,
-      "time": "2026-10-27 13:00"
+      "time": "2026-10-27 13:00",
+      "timestamp": 1793106000.0,
+      "highest_price": 0.1842
     },
     {
       "symbol": "AERO/USDT",
@@ -66,7 +68,8 @@
       "amount": 100.0,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-27 13:00"
+      "time": "2026-10-27 13:00",
+      "timestamp": 1793106000.0
     },
     {
       "symbol": "CETUS/USDT",
@@ -78,43 +81,50 @@
       "amount": 100.0,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-27 15:01"
+      "time": "2026-10-27 15:01",
+      "timestamp": 1793113260.0
     },
     {
       "symbol": "BONK/USDT",
       "entry": 3.049e-06,
-      "sl": 3.049e-06,
+      "sl": 3.11e-06,
       "original_sl": 2.966056e-06,
       "tp1": 3.1817104e-06,
       "tp2": 3.2812432e-06,
       "amount": 50.0,
       "tp1_hit": true,
       "profit_locked": 2.1762938668415885,
-      "time": "2026-10-27 15:20"
+      "time": "2026-10-27 15:20",
+      "timestamp": 1793114400.0,
+      "highest_price": 3.155e-06
     },
     {
       "symbol": "PUMP/USDT",
       "entry": 0.004288,
-      "sl": 0.004288,
+      "sl": 0.00446304,
       "original_sl": 0.0041626580000000005,
       "tp1": 0.0044885472,
       "tp2": 0.004638957599999999,
       "amount": 50.0,
       "tp1_hit": true,
       "profit_locked": 2.3384701492537285,
-      "time": "2026-10-27 16:00"
+      "time": "2026-10-27 16:00",
+      "timestamp": 1793116800.0,
+      "highest_price": 0.004531
     },
     {
       "symbol": "TIA/USDT",
       "entry": 0.5364,
-      "sl": 0.5364,
+      "sl": 0.5428335,
       "original_sl": 0.5192594,
       "tp1": 0.5638249599999999,
       "tp2": 0.5843936799999998,
       "amount": 50.0,
       "tp1_hit": true,
       "profit_locked": 2.5563907531692713,
-      "time": "2026-10-27 16:05"
+      "time": "2026-10-27 16:05",
+      "timestamp": 1793117100.0,
+      "highest_price": 0.5511
     },
     {
       "symbol": "JUP/USDT",
@@ -126,7 +136,9 @@
       "amount": 50.0,
       "tp1_hit": true,
       "profit_locked": 1.783574741348558,
-      "time": "2026-10-27 16:16"
+      "time": "2026-10-27 16:16",
+      "timestamp": 1793117760.0,
+      "highest_price": 0.2826
     },
     {
       "symbol": "ICP/USDT",
@@ -138,7 +150,8 @@
       "amount": 100.98,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-28 19:01"
+      "time": "2026-10-28 19:01",
+      "timestamp": 1793214060.0
     },
     {
       "symbol": "CRV/USDT",
@@ -150,7 +163,8 @@
       "amount": 100.98,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-28 20:00"
+      "time": "2026-10-28 20:00",
+      "timestamp": 1793217600.0
     },
     {
       "symbol": "1INCH/USDT",
@@ -162,7 +176,8 @@
       "amount": 100.98,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-28 20:00"
+      "time": "2026-10-28 20:00",
+      "timestamp": 1793217600.0
     },
     {
       "symbol": "BOME/USDT",
@@ -174,7 +189,8 @@
       "amount": 100.98,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-28 20:01"
+      "time": "2026-10-28 20:01",
+      "timestamp": 1793217660.0
     },
     {
       "symbol": "HMSTR/USDT",
@@ -186,7 +202,8 @@
       "amount": 100.98,
       "tp1_hit": false,
       "profit_locked": 0.0,
-      "time": "2026-10-28 20:01"
+      "time": "2026-10-28 20:01",
+      "timestamp": 1793217660.0
     }
   ],
   "cooldown_until": 1793198287.5878208
