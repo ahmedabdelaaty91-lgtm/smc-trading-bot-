@@ -47,7 +47,7 @@
     {
       "symbol": "FET/USDT",
       "entry": 0.1788,
-      "sl": 0.181437,
+      "sl": 0.1815355,
       "original_sl": 0.1734524,
       "tp1": 0.18735615999999997,
       "tp2": 0.19377327999999994,
@@ -56,7 +56,7 @@
       "profit_locked": 2.3926621923937303,
       "time": "2026-10-27 13:00",
       "timestamp": 1793106000.0,
-      "highest_price": 0.1842
+      "highest_price": 0.1843
     },
     {
       "symbol": "AERO/USDT",
@@ -96,12 +96,12 @@
       "profit_locked": 2.1762938668415885,
       "time": "2026-10-27 15:20",
       "timestamp": 1793114400.0,
-      "highest_price": 3.155e-06
+      "highest_price": 3.158e-06
     },
     {
       "symbol": "PUMP/USDT",
       "entry": 0.004288,
-      "sl": 0.00446304,
+      "sl": 0.00446402,
       "original_sl": 0.0041626580000000005,
       "tp1": 0.0044885472,
       "tp2": 0.004638957599999999,
@@ -110,12 +110,12 @@
       "profit_locked": 2.3384701492537285,
       "time": "2026-10-27 16:00",
       "timestamp": 1793116800.0,
-      "highest_price": 0.004531
+      "highest_price": 0.004532
     },
     {
       "symbol": "TIA/USDT",
       "entry": 0.5364,
-      "sl": 0.5432275,
+      "sl": 0.54372,
       "original_sl": 0.5192594,
       "tp1": 0.5638249599999999,
       "tp2": 0.5843936799999998,
@@ -124,7 +124,7 @@
       "profit_locked": 2.5563907531692713,
       "time": "2026-10-27 16:05",
       "timestamp": 1793117100.0,
-      "highest_price": 0.5515
+      "highest_price": 0.552
     },
     {
       "symbol": "JUP/USDT",
@@ -138,7 +138,7 @@
       "profit_locked": 1.783574741348558,
       "time": "2026-10-27 16:16",
       "timestamp": 1793117760.0,
-      "highest_price": 0.2826
+      "highest_price": 0.2828
     },
     {
       "symbol": "ICP/USDT",
