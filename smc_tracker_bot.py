@@ -30,7 +30,14 @@ COOLDOWN_AFTER_LOSSES = 2       # عدد الخسائر المتتالية لت�
 COOLDOWN_HOURS = 2              # عدد ساعات التهدئة عند تفعيل قاطع الأمان
 HISTORY_FILE = "trades_permanent_history.json"
 
-# قائمة العملات النقية عالية السيولة (تم استبعاد العملات الضعيفة وغير السائلة نهائياً)
+# إعدادات الترقية الذكية للأرباح وإدارة المحفظة
+TRAILING_STEP_PCT = 0.015       # الوقف المتحرك يتبع السعر بفارق 1.5% تحت أعلى قمة بعد TP1
+STAGNANT_HOURS_LIMIT = 40       # إغلاق الصفقة الراكدة بعد 40 ساعة لتحرير السيولة لفرص أسرع
+MAX_MEME_TRADES = 2             # سقف أقصى لعملات الميم لتنويع المحفظة وتفادي تركز المخاطر
+
+MEME_COINS = {'DOGE', 'SHIB', 'PEPE', 'BONK', 'FLOKI', 'WIF', 'BOME', 'PUMP', 'MEME', '1000CAT', '1000SATS'}
+
+# قائمة العملات النقية عالية السيولة (استبعاد العملات الضعيفة وغير السائلة نهائياً)
 RAW_COINS = [
     # القياديات والمشاريع المؤسساتية الكبرى
     'BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOGE', 'AVAX', 'LINK', 'DOT',
@@ -231,6 +238,7 @@ last_scan_stats = {
     "low_vol": 0,
     "rsi_fail": 0,
     "overextended": 0,
+    "sector_blocked": 0,
     "btc_desc": "",
     "btc_blocked": False,
     "cooldown_active": False,
@@ -256,7 +264,7 @@ def send_hourly_market_radar(chat_id=None):
         safety_notes.append(f"🛑 *قاطع أمان المحفظة نشط:* تجميد الشراء مؤقتاً لحماية رصيدك (متبقي `{rem}` دقيقة).")
     
     if last_scan_stats.get("btc_blocked", False) or not btc_ok:
-        safety_notes.append(f"🛡️ *درع البيتكوين مفعل:* {btc_desc}\n*(تم حظر صفقات الشراء آلياً لتجنب النزيف الجماعي ومصائد الثيران)*.")
+        safety_notes.append(f"🛡️ *درع البيتكوين مفعل:* {btc_desc}\n*(تم حظر صفقات الشراء آلياً لتجنب النزيف ومصائد الثيران)*.")
     
     safety_msg = "\n".join(safety_notes)
     if safety_msg:
@@ -277,7 +285,7 @@ def send_hourly_market_radar(chat_id=None):
         f"━━━━━━━━━━━━━━━━━━\n"
         f"💼 *المحفظة:* `{open_count}/{MAX_OPEN_TRADES}` صفقات نشطة\n"
         f"💵 *إجمالي الرصيد المحمي:* `${bal:,.2f}` USDT\n"
-        f"🛡️ *نظام حماية الأرباح وقاطع الأمان شغال 24/7 ولن يدخل إلا في الصفقات المضمونة فنياً!*"
+        f"🛡️ *نظام حماية الأرباح والوقف المتحرك شغال 24/7!*"
     )
     send_telegram(msg, chat_id=chat_id)
 
@@ -315,7 +323,7 @@ def send_full_detailed_report(chat_id=None):
         f"⏳ *الصفقات النشطة بالمحفظة ({len(open_tr)}/{MAX_OPEN_TRADES}):* 🟡\n"
         f"{open_text}"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"💡 *أرسل كلمة (تقرير) أو (رادار) في أي وقت لتحديث كشف الحساب فوراً!*"
+        f"💡 *أرسل كلمة (تقرير) أو (رادار) أو (تصفير) في أي وقت!*"
     )
     send_telegram(msg, chat_id=chat_id)
 
@@ -338,11 +346,46 @@ def check_telegram_commands():
                 # رادار نبض السوق
                 elif any(w in text for w in ['رادار', 'radar', 'السوق', 'market', 'وضع السوق']):
                     send_hourly_market_radar(chat_id=sender_chat_id)
+                # تصفير شامل للمحفظة للبدء من الصفر برصيد 1000$
+                elif any(w in text for w in ['تصفير شامل', 'reset all']):
+                    new_hist = {
+                        "starting_balance": 1000.0,
+                        "current_balance": 1000.0,
+                        "total_profit_usdt": 0.0,
+                        "winning_trades": [],
+                        "losing_trades": [],
+                        "open_trades": [],
+                        "cooldown_until": 0
+                    }
+                    save_history(new_hist)
+                    send_telegram(
+                        "🔄 *تم إعادة ضبط المحفظة بالكامل (Clean Reset)!* 🟢\n"
+                        "━━━━━━━━━━━━━━━━━━\n"
+                        "💼 الرصيد الابتدائي: `$1,000.00` USDT\n"
+                        "🗑️ تم مسح كافة الصفقات القديمة بنجاح.\n"
+                        "🚀 البوت جاهز تماماً لبدء التقييم النظيف الجديد وفق الدرع المطور!",
+                        chat_id=sender_chat_id
+                    )
+                # تصفير وإلغاء الصفقات المفتوحة فقط
+                elif any(w in text for w in ['تصفير', 'الغاء الصفقات', 'إلغاء الصفقات', 'مسح الصفقات', 'reset']):
+                    hist = load_history()
+                    old_count = len(hist.get("open_trades", []))
+                    hist["open_trades"] = []
+                    hist["cooldown_until"] = 0
+                    save_history(hist)
+                    send_telegram(
+                        f"🔄 *تم إلغاء وتصفير الصفقات المفتوحة بنجاح!* 🟢\n"
+                        f"━━━━━━━━━━━━━━━━━━\n"
+                        f"🗑️ تم تفريغ `{old_count}` صفقات معلقة كانت تحجز المحفظة.\n"
+                        f"💼 سعة المحفظة الآن: `0/{MAX_OPEN_TRADES}` صفقات شاغرة.\n"
+                        f"🚀 البوت سيبدأ فوراً بالبحث عن صفقات جديدة بأعلى جودة مؤسساتية!",
+                        chat_id=sender_chat_id
+                    )
     except Exception as e:
         pass
 
 # ========================================================
-# 6. متابعة الصفقات مع حجز الأرباح ونقل الوقف وقاطع الأمان
+# 6. متابعة الصفقات مع الوقف المتحرك وتحرير الصفقات الراكدة
 # ========================================================
 def track_open_trades():
     hist = load_history()
@@ -361,11 +404,22 @@ def track_open_trades():
         amount = t['amount']
         tp1_hit = t.get('tp1_hit', False)
 
+        # استخراج وقت دخول الصفقة بدقة لحساب العمر
+        trade_ts = t.get('timestamp')
+        if not trade_ts and t.get('time'):
+            try:
+                trade_ts = datetime.strptime(t['time'], '%Y-%m-%d %H:%M').timestamp()
+            except:
+                trade_ts = time.time()
+            t['timestamp'] = trade_ts
+
         try:
             ticker = market_exchange.fetch_ticker(symbol)
             curr = ticker['last']
 
-            # 1. تحقق الهدف الأول (TP1): حجز ربح 50% ونقل الوقف لنقطة الدخول (Breakeven)
+            # ----------------------------------------------------
+            # 1. تحقق الهدف الأول (TP1): حجز ربح 50% ونقل الوقف لنقطة الدخول
+            # ----------------------------------------------------
             if not tp1_hit and curr >= tp1:
                 profit_50 = (amount * 0.5) * ((tp1 - entry) / entry)
                 try:
@@ -378,6 +432,7 @@ def track_open_trades():
                 t['tp1_hit'] = True
                 t['amount'] = round(amount * 0.5, 2)
                 t['profit_locked'] = profit_50
+                t['highest_price'] = curr
 
                 hist["total_profit_usdt"] += profit_50
                 hist["current_balance"] += profit_50
@@ -390,17 +445,33 @@ def track_open_trades():
                     f"📥 *الدخول:* `${entry:.4f}` ⬅️ *سعر الهدف الأول:* `${tp1:.4f}`\n"
                     f"💵 *تم حجز ربح (50%):* `+${profit_50:.2f}` USDT 🟢\n"
                     f"🛡️ *تم نقل وقف الخسارة إلى سعر الدخول (Breakeven):* `${entry:.4f}`\n"
+                    f"🚀 *تم تفعيل الوقف المتحرك الذكي (Smart Trailing) لحماية أرباح النصف الثاني!*\n"
                     f"💼 *إجمالي رصيد المحفظة المحدث:* `${hist['current_balance']:,.2f}` USDT 💵\n"
                     f"💰 *صافي أرباح المحفظة الكلية:* `${hist['total_profit_usdt']:+.2f}` USDT\n"
-                    f"━━━━━━━━━━━━━━━━━━\n"
-                    f"🚀 *الصفقة الآن خالية من أي مخاطرة تماماً وننتظر الهدف الثاني TP2!*"
+                    f"━━━━━━━━━━━━━━━━━━"
                 )
                 send_telegram(msg)
                 updated_open.append(t)
                 continue
 
-            # 2. تحقق الهدف الثاني بالكامل (TP2)
-            elif curr >= tp2:
+            # ----------------------------------------------------
+            # 2. ترقية الوقف المتحرك الذكي للنصف الثاني (Smart Trailing Stop)
+            # ----------------------------------------------------
+            if tp1_hit:
+                highest = max(t.get('highest_price', curr), curr)
+                t['highest_price'] = highest
+
+                # إذا واصل السعر الصعود فوق TP1، نحسب وقفاً متحركاً بـ 1.5% تحت أعلى سعر وصل له
+                trailing_candidate = highest * (1.0 - TRAILING_STEP_PCT)
+                # لا نسمح للوقف المتحرك بالنزول عن سعر الدخول مطلقاً
+                if trailing_candidate > t['sl'] and trailing_candidate > entry:
+                    t['sl'] = round(trailing_candidate, 8)
+                    changed = True
+
+            # ----------------------------------------------------
+            # 3. تحقق الهدف الثاني بالكامل (TP2)
+            # ----------------------------------------------------
+            if curr >= tp2:
                 rem_profit = amount * ((tp2 - entry) / entry)
                 total_win = rem_profit + t.get('profit_locked', 0.0)
                 try:
@@ -430,7 +501,9 @@ def track_open_trades():
                 send_telegram(msg)
                 continue
 
-            # 3. ملامسة وقف الخسارة
+            # ----------------------------------------------------
+            # 4. ملامسة الوقف (سواء كان وقف أولي، أو وقف دخول، أو وقف متحرك رابح)
+            # ----------------------------------------------------
             elif curr <= sl:
                 try:
                     qty_close = amount / entry
@@ -439,19 +512,26 @@ def track_open_trades():
                     pass
 
                 if tp1_hit:
+                    rem_profit = amount * ((sl - entry) / entry)
+                    total_win = rem_profit + t.get('profit_locked', 0.0)
                     hist["winning_trades"].append({
                         "symbol": symbol, "entry": entry, "exit": sl,
-                        "profit": t.get('profit_locked', 0.0),
+                        "profit": total_win,
                         "time": datetime.now().strftime('%Y-%m-%d %H:%M')
                     })
+                    hist["total_profit_usdt"] += rem_profit
+                    hist["current_balance"] += rem_profit
                     changed = True
 
+                    is_trailing = sl > (entry * 1.002)
+                    exit_title = "الوقف المتحرك الرابح (Trailing SL)" if is_trailing else "سعر الدخول (Breakeven)"
+
                     msg = (
-                        f"🛡️ *خروج على سعر الدخول (Breakeven Exit)* 🛡️\n"
+                        f"🛡️ *خروج النصف الثاني: {exit_title}* 🛡️\n"
                         f"━━━━━━━━━━━━━━━━━━\n"
                         f"🪙 *العملة:* `#{symbol}`\n"
-                        f"💡 النصف المتبقي خرج على سعر الدخول `${entry:.4f}` بدون أي خسارة.\n"
-                        f"💰 *الصفقة انتهت بربح صافي من الهدف الأول:* `+${t.get('profit_locked', 0.0):.2f}` USDT 🟢\n"
+                        f"📥 *الدخول:* `${entry:.4f}` ⬅️ *الخروج:* `${sl:.4f}`\n"
+                        f"💰 *صافي الربح الكلي للصفقة (TP1 + المتبقي):* `+${total_win:.2f}` USDT 🟢\n"
                         f"💼 *إجمالي رصيد المحفظة المحدث:* `${hist['current_balance']:,.2f}` USDT 💵\n"
                         f"💰 *صافي أرباح المحفظة الكلية:* `${hist['total_profit_usdt']:+.2f}` USDT\n"
                         f"━━━━━━━━━━━━━━━━━━"
@@ -470,7 +550,7 @@ def track_open_trades():
                     hist["current_balance"] += loss
                     changed = True
 
-                    # 🛡️ تفعيل قاطع الأمان التلقائي (Circuit Breaker)
+                    # 🛡️ قاطع الأمان التلقائي (Circuit Breaker)
                     recent_losses = [
                         l for l in hist.get("losing_trades", [])
                         if (now_ts - l.get("timestamp", now_ts)) <= 7200
@@ -482,7 +562,7 @@ def track_open_trades():
                             f"🛡️ *تفعيل قاطع أمان المحفظة (Circuit Breaker)!* 🛡️\n"
                             f"━━━━━━━━━━━━━━━━━━\n"
                             f"⚠️ تم رصد ضرب وقفي خسارة متتاليين نتيجة تراجع عام في السوق.\n"
-                            f"🛑 *تم تجميد فتح أي صفقات جديدة آلياً لمدة {COOLDOWN_HOURS} ساعات* لحماية رأس المال حتى تستقر السيولة!\n"
+                            f"🛑 *تم تجميد فتح أي صفقات جديدة آلياً لمدة {COOLDOWN_HOURS} ساعات* لحماية رأس المال!\n"
                             f"💼 *رصيد المحفظة الحالي:* `${hist['current_balance']:,.2f}` USDT"
                         )
                         send_telegram(cb_msg)
@@ -500,6 +580,48 @@ def track_open_trades():
                     send_telegram(msg)
                     continue
 
+            # ----------------------------------------------------
+            # 5. ترقية تحرير السيولة للصفقات الراكدة (Time-Based Stagnant Exit)
+            # ----------------------------------------------------
+            if not tp1_hit:
+                age_hours = (time.time() - t.get('timestamp', time.time())) / 3600
+                pnl_pct = ((curr - entry) / entry) * 100
+                # إذا مرت 40 ساعة والصفقة نائمة حول سعر الدخول (-1.2% إلى +1.2%)
+                if age_hours >= STAGNANT_HOURS_LIMIT and (-1.2 <= pnl_pct <= 1.2):
+                    try:
+                        qty_close = amount / entry
+                        binance_testnet.create_market_sell_order(symbol, qty_close)
+                    except:
+                        pass
+
+                    pnl_usdt = amount * (pnl_pct / 100)
+                    now_str = datetime.now().strftime('%Y-%m-%d %H:%M')
+                    if pnl_usdt >= 0:
+                        hist["winning_trades"].append({
+                            "symbol": symbol, "entry": entry, "exit": curr,
+                            "profit": pnl_usdt, "time": now_str
+                        })
+                    else:
+                        hist["losing_trades"].append({
+                            "symbol": symbol, "entry": entry, "exit": curr,
+                            "loss": pnl_usdt, "time": now_str, "timestamp": time.time()
+                        })
+                    hist["total_profit_usdt"] += pnl_usdt
+                    hist["current_balance"] += pnl_usdt
+                    changed = True
+
+                    msg = (
+                        f"⏰ *تحرير سيولة صفقة راكدة (Time-Based Exit)* ⏰\n"
+                        f"━━━━━━━━━━━━━━━━━━\n"
+                        f"🪙 *العملة:* `#{symbol}`\n"
+                        f"⏳ *المدة بالمحفظة:* `{age_hours:.1f}` ساعة بحركة عرضية متجمدة.\n"
+                        f"📥 *الدخول:* `${entry:.4f}` ⬅️ *الخروج:* `${curr:.4f}` ({pnl_pct:+.2f}%)\n"
+                        f"💵 *النتيجة:* `{pnl_usdt:+.2f}$` USDT\n"
+                        f"🚀 *تم تحرير مقعد المحفظة فوراً لاقتناص فرصة جديدة ذات زخم وانفجار سعري!*"
+                    )
+                    send_telegram(msg)
+                    continue
+
             updated_open.append(t)
         except:
             updated_open.append(t)
@@ -509,7 +631,7 @@ def track_open_trades():
         save_history(hist)
 
 # ========================================================
-# 7. محرك SMC الفائق الدفاعي (درع البيتكوين 4H + 1H + منع المطاردة)
+# 7. محرك SMC الفائق الدفاعي (درع البيتكوين 4H + 1H + تنويع القطاعات)
 # ========================================================
 def scan_smc():
     global last_scan_stats
@@ -522,6 +644,7 @@ def scan_smc():
     low_vol_c = 0
     rsi_fail_c = 0
     overextended_c = 0
+    sector_blocked_c = 0
     new_opened = 0
 
     # سقف الـ 10 صفقات
@@ -547,11 +670,23 @@ def scan_smc():
         return 0
     last_scan_stats["btc_blocked"] = False
 
+    # فحص عدد عملات الميم المفتوحة حالياً لفرض سقف التنويع القطاعي
+    open_meme_count = sum(1 for t in open_trades if t['symbol'].split('/')[0] in MEME_COINS)
+
     for symbol in SYMBOLS:
         if len(open_trades) >= MAX_OPEN_TRADES:
             break
 
         if symbol in open_symbols:
+            continue
+
+        coin_base = symbol.split('/')[0]
+
+        # ----------------------------------------------------
+        # تنويع القطاعات: منع فتح أكثر من صفقتين في عملات الميم لتوزيع المخاطر
+        # ----------------------------------------------------
+        if coin_base in MEME_COINS and open_meme_count >= MAX_MEME_TRADES:
+            sector_blocked_c += 1
             continue
 
         try:
@@ -644,14 +779,18 @@ def scan_smc():
                     "symbol": symbol, "entry": entry, "sl": sl, "original_sl": sl,
                     "tp1": tp1, "tp2": tp2, "amount": trade_amount,
                     "tp1_hit": False, "profit_locked": 0.0,
-                    "time": datetime.now().strftime('%Y-%m-%d %H:%M')
+                    "highest_price": entry,
+                    "time": datetime.now().strftime('%Y-%m-%d %H:%M'),
+                    "timestamp": time.time()
                 }
                 hist["open_trades"].append(new_trade)
                 open_symbols.append(symbol)
                 save_history(hist)
                 new_opened += 1
 
-                coin_base = symbol.split('/')[0]
+                if coin_base in MEME_COINS:
+                    open_meme_count += 1
+
                 binance_link = f"https://www.binance.com/en/trade/{coin_base}_USDT"
                 tv_link = f"https://www.tradingview.com/chart/?symbol=BINANCE:{coin_base}USDT"
 
@@ -659,7 +798,7 @@ def scan_smc():
                     f"🚀 *إشارة تداول فنية فائقة الجودة (+A SMC Defended)!* 🟢\n"
                     f"🪙 *العملة:* `#{symbol}`\n"
                     f"⏰ *فريم الإشارة:* `{TIMEFRAME}`\n"
-                    f"🎯 *الاستراتيجية:* SMC Pro + RSI Momentum + Dual BTC Guard 🧠\n"
+                    f"🎯 *الاستراتيجية:* SMC Pro + Smart Trailing + Dual BTC Guard 🧠\n"
                     f"📊 *قوة الزخم (RSI):* `{rsi:.1f}` (منطقة الزخم الصاعد النقي)\n"
                     f"📌 *التأكيد الفني:* كسر هيكل صاعد فوق EMA20 بفوليوم مؤسساتي +130%\n"
                     f"🛡️ *درع البيتكوين (4H + 1H):* {btc_desc}\n"
@@ -669,7 +808,7 @@ def scan_smc():
                     f"💵 *سعر الدخول:* `${entry:.4f}`\n"
                     f"🛡️ *قاع الدعم (OB/FVG Low):* `${technical_low:.4f}`\n"
                     f"🛑 *وقف الخسارة الفني المنيع:* `${sl:.4f}` (-{sl_pct:.2f}%)\n"
-                    f"🎯 *الهدف الأول (TP1 - 1:1.6):* `${tp1:.4f}` (+{tp1_pct:.2f}%) *(حجز 50% + نقل الوقف للدخول)*\n"
+                    f"🎯 *الهدف الأول (TP1 - 1:1.6):* `${tp1:.4f}` (+{tp1_pct:.2f}%) *(حجز 50% + تفعيل الوقف المتحرك)*\n"
                     f"🎯 *الهدف الثاني (TP2 - 1:2.8):* `${tp2:.4f}` (+{tp2_pct:.2f}%)\n"
                     f"💼 *حجم العقد المنفذ (10%):* `${trade_amount:.2f} USDT`\n"
                     f"🔢 *الصفقات النشطة بالمحفظة:* `{len(open_trades)}/{MAX_OPEN_TRADES}`\n"
@@ -688,6 +827,7 @@ def scan_smc():
     last_scan_stats["low_vol"] = low_vol_c
     last_scan_stats["rsi_fail"] = rsi_fail_c
     last_scan_stats["overextended"] = overextended_c
+    last_scan_stats["sector_blocked"] = sector_blocked_c
     last_scan_stats["total"] = len(SYMBOLS)
     return new_opened
 
@@ -696,16 +836,20 @@ def scan_smc():
 # ========================================================
 def main():
     bal = get_binance_balance()
-    print("✅ تم تثبيت المحرك الدفاعي المطور بنجاح (درع البيتكوين 4H+1H + منع مطاردة السعر + فوليوم 130% + قائمة العملات النقية)!")
+    print("✅ تم تثبيت المحرك الدفاعي الفائق بنجاح (درع البيتكوين 4H+1H + الوقف المتحرك الذكي + تحرير الصفقات الراكدة)!")
     send_telegram(
-        f"🛡️ *تم تفعيل درع حماية الأرباح وقاطع الأمان المطور للمحفظة!* 🟢\n\n"
+        f"🛡️ *تم تفعيل الترقية الاحترافية الذكية للمحفظة (Smart Trailing & Turnover)!* 🟢\n\n"
         f"💼 رصيد باينانس: `${bal:,.2f}` USDT (دخول 10% لكل صفقة).\n"
-        f"1. 🛡️ *درع البيتكوين المزدوج (4H + 1H):* حظر كامل للشراء إذا كان البيتكوين تحت EMA20 على 4H أو 1H لمنع مصائد الثيران.\n"
-        f"2. 💎 *قائمة العملات المؤسساتية النقية:* استبعاد كامل للعملات ضعيفة السيولة وذيول التصفية العشوائية.\n"
-        f"3. 🎯 *فلتر منع مطاردة السعر:* الشراء فقط عند مستويات الدعم والكسر وإلغاء أي صفقة متضخمة بأكثر من 1.0%.\n"
-        f"4. 🛑 *قاطع الأمان التلقائي (Circuit Breaker):* تجميد الشراء ساعتين فور رصد خسارتين متتاليتين.\n"
-        f"5. 🧱 *وقف خسارة منيع (2.2% - 3.5%):* حماية الصفقات من ذيول التذبذب والضجيج.\n"
-        f"💬 أرسل كلمة (تقرير) لكشف الحساب أو (رادار) لنبض السوق في أي وقت!"
+        f"1. 🚀 *الوقف المتحرك الذكي (Smart Trailing):* بعد TP1، يتحرك الوقف خلف السعر بفارق 1.5% لحجز أعلى أرباح ممكنة حتى لو ارتد السوق.\n"
+        f"2. ⏰ *تحرير السيولة التلقائي (Time Exit):* إغلاق الصفقات الراكدة لأكثر من 40 ساعة لإعادة توجيه رأس المال لفرص أسرع انفجاراً.\n"
+        f"3. 🛡️ *تنويع قطاعات المحفظة:* سقف أقصى لعملات الميم لضمان توزيع السيولة بين DeFi و Layer-1 و AI.\n"
+        f"4. 🧱 *درع البيتكوين المزدوج (4H + 1H):* حظر الشراء تماماً إذا كان البيتكوين تحت EMA20.\n"
+        f"5. 🛑 *قاطع الأمان التلقائي (Circuit Breaker):* تجميد ساعتين عند حدوث خسارتين متتاليتين.\n"
+        f"💬 *الأوامر السريعة المتاحة في الشات:*\n"
+        f"• أرسل `تقرير` لكشف الحساب والأرباح.\n"
+        f"• أرسل `رادار` لنبض السوق اللحظي وحالة البيتكوين.\n"
+        f"• أرسل `تصفير` لإلغاء الصفقات المعلقة وتفريغ المحفظة فوراً.\n"
+        f"• أرسل `تصفير شامل` لإعادة ضبط الحساب بالكامل من الصفر (1,000$ USDT)!"
     )
 
     last_night_day = -1
