@@ -163,6 +163,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-28 20:00"
+    },
+    {
+      "symbol": "BOME/USDT",
+      "entry": 0.0006495,
+      "sl": 0.0006296382,
+      "original_sl": 0.0006296382,
+      "tp1": 0.00068127888,
+      "tp2": 0.00070511304,
+      "amount": 100.98,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-28 20:01"
     }
   ],
   "cooldown_until": 1793198287.5878208
