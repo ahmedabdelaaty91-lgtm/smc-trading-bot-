@@ -175,6 +175,18 @@
       "tp1_hit": false,
       "profit_locked": 0.0,
       "time": "2026-10-28 20:01"
+    },
+    {
+      "symbol": "HMSTR/USDT",
+      "entry": 0.0001451,
+      "sl": 0.0001411172,
+      "original_sl": 0.0001411172,
+      "tp1": 0.00015147248000000002,
+      "tp2": 0.00015625184000000002,
+      "amount": 100.98,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "time": "2026-10-28 20:01"
     }
   ],
   "cooldown_until": 1793198287.5878208
