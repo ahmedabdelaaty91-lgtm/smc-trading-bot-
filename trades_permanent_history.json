@@ -246,6 +246,20 @@
       "highest_price": 0.2775,
       "time": "2026-10-29 15:09",
       "timestamp": 1793286581.6515458
+    },
+    {
+      "symbol": "ALGO/USDT",
+      "entry": 0.1021,
+      "sl": 0.0997002,
+      "original_sl": 0.0997002,
+      "tp1": 0.10593967999999998,
+      "tp2": 0.10881943999999998,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.1021,
+      "time": "2026-10-29 15:10",
+      "timestamp": 1793286647.1114256
     }
   ],
   "cooldown_until": 1793246767.9905427
