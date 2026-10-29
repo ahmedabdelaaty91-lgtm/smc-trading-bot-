@@ -204,6 +204,20 @@
       "highest_price": 0.0078,
       "time": "2026-10-29 15:02",
       "timestamp": 1793286128.0064812
+    },
+    {
+      "symbol": "WLD/USDT",
+      "entry": 0.4277,
+      "sl": 0.4173636,
+      "original_sl": 0.4173636,
+      "tp1": 0.44423824000000006,
+      "tp2": 0.4566419200000001,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.4277,
+      "time": "2026-10-29 15:07",
+      "timestamp": 1793286456.4710171
     }
   ],
   "cooldown_until": 1793246767.9905427
