@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 992.2696931726423,
-  "total_profit_usdt": -7.73030682735773,
+  "current_balance": 986.641628721974,
+  "total_profit_usdt": -13.358371278026013,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -180,6 +180,22 @@
       "loss": -2.7064970674486797,
       "time": "2026-10-29 20:02",
       "timestamp": 1793304176.570511
+    },
+    {
+      "symbol": "INJ/USDT",
+      "entry": 8.082,
+      "exit": 7.835298,
+      "loss": -3.07385441722347,
+      "time": "2026-10-29 20:04",
+      "timestamp": 1793304263.0370622
+    },
+    {
+      "symbol": "EDU/USDT",
+      "entry": 0.0598,
+      "exit": 0.0582832,
+      "loss": -2.554210033444814,
+      "time": "2026-10-29 20:04",
+      "timestamp": 1793304264.3675733
     }
   ],
   "open_trades": [
@@ -198,20 +214,6 @@
       "timestamp": 1793282365.8343053
     },
     {
-      "symbol": "INJ/USDT",
-      "entry": 8.082,
-      "sl": 7.835298,
-      "original_sl": 7.835298,
-      "tp1": 8.476723200000002,
-      "tp2": 8.772765600000003,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 8.082,
-      "time": "2026-10-29 14:18",
-      "timestamp": 1793283490.105782
-    },
-    {
       "symbol": "AGLD/USDT",
       "entry": 0.1812,
       "sl": 0.176646,
@@ -224,21 +226,7 @@
       "highest_price": 0.1812,
       "time": "2026-10-29 14:27",
       "timestamp": 1793284030.5197217
-    },
-    {
-      "symbol": "EDU/USDT",
-      "entry": 0.0598,
-      "sl": 0.0582832,
-      "original_sl": 0.0582832,
-      "tp1": 0.06222688,
-      "tp2": 0.06404704,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.0598,
-      "time": "2026-10-29 14:41",
-      "timestamp": 1793284901.3280358
     }
   ],
-  "cooldown_until": 1793311376.570511
+  "cooldown_until": 1793311464.3675733
 }
