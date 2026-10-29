@@ -260,6 +260,20 @@
       "highest_price": 0.1021,
       "time": "2026-10-29 15:10",
       "timestamp": 1793286647.1114256
+    },
+    {
+      "symbol": "PORTAL/USDT",
+      "entry": 0.01364,
+      "sl": 0.0132734,
+      "original_sl": 0.0132734,
+      "tp1": 0.01422656,
+      "tp2": 0.014666479999999999,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.01364,
+      "time": "2026-10-29 15:11",
+      "timestamp": 1793286717.3954208
     }
   ],
   "cooldown_until": 1793246767.9905427
