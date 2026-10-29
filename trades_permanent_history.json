@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1004.7441145483796,
-  "total_profit_usdt": 4.744114548379521,
+  "current_balance": 1002.3772207188007,
+  "total_profit_usdt": 2.3772207188006824,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -140,6 +140,14 @@
       "loss": -2.259912226577321,
       "time": "2026-10-29 18:28",
       "timestamp": 1793298511.5635235
+    },
+    {
+      "symbol": "ALGO/USDT",
+      "entry": 0.1021,
+      "exit": 0.0997002,
+      "loss": -2.366893829578838,
+      "time": "2026-10-29 18:31",
+      "timestamp": 1793298705.8922734
     }
   ],
   "open_trades": [
@@ -242,20 +250,6 @@
       "timestamp": 1793286581.6515458
     },
     {
-      "symbol": "ALGO/USDT",
-      "entry": 0.1021,
-      "sl": 0.0997002,
-      "original_sl": 0.0997002,
-      "tp1": 0.10593967999999998,
-      "tp2": 0.10881943999999998,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.1021,
-      "time": "2026-10-29 15:10",
-      "timestamp": 1793286647.1114256
-    },
-    {
       "symbol": "PORTAL/USDT",
       "entry": 0.01364,
       "sl": 0.0132734,
@@ -270,5 +264,5 @@
       "timestamp": 1793286717.3954208
     }
   ],
-  "cooldown_until": 1793246767.9905427
+  "cooldown_until": 1793305905.8922734
 }
