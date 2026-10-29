@@ -148,6 +148,20 @@
       "highest_price": 1.2012,
       "time": "2026-10-29 13:59",
       "timestamp": 1793282365.8343053
+    },
+    {
+      "symbol": "INJ/USDT",
+      "entry": 8.082,
+      "sl": 7.835298,
+      "original_sl": 7.835298,
+      "tp1": 8.476723200000002,
+      "tp2": 8.772765600000003,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 8.082,
+      "time": "2026-10-29 14:18",
+      "timestamp": 1793283490.105782
     }
   ],
   "cooldown_until": 1793246767.9905427
