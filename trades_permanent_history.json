@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1023.3847169955598,
-  "total_profit_usdt": 23.384716995559717,
+  "current_balance": 1023.4875864042134,
+  "total_profit_usdt": 23.487586404213417,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -51,6 +51,13 @@
       "exit": 0.1821265,
       "profit": 3.322891498881429,
       "time": "2026-10-29 01:33"
+    },
+    {
+      "symbol": "BONK/USDT",
+      "entry": 3.049e-06,
+      "exit": 3.13e-06,
+      "profit": 3.504598228927521,
+      "time": "2026-10-29 01:39"
     }
   ],
   "losing_trades": [
@@ -69,6 +76,14 @@
       "loss": -2.900056794714184,
       "time": "2026-10-28 12:38",
       "timestamp": 1793191087.5878208
+    },
+    {
+      "symbol": "CRV/USDT",
+      "entry": 0.3433,
+      "exit": 0.33173519999999995,
+      "loss": -3.4017288202738256,
+      "time": "2026-10-29 01:39",
+      "timestamp": 1793237956.9718664
     }
   ],
   "open_trades": [
@@ -99,20 +114,6 @@
       "timestamp": 1793113260.0
     },
     {
-      "symbol": "BONK/USDT",
-      "entry": 3.049e-06,
-      "sl": 3.13e-06,
-      "original_sl": 2.966056e-06,
-      "tp1": 3.1817104e-06,
-      "tp2": 3.2812432e-06,
-      "amount": 50.0,
-      "tp1_hit": true,
-      "profit_locked": 2.1762938668415885,
-      "time": "2026-10-27 15:20",
-      "timestamp": 1793114400.0,
-      "highest_price": 3.174e-06
-    },
-    {
       "symbol": "ICP/USDT",
       "entry": 2.644,
       "sl": 2.5628640000000003,
@@ -124,19 +125,6 @@
       "profit_locked": 0.0,
       "time": "2026-10-28 19:01",
       "timestamp": 1793214060.0
-    },
-    {
-      "symbol": "CRV/USDT",
-      "entry": 0.3433,
-      "sl": 0.33173519999999995,
-      "original_sl": 0.33173519999999995,
-      "tp1": 0.36180368000000007,
-      "tp2": 0.3756814400000001,
-      "amount": 100.98,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-28 20:00",
-      "timestamp": 1793217600.0
     },
     {
       "symbol": "1INCH/USDT",
