@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1007.0040267749569,
-  "total_profit_usdt": 7.0040267749568415,
+  "current_balance": 1004.7441145483796,
+  "total_profit_usdt": 4.744114548379521,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -132,6 +132,14 @@
       "loss": -2.7717652929014513,
       "time": "2026-10-29 02:06",
       "timestamp": 1793239567.9905427
+    },
+    {
+      "symbol": "MANA/USDT",
+      "entry": 0.07909,
+      "exit": 0.07731505999999999,
+      "loss": -2.259912226577321,
+      "time": "2026-10-29 18:28",
+      "timestamp": 1793298511.5635235
     }
   ],
   "open_trades": [
@@ -218,20 +226,6 @@
       "highest_price": 0.4277,
       "time": "2026-10-29 15:07",
       "timestamp": 1793286456.4710171
-    },
-    {
-      "symbol": "MANA/USDT",
-      "entry": 0.07909,
-      "sl": 0.07731505999999999,
-      "original_sl": 0.07731505999999999,
-      "tp1": 0.081929904,
-      "tp2": 0.084059832,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.07909,
-      "time": "2026-10-29 15:09",
-      "timestamp": 1793286578.4768727
     },
     {
       "symbol": "JUP/USDT",
