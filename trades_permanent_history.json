@@ -190,6 +190,20 @@
       "highest_price": 0.0598,
       "time": "2026-10-29 14:41",
       "timestamp": 1793284901.3280358
+    },
+    {
+      "symbol": "XAI/USDT",
+      "entry": 0.0078,
+      "sl": 0.00760476,
+      "original_sl": 0.00760476,
+      "tp1": 0.008112383999999999,
+      "tp2": 0.008346671999999998,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.0078,
+      "time": "2026-10-29 15:02",
+      "timestamp": 1793286128.0064812
     }
   ],
   "cooldown_until": 1793246767.9905427
