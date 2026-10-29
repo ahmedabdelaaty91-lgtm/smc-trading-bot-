@@ -176,6 +176,20 @@
       "highest_price": 0.1812,
       "time": "2026-10-29 14:27",
       "timestamp": 1793284030.5197217
+    },
+    {
+      "symbol": "EDU/USDT",
+      "entry": 0.0598,
+      "sl": 0.0582832,
+      "original_sl": 0.0582832,
+      "tp1": 0.06222688,
+      "tp2": 0.06404704,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.0598,
+      "time": "2026-10-29 14:41",
+      "timestamp": 1793284901.3280358
     }
   ],
   "cooldown_until": 1793246767.9905427
