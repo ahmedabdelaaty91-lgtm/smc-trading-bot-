@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1015.4525997504096,
-  "total_profit_usdt": 15.45259975040964,
+  "current_balance": 1020.0618254966782,
+  "total_profit_usdt": 20.06182549667829,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -37,6 +37,13 @@
       "exit": 0.2803,
       "profit": 1.783574741348558,
       "time": "2026-10-29 00:53"
+    },
+    {
+      "symbol": "PUMP/USDT",
+      "entry": 0.004288,
+      "exit": 0.00448274,
+      "profit": 4.60922574626865,
+      "time": "2026-10-29 00:54"
     }
   ],
   "losing_trades": [
@@ -111,20 +118,6 @@
       "time": "2026-10-27 15:20",
       "timestamp": 1793114400.0,
       "highest_price": 3.174e-06
-    },
-    {
-      "symbol": "PUMP/USDT",
-      "entry": 0.004288,
-      "sl": 0.00448274,
-      "original_sl": 0.0041626580000000005,
-      "tp1": 0.0044885472,
-      "tp2": 0.004638957599999999,
-      "amount": 50.0,
-      "tp1_hit": true,
-      "profit_locked": 2.3384701492537285,
-      "time": "2026-10-27 16:00",
-      "timestamp": 1793116800.0,
-      "highest_price": 0.004551
     },
     {
       "symbol": "ICP/USDT",
