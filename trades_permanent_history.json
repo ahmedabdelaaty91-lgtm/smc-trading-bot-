@@ -134,6 +134,21 @@
       "timestamp": 1793239567.9905427
     }
   ],
-  "open_trades": [],
+  "open_trades": [
+    {
+      "symbol": "GAS/USDT",
+      "entry": 1.2012,
+      "sl": 1.1680592,
+      "original_sl": 1.1680592,
+      "tp1": 1.25422528,
+      "tp2": 1.29399424,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 1.2012,
+      "time": "2026-10-29 13:59",
+      "timestamp": 1793282365.8343053
+    }
+  ],
   "cooldown_until": 1793246767.9905427
 }
