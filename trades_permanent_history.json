@@ -162,6 +162,20 @@
       "highest_price": 8.082,
       "time": "2026-10-29 14:18",
       "timestamp": 1793283490.105782
+    },
+    {
+      "symbol": "AGLD/USDT",
+      "entry": 0.1812,
+      "sl": 0.176646,
+      "original_sl": 0.176646,
+      "tp1": 0.1884864,
+      "tp2": 0.19395120000000002,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.1812,
+      "time": "2026-10-29 14:27",
+      "timestamp": 1793284030.5197217
     }
   ],
   "cooldown_until": 1793246767.9905427
