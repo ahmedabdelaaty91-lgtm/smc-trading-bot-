@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1023.4875864042134,
-  "total_profit_usdt": 23.487586404213417,
+  "current_balance": 1015.5546226125502,
+  "total_profit_usdt": 15.5546226125503,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -84,22 +84,33 @@
       "loss": -3.4017288202738256,
       "time": "2026-10-29 01:39",
       "timestamp": 1793237956.9718664
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "AERO/USDT",
       "entry": 0.6918,
-      "sl": 0.6753466,
-      "original_sl": 0.6753466,
-      "tp1": 0.7181254399999999,
-      "tp2": 0.7378695199999998,
-      "amount": 100.0,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-27 13:00",
-      "timestamp": 1793106000.0
+      "exit": 0.6753466,
+      "loss": -2.378346342873656,
+      "time": "2026-10-29 01:48",
+      "timestamp": 1793238514.3355355
     },
+    {
+      "symbol": "1INCH/USDT",
+      "entry": 0.08989,
+      "exit": 0.08769426000000001,
+      "loss": -2.466635056179762,
+      "time": "2026-10-29 01:48",
+      "timestamp": 1793238515.5189824
+    },
+    {
+      "symbol": "BOME/USDT",
+      "entry": 0.0006495,
+      "exit": 0.0006296382,
+      "loss": -3.087982392609697,
+      "time": "2026-10-29 01:48",
+      "timestamp": 1793238516.4275897
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "CETUS/USDT",
       "entry": 0.02173,
@@ -127,32 +138,6 @@
       "timestamp": 1793214060.0
     },
     {
-      "symbol": "1INCH/USDT",
-      "entry": 0.08989,
-      "sl": 0.08769426000000001,
-      "original_sl": 0.08769426000000001,
-      "tp1": 0.09340318399999997,
-      "tp2": 0.09603807199999996,
-      "amount": 100.98,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-28 20:00",
-      "timestamp": 1793217600.0
-    },
-    {
-      "symbol": "BOME/USDT",
-      "entry": 0.0006495,
-      "sl": 0.0006296382,
-      "original_sl": 0.0006296382,
-      "tp1": 0.00068127888,
-      "tp2": 0.00070511304,
-      "amount": 100.98,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "time": "2026-10-28 20:01",
-      "timestamp": 1793217660.0
-    },
-    {
       "symbol": "HMSTR/USDT",
       "entry": 0.0001451,
       "sl": 0.0001411172,
@@ -166,5 +151,5 @@
       "timestamp": 1793217660.0
     }
   ],
-  "cooldown_until": 1793198287.5878208
+  "cooldown_until": 1793245716.4275897
 }
