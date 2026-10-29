@@ -232,6 +232,20 @@
       "highest_price": 0.07909,
       "time": "2026-10-29 15:09",
       "timestamp": 1793286578.4768727
+    },
+    {
+      "symbol": "JUP/USDT",
+      "entry": 0.2775,
+      "sl": 0.2707574,
+      "original_sl": 0.2707574,
+      "tp1": 0.28828816000000007,
+      "tp2": 0.29637928000000013,
+      "amount": 100.7,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.2775,
+      "time": "2026-10-29 15:09",
+      "timestamp": 1793286581.6515458
     }
   ],
   "cooldown_until": 1793246767.9905427
