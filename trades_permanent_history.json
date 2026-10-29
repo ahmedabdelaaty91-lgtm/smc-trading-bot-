@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1002.3772207188007,
-  "total_profit_usdt": 2.3772207188006824,
+  "current_balance": 999.9435628277555,
+  "total_profit_usdt": -0.05643717224445055,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -148,6 +148,14 @@
       "loss": -2.366893829578838,
       "time": "2026-10-29 18:31",
       "timestamp": 1793298705.8922734
+    },
+    {
+      "symbol": "WLD/USDT",
+      "entry": 0.4277,
+      "exit": 0.4173636,
+      "loss": -2.4336578910451303,
+      "time": "2026-10-29 18:48",
+      "timestamp": 1793299737.41729
     }
   ],
   "open_trades": [
@@ -222,20 +230,6 @@
       "timestamp": 1793286128.0064812
     },
     {
-      "symbol": "WLD/USDT",
-      "entry": 0.4277,
-      "sl": 0.4173636,
-      "original_sl": 0.4173636,
-      "tp1": 0.44423824000000006,
-      "tp2": 0.4566419200000001,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.4277,
-      "time": "2026-10-29 15:07",
-      "timestamp": 1793286456.4710171
-    },
-    {
       "symbol": "JUP/USDT",
       "entry": 0.2775,
       "sl": 0.2707574,
@@ -264,5 +258,5 @@
       "timestamp": 1793286717.3954208
     }
   ],
-  "cooldown_until": 1793305905.8922734
+  "cooldown_until": 1793306937.41729
 }
