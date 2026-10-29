@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 983.8633415424868,
-  "total_profit_usdt": -16.136658457513192,
+  "current_balance": 981.3325037941424,
+  "total_profit_usdt": -18.667496205857567,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -204,23 +204,16 @@
       "loss": -2.778287179487177,
       "time": "2026-10-29 20:42",
       "timestamp": 1793306564.036793
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "AGLD/USDT",
       "entry": 0.1812,
-      "sl": 0.176646,
-      "original_sl": 0.176646,
-      "tp1": 0.1884864,
-      "tp2": 0.19395120000000002,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.1812,
-      "time": "2026-10-29 14:27",
-      "timestamp": 1793284030.5197217
+      "exit": 0.176646,
+      "loss": -2.5308377483443723,
+      "time": "2026-10-29 20:43",
+      "timestamp": 1793306607.8180318
     }
   ],
-  "cooldown_until": 1793313764.036793
+  "open_trades": [],
+  "cooldown_until": 1793313807.8180318
 }
