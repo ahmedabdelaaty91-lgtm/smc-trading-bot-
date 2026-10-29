@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 999.9435628277555,
-  "total_profit_usdt": -0.05643717224445055,
+  "current_balance": 997.4229643662171,
+  "total_profit_usdt": -2.5770356337829057,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -156,6 +156,14 @@
       "loss": -2.4336578910451303,
       "time": "2026-10-29 18:48",
       "timestamp": 1793299737.41729
+    },
+    {
+      "symbol": "XAI/USDT",
+      "entry": 0.0078,
+      "exit": 0.00760476,
+      "loss": -2.5205984615384525,
+      "time": "2026-10-29 19:20",
+      "timestamp": 1793301620.99678
     }
   ],
   "open_trades": [
@@ -216,20 +224,6 @@
       "timestamp": 1793284901.3280358
     },
     {
-      "symbol": "XAI/USDT",
-      "entry": 0.0078,
-      "sl": 0.00760476,
-      "original_sl": 0.00760476,
-      "tp1": 0.008112383999999999,
-      "tp2": 0.008346671999999998,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.0078,
-      "time": "2026-10-29 15:02",
-      "timestamp": 1793286128.0064812
-    },
-    {
       "symbol": "JUP/USDT",
       "entry": 0.2775,
       "sl": 0.2707574,
@@ -258,5 +252,5 @@
       "timestamp": 1793286717.3954208
     }
   ],
-  "cooldown_until": 1793306937.41729
+  "cooldown_until": 1793308820.99678
 }
