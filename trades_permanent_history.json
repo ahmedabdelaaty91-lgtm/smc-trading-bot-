@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 986.641628721974,
-  "total_profit_usdt": -13.358371278026013,
+  "current_balance": 983.8633415424868,
+  "total_profit_usdt": -16.136658457513192,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -196,23 +196,17 @@
       "loss": -2.554210033444814,
       "time": "2026-10-29 20:04",
       "timestamp": 1793304264.3675733
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "GAS/USDT",
       "entry": 1.2012,
-      "sl": 1.1680592,
-      "original_sl": 1.1680592,
-      "tp1": 1.25422528,
-      "tp2": 1.29399424,
-      "amount": 100.7,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 1.2012,
-      "time": "2026-10-29 13:59",
-      "timestamp": 1793282365.8343053
-    },
+      "exit": 1.1680592,
+      "loss": -2.778287179487177,
+      "time": "2026-10-29 20:42",
+      "timestamp": 1793306564.036793
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "AGLD/USDT",
       "entry": 0.1812,
@@ -228,5 +222,5 @@
       "timestamp": 1793284030.5197217
     }
   ],
-  "cooldown_until": 1793311464.3675733
+  "cooldown_until": 1793313764.036793
 }
