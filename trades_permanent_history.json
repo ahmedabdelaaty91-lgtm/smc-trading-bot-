@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 1020.0618254966782,
-  "total_profit_usdt": 20.06182549667829,
+  "current_balance": 1023.3847169955598,
+  "total_profit_usdt": 23.384716995559717,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -44,6 +44,13 @@
       "exit": 0.00448274,
       "profit": 4.60922574626865,
       "time": "2026-10-29 00:54"
+    },
+    {
+      "symbol": "FET/USDT",
+      "entry": 0.1788,
+      "exit": 0.1821265,
+      "profit": 3.322891498881429,
+      "time": "2026-10-29 01:33"
     }
   ],
   "losing_trades": [
@@ -65,20 +72,6 @@
     }
   ],
   "open_trades": [
-    {
-      "symbol": "FET/USDT",
-      "entry": 0.1788,
-      "sl": 0.1821265,
-      "original_sl": 0.1734524,
-      "tp1": 0.18735615999999997,
-      "tp2": 0.19377327999999994,
-      "amount": 50.0,
-      "tp1_hit": true,
-      "profit_locked": 2.3926621923937303,
-      "time": "2026-10-27 13:00",
-      "timestamp": 1793106000.0,
-      "highest_price": 0.1849
-    },
     {
       "symbol": "AERO/USDT",
       "entry": 0.6918,
