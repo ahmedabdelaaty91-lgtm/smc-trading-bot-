@@ -94,7 +94,7 @@
     {
       "symbol": "BONK/USDT",
       "entry": 3.049e-06,
-      "sl": 3.12e-06,
+      "sl": 3.13e-06,
       "original_sl": 2.966056e-06,
       "tp1": 3.1817104e-06,
       "tp2": 3.2812432e-06,
@@ -103,7 +103,7 @@
       "profit_locked": 2.1762938668415885,
       "time": "2026-10-27 15:20",
       "timestamp": 1793114400.0,
-      "highest_price": 3.172e-06
+      "highest_price": 3.174e-06
     },
     {
       "symbol": "PUMP/USDT",
