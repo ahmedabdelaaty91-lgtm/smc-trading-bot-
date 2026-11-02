@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 979.0182995899902,
-  "total_profit_usdt": -20.9817004100098,
+  "current_balance": 976.7977407800361,
+  "total_profit_usdt": -23.202259219963892,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -220,23 +220,17 @@
       "loss": -2.3142042041522357,
       "time": "2026-11-02 14:22",
       "timestamp": 1793629349.1647017
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "ZEC/USDT",
       "entry": 1250.019,
-      "sl": 1221.732638,
-      "original_sl": 1221.732638,
-      "tp1": 1295.2771792,
-      "tp2": 1329.2208136000002,
-      "amount": 98.13,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 1250.019,
-      "time": "2026-11-02 02:01",
-      "timestamp": 1793584874.4411833
-    },
+      "exit": 1221.732638,
+      "loss": -2.2205588099540927,
+      "time": "2026-11-02 17:18",
+      "timestamp": 1793639882.9173532
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "GMX/USDT",
       "entry": 8.14,
