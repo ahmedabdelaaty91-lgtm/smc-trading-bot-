@@ -236,6 +236,20 @@
       "highest_price": 1250.019,
       "time": "2026-11-02 02:01",
       "timestamp": 1793584874.4411833
+    },
+    {
+      "symbol": "GMX/USDT",
+      "entry": 8.14,
+      "sl": 7.95406,
+      "original_sl": 7.95406,
+      "tp1": 8.437504,
+      "tp2": 8.660632000000001,
+      "amount": 97.9,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 8.14,
+      "time": "2026-11-02 14:33",
+      "timestamp": 1793629994.2901647
     }
   ],
   "cooldown_until": 1793313807.8180318
