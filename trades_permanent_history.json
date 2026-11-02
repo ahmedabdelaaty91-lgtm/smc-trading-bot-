@@ -214,6 +214,21 @@
       "timestamp": 1793306607.8180318
     }
   ],
-  "open_trades": [],
+  "open_trades": [
+    {
+      "symbol": "ZEC/USDT",
+      "entry": 1250.019,
+      "sl": 1221.732638,
+      "original_sl": 1221.732638,
+      "tp1": 1295.2771792,
+      "tp2": 1329.2208136000002,
+      "amount": 98.13,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 1250.019,
+      "time": "2026-11-02 02:01",
+      "timestamp": 1793584874.4411833
+    }
+  ],
   "cooldown_until": 1793313807.8180318
 }
