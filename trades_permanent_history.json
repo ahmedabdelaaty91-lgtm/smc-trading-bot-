@@ -234,14 +234,14 @@
     {
       "symbol": "GMX/USDT",
       "entry": 8.14,
-      "sl": 8.50055,
+      "sl": 8.52025,
       "original_sl": 7.95406,
       "tp1": 8.437504,
       "tp2": 8.660632000000001,
       "amount": 48.95,
       "tp1_hit": true,
       "profit_locked": 1.7890443243243244,
-      "highest_price": 8.63,
+      "highest_price": 8.65,
       "time": "2026-11-02 14:33",
       "timestamp": 1793629994.2901647
     }
