@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 982.6635011929191,
-  "total_profit_usdt": -17.33649880708098,
+  "current_balance": 980.2505625503851,
+  "total_profit_usdt": -19.749437449614916,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -250,6 +250,14 @@
       "loss": -2.655320704361095,
       "time": "2026-11-04 14:02",
       "timestamp": 1793800949.3674817
+    },
+    {
+      "symbol": "WIF/USDT",
+      "entry": 0.1768,
+      "exit": 0.1724544,
+      "loss": -2.4129386425339394,
+      "time": "2026-11-04 19:45",
+      "timestamp": 1793821519.2630086
     }
   ],
   "open_trades": [
@@ -336,20 +344,6 @@
       "highest_price": 0.000437,
       "time": "2026-11-04 07:27",
       "timestamp": 1793777266.8932374
-    },
-    {
-      "symbol": "WIF/USDT",
-      "entry": 0.1768,
-      "sl": 0.1724544,
-      "original_sl": 0.1724544,
-      "tp1": 0.18375296000000002,
-      "tp2": 0.18896768000000003,
-      "amount": 98.17,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.1768,
-      "time": "2026-11-04 08:00",
-      "timestamp": 1793779245.8806846
     },
     {
       "symbol": "IMX/USDT",
