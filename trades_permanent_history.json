@@ -321,6 +321,20 @@
       "highest_price": 0.1917,
       "time": "2026-11-04 06:39",
       "timestamp": 1793774358.211323
+    },
+    {
+      "symbol": "MEME/USDT",
+      "entry": 0.000437,
+      "sl": 0.000427144,
+      "original_sl": 0.000427144,
+      "tp1": 0.0004527696,
+      "tp2": 0.00046459679999999996,
+      "amount": 98.17,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.000437,
+      "time": "2026-11-04 07:27",
+      "timestamp": 1793777266.8932374
     }
   ],
   "cooldown_until": 1793313807.8180318
