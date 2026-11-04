@@ -251,6 +251,20 @@
       "highest_price": 0.000685,
       "time": "2026-11-03 19:05",
       "timestamp": 1793732707.5949132
+    },
+    {
+      "symbol": "AXS/USDT",
+      "entry": 0.852,
+      "sl": 0.82834,
+      "original_sl": 0.82834,
+      "tp1": 0.889856,
+      "tp2": 0.918248,
+      "amount": 98.17,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.852,
+      "time": "2026-11-04 06:01",
+      "timestamp": 1793772062.6612568
     }
   ],
   "cooldown_until": 1793313807.8180318
