@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 979.0622919675669,
-  "total_profit_usdt": -20.937708032433093,
+  "current_balance": 982.6635011929191,
+  "total_profit_usdt": -17.33649880708098,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -65,6 +65,13 @@
       "exit": 8.660632000000001,
       "profit": 4.919871891891898,
       "time": "2026-11-03 16:40"
+    },
+    {
+      "symbol": "AXS/USDT",
+      "entry": 0.852,
+      "exit": 0.87665,
+      "profit": 3.6012092253521164,
+      "time": "2026-11-04 15:44"
     }
   ],
   "losing_trades": [
@@ -259,20 +266,6 @@
       "highest_price": 0.000685,
       "time": "2026-11-03 19:05",
       "timestamp": 1793732707.5949132
-    },
-    {
-      "symbol": "AXS/USDT",
-      "entry": 0.852,
-      "sl": 0.87665,
-      "original_sl": 0.82834,
-      "tp1": 0.889856,
-      "tp2": 0.918248,
-      "amount": 49.09,
-      "tp1_hit": true,
-      "profit_locked": 2.18094103286385,
-      "highest_price": 0.89,
-      "time": "2026-11-04 06:01",
-      "timestamp": 1793772062.6612568
     },
     {
       "symbol": "OGN/USDT",
