@@ -335,6 +335,20 @@
       "highest_price": 0.000437,
       "time": "2026-11-04 07:27",
       "timestamp": 1793777266.8932374
+    },
+    {
+      "symbol": "UNI/USDT",
+      "entry": 7.4706,
+      "sl": 7.2685338,
+      "original_sl": 7.2685338,
+      "tp1": 7.79390592,
+      "tp2": 8.03638536,
+      "amount": 98.17,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 7.4706,
+      "time": "2026-11-04 08:00",
+      "timestamp": 1793779238.619509
     }
   ],
   "cooldown_until": 1793313807.8180318
