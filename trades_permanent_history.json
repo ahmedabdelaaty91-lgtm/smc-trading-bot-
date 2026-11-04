@@ -371,6 +371,20 @@
       "highest_price": 0.122,
       "time": "2026-11-04 08:16",
       "timestamp": 1793780213.295279
+    },
+    {
+      "symbol": "C98/USDT",
+      "entry": 0.01271,
+      "sl": 0.01240514,
+      "original_sl": 0.01240514,
+      "tp1": 0.013197776000000001,
+      "tp2": 0.013563608000000003,
+      "amount": 97.91,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.01271,
+      "time": "2026-11-04 15:01",
+      "timestamp": 1793804478.660656
     }
   ],
   "cooldown_until": 1793313807.8180318
