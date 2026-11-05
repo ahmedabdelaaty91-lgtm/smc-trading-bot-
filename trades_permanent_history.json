@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 967.3164863035299,
-  "total_profit_usdt": -32.683513696470094,
+  "current_balance": 964.4642505693951,
+  "total_profit_usdt": -35.53574943060496,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -306,6 +306,14 @@
       "loss": -0.429941605839411,
       "time": "2026-11-05 14:40",
       "timestamp": 1793889614.9354482
+    },
+    {
+      "symbol": "PENDLE/USDT",
+      "entry": 1.7633,
+      "exit": 1.712069,
+      "loss": -2.852235734134862,
+      "time": "2026-11-05 14:40",
+      "timestamp": 1793889659.1263063
     }
   ],
   "open_trades": [
@@ -324,20 +332,6 @@
       "timestamp": 1793772751.4915287
     },
     {
-      "symbol": "PENDLE/USDT",
-      "entry": 1.7633,
-      "sl": 1.712069,
-      "original_sl": 1.712069,
-      "tp1": 1.8452696000000002,
-      "tp2": 1.9067468,
-      "amount": 98.17,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 1.7633,
-      "time": "2026-11-04 06:13",
-      "timestamp": 1793772809.9213405
-    },
-    {
       "symbol": "IMX/USDT",
       "entry": 0.122,
       "sl": 0.11916120000000001,
@@ -352,5 +346,5 @@
       "timestamp": 1793780213.295279
     }
   ],
-  "cooldown_until": 1793890465.589493
+  "cooldown_until": 1793896859.1263063
 }
