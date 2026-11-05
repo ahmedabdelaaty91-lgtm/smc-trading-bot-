@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 970.6583033433591,
-  "total_profit_usdt": -29.341696656640885,
+  "current_balance": 967.7464279093693,
+  "total_profit_usdt": -32.253572090630676,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -290,6 +290,14 @@
       "loss": -2.3484533910306884,
       "time": "2026-11-05 12:34",
       "timestamp": 1793882042.8858387
+    },
+    {
+      "symbol": "HMSTR/USDT",
+      "entry": 0.0001371,
+      "exit": 0.00013303339999999999,
+      "loss": -2.9118754339897976,
+      "time": "2026-11-05 12:54",
+      "timestamp": 1793883265.589493
     }
   ],
   "open_trades": [
@@ -336,20 +344,6 @@
       "timestamp": 1793772809.9213405
     },
     {
-      "symbol": "HMSTR/USDT",
-      "entry": 0.0001371,
-      "sl": 0.00013303339999999999,
-      "original_sl": 0.00013303339999999999,
-      "tp1": 0.00014360656000000002,
-      "tp2": 0.00014848648000000003,
-      "amount": 98.17,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.0001371,
-      "time": "2026-11-04 06:32",
-      "timestamp": 1793773924.2526748
-    },
-    {
       "symbol": "IMX/USDT",
       "entry": 0.122,
       "sl": 0.11916120000000001,
@@ -364,5 +358,5 @@
       "timestamp": 1793780213.295279
     }
   ],
-  "cooldown_until": 1793889242.8858387
+  "cooldown_until": 1793890465.589493
 }
