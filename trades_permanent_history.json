@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 980.2505625503851,
-  "total_profit_usdt": -19.749437449614916,
+  "current_balance": 978.0236988960196,
+  "total_profit_usdt": -21.97630110398036,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -258,6 +258,14 @@
       "loss": -2.4129386425339394,
       "time": "2026-11-04 19:45",
       "timestamp": 1793821519.2630086
+    },
+    {
+      "symbol": "GTC/USDT",
+      "entry": 0.2222,
+      "exit": 0.2171648,
+      "loss": -2.226863654365444,
+      "time": "2026-11-05 02:42",
+      "timestamp": 1793846520.2319355
     }
   ],
   "open_trades": [
@@ -372,20 +380,6 @@
       "highest_price": 0.01271,
       "time": "2026-11-04 15:01",
       "timestamp": 1793804478.660656
-    },
-    {
-      "symbol": "GTC/USDT",
-      "entry": 0.2222,
-      "sl": 0.2171648,
-      "original_sl": 0.2171648,
-      "tp1": 0.23025632000000004,
-      "tp2": 0.23629856000000005,
-      "amount": 98.27,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.2222,
-      "time": "2026-11-04 15:48",
-      "timestamp": 1793807285.6504803
     }
   ],
   "cooldown_until": 1793313807.8180318
