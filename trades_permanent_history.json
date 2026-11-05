@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 978.0236988960196,
-  "total_profit_usdt": -21.97630110398036,
+  "current_balance": 973.0067567343898,
+  "total_profit_usdt": -26.993243265610197,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -266,6 +266,22 @@
       "loss": -2.226863654365444,
       "time": "2026-11-05 02:42",
       "timestamp": 1793846520.2319355
+    },
+    {
+      "symbol": "BAND/USDT",
+      "entry": 0.1917,
+      "exit": 0.1862268,
+      "loss": -2.802837996870115,
+      "time": "2026-11-05 11:43",
+      "timestamp": 1793878999.3633342
+    },
+    {
+      "symbol": "MEME/USDT",
+      "entry": 0.000437,
+      "exit": 0.000427144,
+      "loss": -2.2141041647597213,
+      "time": "2026-11-05 11:43",
+      "timestamp": 1793878999.9641907
     }
   ],
   "open_trades": [
@@ -326,34 +342,6 @@
       "timestamp": 1793773924.2526748
     },
     {
-      "symbol": "BAND/USDT",
-      "entry": 0.1917,
-      "sl": 0.1862268,
-      "original_sl": 0.1862268,
-      "tp1": 0.20045712000000002,
-      "tp2": 0.20702496000000004,
-      "amount": 98.17,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.1917,
-      "time": "2026-11-04 06:39",
-      "timestamp": 1793774358.211323
-    },
-    {
-      "symbol": "MEME/USDT",
-      "entry": 0.000437,
-      "sl": 0.000427144,
-      "original_sl": 0.000427144,
-      "tp1": 0.0004527696,
-      "tp2": 0.00046459679999999996,
-      "amount": 98.17,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.000437,
-      "time": "2026-11-04 07:27",
-      "timestamp": 1793777266.8932374
-    },
-    {
       "symbol": "IMX/USDT",
       "entry": 0.122,
       "sl": 0.11916120000000001,
@@ -382,5 +370,5 @@
       "timestamp": 1793804478.660656
     }
   ],
-  "cooldown_until": 1793313807.8180318
+  "cooldown_until": 1793886199.9641907
 }
