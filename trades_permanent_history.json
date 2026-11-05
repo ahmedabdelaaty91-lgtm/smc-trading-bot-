@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 962.1799473234934,
-  "total_profit_usdt": -37.820052676506585,
+  "current_balance": 959.1204859543982,
+  "total_profit_usdt": -40.87951404560186,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -322,23 +322,16 @@
       "loss": -2.28430324590163,
       "time": "2026-11-05 14:56",
       "timestamp": 1793890580.7246468
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "OGN/USDT",
       "entry": 0.02498,
-      "sl": 0.0242015,
-      "original_sl": 0.0242015,
-      "tp1": 0.026225599999999995,
-      "tp2": 0.02715979999999999,
-      "amount": 98.17,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.02498,
-      "time": "2026-11-04 06:12",
-      "timestamp": 1793772751.4915287
+      "exit": 0.0242015,
+      "loss": -3.0594613690952683,
+      "time": "2026-11-05 15:08",
+      "timestamp": 1793891332.442034
     }
   ],
-  "cooldown_until": 1793897780.7246468
+  "open_trades": [],
+  "cooldown_until": 1793898532.442034
 }
