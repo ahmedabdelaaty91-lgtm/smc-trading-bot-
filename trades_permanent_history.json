@@ -346,6 +346,20 @@
       "highest_price": 0.1826,
       "time": "2026-11-09 15:56",
       "timestamp": 1794239771.0663004
+    },
+    {
+      "symbol": "LINK/USDT",
+      "entry": 10.7992,
+      "sl": 10.5288002,
+      "original_sl": 10.5288002,
+      "tp1": 11.231839680000004,
+      "tp2": 11.556319440000005,
+      "amount": 95.91,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 10.7992,
+      "time": "2026-11-09 15:56",
+      "timestamp": 1794239773.613297
     }
   ],
   "cooldown_until": 1793898532.442034
