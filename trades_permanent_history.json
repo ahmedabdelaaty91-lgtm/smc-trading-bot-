@@ -360,6 +360,20 @@
       "highest_price": 10.7992,
       "time": "2026-11-09 15:56",
       "timestamp": 1794239773.613297
+    },
+    {
+      "symbol": "XEC/USDT",
+      "entry": 5.8e-06,
+      "sl": 5.66864e-06,
+      "original_sl": 5.66864e-06,
+      "tp1": 6.0101760000000015e-06,
+      "tp2": 6.167808000000002e-06,
+      "amount": 95.91,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 5.8e-06,
+      "time": "2026-11-09 15:56",
+      "timestamp": 1794239780.7436764
     }
   ],
   "cooldown_until": 1793898532.442034
