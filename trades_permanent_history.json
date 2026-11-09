@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 959.1204859543982,
-  "total_profit_usdt": -40.87951404560186,
+  "current_balance": 956.5697841909808,
+  "total_profit_usdt": -43.43021580901917,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -330,23 +330,17 @@
       "loss": -3.0594613690952683,
       "time": "2026-11-05 15:08",
       "timestamp": 1793891332.442034
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "ADA/USDT",
       "entry": 0.1826,
-      "sl": 0.1777438,
-      "original_sl": 0.1777438,
-      "tp1": 0.19036992000000003,
-      "tp2": 0.19619736000000002,
-      "amount": 95.91,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.1826,
-      "time": "2026-11-09 15:56",
-      "timestamp": 1794239771.0663004
-    },
+      "exit": 0.1777438,
+      "loss": -2.5507017634173077,
+      "time": "2026-11-09 18:18",
+      "timestamp": 1794248283.1171231
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "LINK/USDT",
       "entry": 10.7992,
