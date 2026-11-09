@@ -388,6 +388,20 @@
       "highest_price": 0.1501,
       "time": "2026-11-09 16:00",
       "timestamp": 1794240032.9344575
+    },
+    {
+      "symbol": "CAKE/USDT",
+      "entry": 1.901,
+      "sl": 1.854284,
+      "original_sl": 1.854284,
+      "tp1": 1.9757456,
+      "tp2": 2.0318047999999997,
+      "amount": 95.91,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 1.901,
+      "time": "2026-11-09 16:00",
+      "timestamp": 1794240039.8495777
     }
   ],
   "cooldown_until": 1793898532.442034
