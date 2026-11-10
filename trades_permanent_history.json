@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 951.9738318105448,
-  "total_profit_usdt": -48.02616818945521,
+  "current_balance": 949.5723534771497,
+  "total_profit_usdt": -50.42764652285029,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -354,23 +354,17 @@
       "loss": -2.4237562425049943,
       "time": "2026-11-10 03:42",
       "timestamp": 1794282165.3212943
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "LINK/USDT",
       "entry": 10.7992,
-      "sl": 10.5288002,
-      "original_sl": 10.5288002,
-      "tp1": 11.231839680000004,
-      "tp2": 11.556319440000005,
-      "amount": 95.91,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 10.7992,
-      "time": "2026-11-09 15:56",
-      "timestamp": 1794239773.613297
-    },
+      "exit": 10.5288002,
+      "loss": -2.4014783333950804,
+      "time": "2026-11-10 03:43",
+      "timestamp": 1794282209.2780032
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "CAKE/USDT",
       "entry": 1.901,
@@ -386,5 +380,5 @@
       "timestamp": 1794240039.8495777
     }
   ],
-  "cooldown_until": 1793898532.442034
+  "cooldown_until": 1794289409.2780032
 }
