@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 940.5286773756612,
-  "total_profit_usdt": -59.47132262433879,
+  "current_balance": 938.3963697356895,
+  "total_profit_usdt": -61.60363026431043,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -394,23 +394,17 @@
       "loss": -2.2985864509321106,
       "time": "2026-11-11 22:35",
       "timestamp": 1794436507.6010482
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "SUI/USDT",
       "entry": 0.8466,
-      "sl": 0.8275416000000001,
-      "original_sl": 0.8275416000000001,
-      "tp1": 0.8770934399999999,
-      "tp2": 0.8999635199999998,
-      "amount": 94.72,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.8466,
-      "time": "2026-11-11 16:27",
-      "timestamp": 1794414449.9377282
-    },
+      "exit": 0.8275416000000001,
+      "loss": -2.1323076399716423,
+      "time": "2026-11-11 22:37",
+      "timestamp": 1794436636.0084221
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "AERO/USDT",
       "entry": 0.5572,
@@ -454,5 +448,5 @@
       "timestamp": 1794418240.1346412
     }
   ],
-  "cooldown_until": 1794443707.6010482
+  "cooldown_until": 1794443836.0084221
 }
