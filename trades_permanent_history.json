@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 944.9619934372719,
-  "total_profit_usdt": -55.038006562728164,
+  "current_balance": 942.8272638265934,
+  "total_profit_usdt": -57.17273617340668,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -378,6 +378,14 @@
       "loss": -2.2534260262008723,
       "time": "2026-11-11 19:38",
       "timestamp": 1794425906.1186316
+    },
+    {
+      "symbol": "GRT/USDT",
+      "entry": 0.01798,
+      "exit": 0.01757478,
+      "loss": -2.1347296106785203,
+      "time": "2026-11-11 21:59",
+      "timestamp": 1794434393.0219777
     }
   ],
   "open_trades": [
@@ -408,20 +416,6 @@
       "highest_price": 0.8466,
       "time": "2026-11-11 16:27",
       "timestamp": 1794414449.9377282
-    },
-    {
-      "symbol": "GRT/USDT",
-      "entry": 0.01798,
-      "sl": 0.01757478,
-      "original_sl": 0.01757478,
-      "tp1": 0.018628351999999997,
-      "tp2": 0.019114615999999994,
-      "amount": 94.72,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.01798,
-      "time": "2026-11-11 16:27",
-      "timestamp": 1794414452.2361896
     },
     {
       "symbol": "AERO/USDT",
