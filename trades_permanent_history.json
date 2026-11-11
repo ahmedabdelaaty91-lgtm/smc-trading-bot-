@@ -456,6 +456,20 @@
       "highest_price": 0.00687,
       "time": "2026-11-11 17:28",
       "timestamp": 1794418110.6428323
+    },
+    {
+      "symbol": "VET/USDT",
+      "entry": 0.005317,
+      "sl": 0.005191596,
+      "original_sl": 0.005191596,
+      "tp1": 0.0055176463999999995,
+      "tp2": 0.0056681312,
+      "amount": 94.72,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.005317,
+      "time": "2026-11-11 17:30",
+      "timestamp": 1794418240.1346412
     }
   ],
   "cooldown_until": 1794289409.2780032
