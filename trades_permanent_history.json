@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 935.5433802166658,
-  "total_profit_usdt": -64.45661978333413,
+  "current_balance": 933.2533977071672,
+  "total_profit_usdt": -66.74660229283279,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -410,23 +410,17 @@
       "loss": -2.8529895190237076,
       "time": "2026-11-11 22:54",
       "timestamp": 1794437643.5169463
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "XRP/USDT",
       "entry": 1.07647,
-      "sl": 1.0504449,
-      "original_sl": 1.0504449,
-      "tp1": 1.11811016,
-      "tp2": 1.14934028,
-      "amount": 94.72,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 1.07647,
-      "time": "2026-11-11 16:28",
-      "timestamp": 1794414518.5390913
-    },
+      "exit": 1.0504449,
+      "loss": -2.289982509498641,
+      "time": "2026-11-11 23:08",
+      "timestamp": 1794438522.3272192
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "VET/USDT",
       "entry": 0.005317,
@@ -442,5 +436,5 @@
       "timestamp": 1794418240.1346412
     }
   ],
-  "cooldown_until": 1794444843.5169463
+  "cooldown_until": 1794445722.3272192
 }
