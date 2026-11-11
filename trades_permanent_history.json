@@ -400,6 +400,20 @@
       "highest_price": 0.8466,
       "time": "2026-11-11 16:27",
       "timestamp": 1794414449.9377282
+    },
+    {
+      "symbol": "GRT/USDT",
+      "entry": 0.01798,
+      "sl": 0.01757478,
+      "original_sl": 0.01757478,
+      "tp1": 0.018628351999999997,
+      "tp2": 0.019114615999999994,
+      "amount": 94.72,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.01798,
+      "time": "2026-11-11 16:27",
+      "timestamp": 1794414452.2361896
     }
   ],
   "cooldown_until": 1794289409.2780032
