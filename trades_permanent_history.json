@@ -428,6 +428,20 @@
       "highest_price": 0.5572,
       "time": "2026-11-11 16:27",
       "timestamp": 1794414472.8899138
+    },
+    {
+      "symbol": "XRP/USDT",
+      "entry": 1.07647,
+      "sl": 1.0504449,
+      "original_sl": 1.0504449,
+      "tp1": 1.11811016,
+      "tp2": 1.14934028,
+      "amount": 94.72,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 1.07647,
+      "time": "2026-11-11 16:28",
+      "timestamp": 1794414518.5390913
     }
   ],
   "cooldown_until": 1794289409.2780032
