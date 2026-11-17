@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 931.0193809909739,
-  "total_profit_usdt": -68.98061900902613,
+  "current_balance": 934.6644054607945,
+  "total_profit_usdt": -65.33559453920557,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -72,6 +72,13 @@
       "exit": 0.87665,
       "profit": 3.6012092253521164,
       "time": "2026-11-04 15:44"
+    },
+    {
+      "symbol": "BLUR/USDT",
+      "entry": 0.00613,
+      "exit": 0.0063828,
+      "profit": 3.6450244698205507,
+      "time": "2026-11-17 17:25"
     }
   ],
   "losing_trades": [
@@ -428,21 +435,6 @@
       "timestamp": 1794438607.177615
     }
   ],
-  "open_trades": [
-    {
-      "symbol": "BLUR/USDT",
-      "entry": 0.00613,
-      "sl": 0.0063828,
-      "original_sl": 0.005988,
-      "tp1": 0.0063571999999999995,
-      "tp2": 0.0065276,
-      "amount": 46.55,
-      "tp1_hit": true,
-      "profit_locked": 1.7253115823817249,
-      "highest_price": 0.00648,
-      "time": "2026-11-17 08:42",
-      "timestamp": 1794904942.12625
-    }
-  ],
+  "open_trades": [],
   "cooldown_until": 1794445807.177615
 }
