@@ -432,14 +432,14 @@
     {
       "symbol": "BLUR/USDT",
       "entry": 0.00613,
-      "sl": 0.00627445,
+      "sl": 0.00629415,
       "original_sl": 0.005988,
       "tp1": 0.0063571999999999995,
       "tp2": 0.0065276,
       "amount": 46.55,
       "tp1_hit": true,
       "profit_locked": 1.7253115823817249,
-      "highest_price": 0.00637,
+      "highest_price": 0.00639,
       "time": "2026-11-17 08:42",
       "timestamp": 1794904942.12625
     }
