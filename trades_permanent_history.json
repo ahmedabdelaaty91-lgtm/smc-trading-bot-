@@ -428,6 +428,21 @@
       "timestamp": 1794438607.177615
     }
   ],
-  "open_trades": [],
+  "open_trades": [
+    {
+      "symbol": "BLUR/USDT",
+      "entry": 0.00613,
+      "sl": 0.005988,
+      "original_sl": 0.005988,
+      "tp1": 0.0063571999999999995,
+      "tp2": 0.0065276,
+      "amount": 93.1,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.00613,
+      "time": "2026-11-17 08:42",
+      "timestamp": 1794904942.12625
+    }
+  ],
   "cooldown_until": 1794445807.177615
 }
