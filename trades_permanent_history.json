@@ -533,6 +533,20 @@
       "highest_price": 0.0472,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341108.7584724
+    },
+    {
+      "symbol": "RENDER/USDT",
+      "entry": 1.342,
+      "sl": 1.309376,
+      "original_sl": 1.309376,
+      "tp1": 1.3941984,
+      "tp2": 1.4333472,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 1.342,
+      "time": "2026-11-22 09:53",
+      "timestamp": 1795341220.986221
     }
   ],
   "cooldown_until": 1794445807.177615
