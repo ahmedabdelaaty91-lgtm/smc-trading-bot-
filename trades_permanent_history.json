@@ -463,6 +463,20 @@
       "highest_price": 0.05596,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341085.7257957
+    },
+    {
+      "symbol": "WIF/USDT",
+      "entry": 0.1196,
+      "sl": 0.11576800000000001,
+      "original_sl": 0.11576800000000001,
+      "tp1": 0.1257312,
+      "tp2": 0.13032959999999996,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.1196,
+      "time": "2026-11-22 09:51",
+      "timestamp": 1795341089.1316273
     }
   ],
   "cooldown_until": 1794445807.177615
