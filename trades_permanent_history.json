@@ -491,6 +491,20 @@
       "highest_price": 0.0002856,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341090.995701
+    },
+    {
+      "symbol": "PIXEL/USDT",
+      "entry": 0.00287,
+      "sl": 0.0027944,
+      "original_sl": 0.0027944,
+      "tp1": 0.002990960000000001,
+      "tp2": 0.003081680000000001,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.00287,
+      "time": "2026-11-22 09:51",
+      "timestamp": 1795341093.2086332
     }
   ],
   "cooldown_until": 1794445807.177615
