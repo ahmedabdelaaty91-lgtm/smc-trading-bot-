@@ -547,6 +547,20 @@
       "highest_price": 1.342,
       "time": "2026-11-22 09:53",
       "timestamp": 1795341220.986221
+    },
+    {
+      "symbol": "OGN/USDT",
+      "entry": 0.01915,
+      "sl": 0.01858276,
+      "original_sl": 0.01858276,
+      "tp1": 0.020057584,
+      "tp2": 0.020738272000000002,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.01915,
+      "time": "2026-11-22 09:54",
+      "timestamp": 1795341295.7392504
     }
   ],
   "cooldown_until": 1794445807.177615
