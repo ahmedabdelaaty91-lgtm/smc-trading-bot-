@@ -477,6 +477,20 @@
       "highest_price": 0.1196,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341089.1316273
+    },
+    {
+      "symbol": "NOT/USDT",
+      "entry": 0.0002856,
+      "sl": 0.0002766456,
+      "original_sl": 0.0002766456,
+      "tp1": 0.00029992704,
+      "tp2": 0.00031067232000000003,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.0002856,
+      "time": "2026-11-22 09:51",
+      "timestamp": 1795341090.995701
     }
   ],
   "cooldown_until": 1794445807.177615
