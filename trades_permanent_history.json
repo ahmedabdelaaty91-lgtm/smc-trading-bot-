@@ -505,6 +505,20 @@
       "highest_price": 0.00287,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341093.2086332
+    },
+    {
+      "symbol": "STRK/USDT",
+      "entry": 0.03087,
+      "sl": 0.02996994,
+      "original_sl": 0.02996994,
+      "tp1": 0.032310096,
+      "tp2": 0.033390168000000005,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.03087,
+      "time": "2026-11-22 09:51",
+      "timestamp": 1795341095.427906
     }
   ],
   "cooldown_until": 1794445807.177615
