@@ -449,6 +449,20 @@
       "highest_price": 8.7364,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341078.8677838
+    },
+    {
+      "symbol": "MANA/USDT",
+      "entry": 0.05596,
+      "sl": 0.0544409,
+      "original_sl": 0.0544409,
+      "tp1": 0.05839056000000001,
+      "tp2": 0.06021348000000001,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.05596,
+      "time": "2026-11-22 09:51",
+      "timestamp": 1795341085.7257957
     }
   ],
   "cooldown_until": 1794445807.177615
