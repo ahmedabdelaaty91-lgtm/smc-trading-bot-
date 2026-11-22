@@ -435,6 +435,21 @@
       "timestamp": 1794438607.177615
     }
   ],
-  "open_trades": [],
+  "open_trades": [
+    {
+      "symbol": "LINK/USDT",
+      "entry": 8.7364,
+      "sl": 8.52292,
+      "original_sl": 8.52292,
+      "tp1": 9.077968,
+      "tp2": 9.334144000000002,
+      "amount": 93.47,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 8.7364,
+      "time": "2026-11-22 09:51",
+      "timestamp": 1795341078.8677838
+    }
+  ],
   "cooldown_until": 1794445807.177615
 }
