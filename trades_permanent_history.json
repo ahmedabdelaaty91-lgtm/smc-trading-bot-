@@ -504,14 +504,14 @@
     {
       "symbol": "WIF/USDT",
       "entry": 0.1196,
-      "sl": 0.1242085,
+      "sl": 0.124307,
       "original_sl": 0.11576800000000001,
       "tp1": 0.1257312,
       "tp2": 0.13032959999999996,
       "amount": 46.73,
       "tp1_hit": true,
       "profit_locked": 2.3958330434782567,
-      "highest_price": 0.1261,
+      "highest_price": 0.1262,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341089.1316273
     },
