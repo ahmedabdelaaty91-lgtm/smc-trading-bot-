@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 943.0187656504319,
-  "total_profit_usdt": -56.98123434956817,
+  "current_balance": 944.6477064772661,
+  "total_profit_usdt": -55.35229352273389,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -93,6 +93,13 @@
       "exit": 5.899494639999998,
       "profit": 4.563962147525314,
       "time": "2026-11-23 09:05"
+    },
+    {
+      "symbol": "EDU/USDT",
+      "entry": 0.0472,
+      "exit": 0.049053,
+      "profit": 4.355703737288135,
+      "time": "2026-11-23 19:38"
     }
   ],
   "losing_trades": [
@@ -447,6 +454,14 @@
       "loss": -2.2340167161933415,
       "time": "2026-11-11 23:10",
       "timestamp": 1794438607.177615
+    },
+    {
+      "symbol": "ZRO/USDT",
+      "entry": 1.2273,
+      "exit": 1.1918115999999999,
+      "loss": -2.7267629104538567,
+      "time": "2026-11-23 19:38",
+      "timestamp": 1795462718.8682272
     }
   ],
   "open_trades": [
@@ -521,20 +536,6 @@
       "timestamp": 1795341093.2086332
     },
     {
-      "symbol": "EDU/USDT",
-      "entry": 0.0472,
-      "sl": 0.049053,
-      "original_sl": 0.0456086,
-      "tp1": 0.04974624,
-      "tp2": 0.051655919999999994,
-      "amount": 46.73,
-      "tp1_hit": true,
-      "profit_locked": 2.521155220338981,
-      "highest_price": 0.0498,
-      "time": "2026-11-22 09:51",
-      "timestamp": 1795341108.7584724
-    },
-    {
       "symbol": "RENDER/USDT",
       "entry": 1.342,
       "sl": 1.309376,
@@ -575,20 +576,6 @@
       "highest_price": 0.1098,
       "time": "2026-11-23 07:49",
       "timestamp": 1795420145.6757915
-    },
-    {
-      "symbol": "ZRO/USDT",
-      "entry": 1.2273,
-      "sl": 1.1918115999999999,
-      "original_sl": 1.1918115999999999,
-      "tp1": 1.2840814400000005,
-      "tp2": 1.3266675200000007,
-      "amount": 94.3,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 1.2273,
-      "time": "2026-11-23 09:06",
-      "timestamp": 1795424773.0112014
     }
   ],
   "cooldown_until": 1794445807.177615
