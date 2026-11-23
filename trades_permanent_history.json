@@ -568,6 +568,20 @@
       "highest_price": 5.8567,
       "time": "2026-11-22 09:56",
       "timestamp": 1795341413.5226736
+    },
+    {
+      "symbol": "FET/USDT",
+      "entry": 0.1098,
+      "sl": 0.1063868,
+      "original_sl": 0.1063868,
+      "tp1": 0.11526111999999998,
+      "tp2": 0.11935695999999997,
+      "amount": 93.85,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.1098,
+      "time": "2026-11-23 07:49",
+      "timestamp": 1795420145.6757915
     }
   ],
   "cooldown_until": 1794445807.177615
