@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 938.4548035029065,
-  "total_profit_usdt": -61.545196497093485,
+  "current_balance": 943.0187656504319,
+  "total_profit_usdt": -56.98123434956817,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -86,6 +86,13 @@
       "exit": 0.0319337,
       "profit": 3.7903980421120864,
       "time": "2026-11-23 07:47"
+    },
+    {
+      "symbol": "ETC/USDT",
+      "entry": 5.5543,
+      "exit": 5.899494639999998,
+      "profit": 4.563962147525314,
+      "time": "2026-11-23 09:05"
     }
   ],
   "losing_trades": [
@@ -554,20 +561,6 @@
       "highest_price": 0.01915,
       "time": "2026-11-22 09:54",
       "timestamp": 1795341295.7392504
-    },
-    {
-      "symbol": "ETC/USDT",
-      "entry": 5.5543,
-      "sl": 5.8066735,
-      "original_sl": 5.4310162,
-      "tp1": 5.751554079999998,
-      "tp2": 5.899494639999998,
-      "amount": 46.73,
-      "tp1_hit": true,
-      "profit_locked": 1.6597355974290078,
-      "highest_price": 5.8951,
-      "time": "2026-11-22 09:56",
-      "timestamp": 1795341413.5226736
     },
     {
       "symbol": "FET/USDT",
