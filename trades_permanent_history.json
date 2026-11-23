@@ -565,14 +565,14 @@
     {
       "symbol": "ETC/USDT",
       "entry": 5.5543,
-      "sl": 5.5543,
+      "sl": 5.6882765,
       "original_sl": 5.4310162,
       "tp1": 5.751554079999998,
       "tp2": 5.899494639999998,
       "amount": 46.73,
       "tp1_hit": true,
       "profit_locked": 1.6597355974290078,
-      "highest_price": 5.7568,
+      "highest_price": 5.7749,
       "time": "2026-11-22 09:56",
       "timestamp": 1795341413.5226736
     }
