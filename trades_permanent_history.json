@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 934.6644054607945,
-  "total_profit_usdt": -65.33559453920557,
+  "current_balance": 938.4548035029065,
+  "total_profit_usdt": -61.545196497093485,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -79,6 +79,13 @@
       "exit": 0.0063828,
       "profit": 3.6450244698205507,
       "time": "2026-11-17 17:25"
+    },
+    {
+      "symbol": "STRK/USDT",
+      "entry": 0.03087,
+      "exit": 0.0319337,
+      "profit": 3.7903980421120864,
+      "time": "2026-11-23 07:47"
     }
   ],
   "losing_trades": [
@@ -505,20 +512,6 @@
       "highest_price": 0.00287,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341093.2086332
-    },
-    {
-      "symbol": "STRK/USDT",
-      "entry": 0.03087,
-      "sl": 0.0319337,
-      "original_sl": 0.02996994,
-      "tp1": 0.032310096,
-      "tp2": 0.033390168000000005,
-      "amount": 46.73,
-      "tp1_hit": true,
-      "profit_locked": 2.180203646258506,
-      "highest_price": 0.03242,
-      "time": "2026-11-22 09:51",
-      "timestamp": 1795341095.427906
     },
     {
       "symbol": "EDU/USDT",
