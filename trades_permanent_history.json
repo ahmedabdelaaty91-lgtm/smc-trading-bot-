@@ -509,14 +509,14 @@
     {
       "symbol": "STRK/USDT",
       "entry": 0.03087,
-      "sl": 0.0318549,
+      "sl": 0.03190415,
       "original_sl": 0.02996994,
       "tp1": 0.032310096,
       "tp2": 0.033390168000000005,
       "amount": 46.73,
       "tp1_hit": true,
       "profit_locked": 2.180203646258506,
-      "highest_price": 0.03234,
+      "highest_price": 0.03239,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341095.427906
     },
