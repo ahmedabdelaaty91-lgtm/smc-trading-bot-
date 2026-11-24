@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 950.5648203514575,
-  "total_profit_usdt": -49.43517964854249,
+  "current_balance": 950.8672523006489,
+  "total_profit_usdt": -49.132747699351086,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -121,6 +121,13 @@
       "exit": 9.020039,
       "profit": 3.344355907467614,
       "time": "2026-11-24 09:08"
+    },
+    {
+      "symbol": "NOT/USDT",
+      "entry": 0.0002856,
+      "exit": 0.0002878,
+      "profit": 0.7200070028011202,
+      "time": "2026-11-24 19:12"
     }
   ],
   "losing_trades": [
@@ -499,37 +506,17 @@
       "loss": -0.19523759791123615,
       "time": "2026-11-24 05:19",
       "timestamp": 1795497562.1827054
-    }
-  ],
-  "open_trades": [
+    },
     {
       "symbol": "MANA/USDT",
       "entry": 0.05596,
-      "sl": 0.0544409,
-      "original_sl": 0.0544409,
-      "tp1": 0.05839056000000001,
-      "tp2": 0.06021348000000001,
-      "amount": 93.47,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.05596,
-      "time": "2026-11-22 09:51",
-      "timestamp": 1795341085.7257957
-    },
-    {
-      "symbol": "NOT/USDT",
-      "entry": 0.0002856,
-      "sl": 0.0002766456,
-      "original_sl": 0.0002766456,
-      "tp1": 0.00029992704,
-      "tp2": 0.00031067232000000003,
-      "amount": 93.47,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.0002856,
-      "time": "2026-11-22 09:51",
-      "timestamp": 1795341090.995701
-    },
+      "exit": 0.05571,
+      "loss": -0.4175750536097216,
+      "time": "2026-11-24 19:12",
+      "timestamp": 1795547544.5873666
+    }
+  ],
+  "open_trades": [
     {
       "symbol": "FET/USDT",
       "entry": 0.1098,
