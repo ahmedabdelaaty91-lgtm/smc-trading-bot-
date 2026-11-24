@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 946.7643431568837,
-  "total_profit_usdt": -53.23565684311629,
+  "current_balance": 947.4157020419011,
+  "total_profit_usdt": -52.584297958098865,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -107,6 +107,13 @@
       "exit": 0.124701,
       "profit": 4.388890986622073,
       "time": "2026-11-23 22:08"
+    },
+    {
+      "symbol": "PIXEL/USDT",
+      "entry": 0.00287,
+      "exit": 0.00289,
+      "profit": 0.6513588850174233,
+      "time": "2026-11-24 04:30"
     }
   ],
   "losing_trades": [
@@ -521,20 +528,6 @@
       "highest_price": 0.0002856,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341090.995701
-    },
-    {
-      "symbol": "PIXEL/USDT",
-      "entry": 0.00287,
-      "sl": 0.0027944,
-      "original_sl": 0.0027944,
-      "tp1": 0.002990960000000001,
-      "tp2": 0.003081680000000001,
-      "amount": 93.47,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.00287,
-      "time": "2026-11-22 09:51",
-      "timestamp": 1795341093.2086332
     },
     {
       "symbol": "OGN/USDT",
