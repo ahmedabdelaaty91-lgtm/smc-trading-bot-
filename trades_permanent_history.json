@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 947.4157020419011,
-  "total_profit_usdt": -52.584297958098865,
+  "current_balance": 947.22046444399,
+  "total_profit_usdt": -52.779535556010096,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -484,6 +484,14 @@
       "loss": -2.2722543070044696,
       "time": "2026-11-23 19:39",
       "timestamp": 1795462764.5790594
+    },
+    {
+      "symbol": "OGN/USDT",
+      "entry": 0.01915,
+      "exit": 0.01911,
+      "loss": -0.19523759791123615,
+      "time": "2026-11-24 05:19",
+      "timestamp": 1795497562.1827054
     }
   ],
   "open_trades": [
@@ -528,20 +536,6 @@
       "highest_price": 0.0002856,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341090.995701
-    },
-    {
-      "symbol": "OGN/USDT",
-      "entry": 0.01915,
-      "sl": 0.01858276,
-      "original_sl": 0.01858276,
-      "tp1": 0.020057584,
-      "tp2": 0.020738272000000002,
-      "amount": 93.47,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.01915,
-      "time": "2026-11-22 09:54",
-      "timestamp": 1795341295.7392504
     },
     {
       "symbol": "FET/USDT",
