@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 947.22046444399,
-  "total_profit_usdt": -52.779535556010096,
+  "current_balance": 950.5648203514575,
+  "total_profit_usdt": -49.43517964854249,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -114,6 +114,13 @@
       "exit": 0.00289,
       "profit": 0.6513588850174233,
       "time": "2026-11-24 04:30"
+    },
+    {
+      "symbol": "LINK/USDT",
+      "entry": 8.7364,
+      "exit": 9.020039,
+      "profit": 3.344355907467614,
+      "time": "2026-11-24 09:08"
     }
   ],
   "losing_trades": [
@@ -495,20 +502,6 @@
     }
   ],
   "open_trades": [
-    {
-      "symbol": "LINK/USDT",
-      "entry": 8.7364,
-      "sl": 9.020039,
-      "original_sl": 8.52292,
-      "tp1": 9.077968,
-      "tp2": 9.334144000000002,
-      "amount": 46.73,
-      "tp1_hit": true,
-      "profit_locked": 1.827203479694156,
-      "highest_price": 9.1574,
-      "time": "2026-11-22 09:51",
-      "timestamp": 1795341078.8677838
-    },
     {
       "symbol": "MANA/USDT",
       "entry": 0.05596,
