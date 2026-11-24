@@ -483,14 +483,14 @@
     {
       "symbol": "LINK/USDT",
       "entry": 8.7364,
-      "sl": 8.9823135,
+      "sl": 8.988125,
       "original_sl": 8.52292,
       "tp1": 9.077968,
       "tp2": 9.334144000000002,
       "amount": 46.73,
       "tp1_hit": true,
       "profit_locked": 1.827203479694156,
-      "highest_price": 9.1191,
+      "highest_price": 9.125,
       "time": "2026-11-22 09:51",
       "timestamp": 1795341078.8677838
     },
