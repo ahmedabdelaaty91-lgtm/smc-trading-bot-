@@ -531,6 +531,21 @@
       "timestamp": 1795551840.8370488
     }
   ],
-  "open_trades": [],
+  "open_trades": [
+    {
+      "symbol": "BTC/USDT",
+      "entry": 59830.9,
+      "sl": 57988.79,
+      "original_sl": 57988.79,
+      "tp1": 62778.276000000005,
+      "tp2": 64988.808000000005,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 59830.9,
+      "time": "2026-11-25 18:06",
+      "timestamp": 1795629998.922473
+    }
+  ],
   "cooldown_until": 1795559040.8370488
 }
