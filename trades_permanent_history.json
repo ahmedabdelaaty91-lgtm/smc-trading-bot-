@@ -629,6 +629,20 @@
       "highest_price": 0.1266,
       "time": "2026-11-25 19:03",
       "timestamp": 1795633399.4156363
+    },
+    {
+      "symbol": "AR/USDT",
+      "entry": 2.293,
+      "sl": 2.237516,
+      "original_sl": 2.237516,
+      "tp1": 2.3817744000000007,
+      "tp2": 2.448355200000001,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 2.293,
+      "time": "2026-11-25 19:03",
+      "timestamp": 1795633405.438658
     }
   ],
   "cooldown_until": 1795559040.8370488
