@@ -587,6 +587,20 @@
       "highest_price": 200.37,
       "time": "2026-11-25 18:06",
       "timestamp": 1795630007.497675
+    },
+    {
+      "symbol": "ICP/USDT",
+      "entry": 2.012,
+      "sl": 1.952088,
+      "original_sl": 1.952088,
+      "tp1": 2.1078592,
+      "tp2": 2.1797535999999997,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 2.012,
+      "time": "2026-11-25 18:49",
+      "timestamp": 1795632597.215375
     }
   ],
   "cooldown_until": 1795559040.8370488
