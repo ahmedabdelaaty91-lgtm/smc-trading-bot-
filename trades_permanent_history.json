@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 947.9498677833448,
-  "total_profit_usdt": -52.05013221665527,
+  "current_balance": 952.3874046879769,
+  "total_profit_usdt": -47.61259531202312,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -128,6 +128,13 @@
       "exit": 0.0002878,
       "profit": 0.7200070028011202,
       "time": "2026-11-24 19:12"
+    },
+    {
+      "symbol": "ERA/USDT",
+      "entry": 0.0734,
+      "exit": 0.0773225,
+      "profit": 4.437536904632156,
+      "time": "2026-11-25 05:11"
     }
   ],
   "losing_trades": [
@@ -524,21 +531,6 @@
       "timestamp": 1795551840.8370488
     }
   ],
-  "open_trades": [
-    {
-      "symbol": "ERA/USDT",
-      "entry": 0.0734,
-      "sl": 0.0773225,
-      "original_sl": 0.0715566,
-      "tp1": 0.07634944000000002,
-      "tp2": 0.07856152000000004,
-      "amount": 47.4,
-      "tp1_hit": true,
-      "profit_locked": 1.904478321525893,
-      "highest_price": 0.0785,
-      "time": "2026-11-25 00:25",
-      "timestamp": 1795566358.0484464
-    }
-  ],
+  "open_trades": [],
   "cooldown_until": 1795559040.8370488
 }
