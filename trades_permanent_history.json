@@ -545,6 +545,20 @@
       "highest_price": 59830.9,
       "time": "2026-11-25 18:06",
       "timestamp": 1795629998.922473
+    },
+    {
+      "symbol": "ETH/USDT",
+      "entry": 1684.63,
+      "sl": 1626.77992,
+      "original_sl": 1626.77992,
+      "tp1": 1777.1901280000004,
+      "tp2": 1846.6102240000005,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 1684.63,
+      "time": "2026-11-25 18:06",
+      "timestamp": 1795630001.2659209
     }
   ],
   "cooldown_until": 1795559040.8370488
