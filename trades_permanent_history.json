@@ -643,6 +643,20 @@
       "highest_price": 2.293,
       "time": "2026-11-25 19:03",
       "timestamp": 1795633405.438658
+    },
+    {
+      "symbol": "FLOKI/USDT",
+      "entry": 1.647e-05,
+      "sl": 1.590812e-05,
+      "original_sl": 1.590812e-05,
+      "tp1": 1.7369008e-05,
+      "tp2": 1.8043264000000002e-05,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 1.647e-05,
+      "time": "2026-11-25 19:03",
+      "timestamp": 1795633408.435737
     }
   ],
   "cooldown_until": 1795559040.8370488
