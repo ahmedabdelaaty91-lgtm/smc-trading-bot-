@@ -615,6 +615,20 @@
       "highest_price": 0.0188,
       "time": "2026-11-25 18:50",
       "timestamp": 1795632612.3579183
+    },
+    {
+      "symbol": "XLM/USDT",
+      "entry": 0.1266,
+      "sl": 0.1224546,
+      "original_sl": 0.1224546,
+      "tp1": 0.13323263999999999,
+      "tp2": 0.13820711999999996,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 0.1266,
+      "time": "2026-11-25 19:03",
+      "timestamp": 1795633399.4156363
     }
   ],
   "cooldown_until": 1795559040.8370488
