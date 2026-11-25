@@ -573,6 +573,20 @@
       "highest_price": 550.197,
       "time": "2026-11-25 18:06",
       "timestamp": 1795630003.250866
+    },
+    {
+      "symbol": "BCH/USDT",
+      "entry": 200.37,
+      "sl": 193.90142,
+      "original_sl": 193.90142,
+      "tp1": 210.719728,
+      "tp2": 218.48202400000002,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 200.37,
+      "time": "2026-11-25 18:06",
+      "timestamp": 1795630007.497675
     }
   ],
   "cooldown_until": 1795559040.8370488
