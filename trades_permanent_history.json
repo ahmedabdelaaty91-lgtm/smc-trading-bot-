@@ -528,14 +528,14 @@
     {
       "symbol": "ERA/USDT",
       "entry": 0.0734,
-      "sl": 0.075648,
+      "sl": 0.075845,
       "original_sl": 0.0715566,
       "tp1": 0.07634944000000002,
       "tp2": 0.07856152000000004,
       "amount": 47.4,
       "tp1_hit": true,
       "profit_locked": 1.904478321525893,
-      "highest_price": 0.0768,
+      "highest_price": 0.077,
       "time": "2026-11-25 00:25",
       "timestamp": 1795566358.0484464
     }
