@@ -559,6 +559,20 @@
       "highest_price": 1684.63,
       "time": "2026-11-25 18:06",
       "timestamp": 1795630001.2659209
+    },
+    {
+      "symbol": "BNB/USDT",
+      "entry": 550.197,
+      "sl": 533.64058,
+      "original_sl": 533.64058,
+      "tp1": 576.687272,
+      "tp2": 596.554976,
+      "amount": 95.24,
+      "tp1_hit": false,
+      "profit_locked": 0.0,
+      "highest_price": 550.197,
+      "time": "2026-11-25 18:06",
+      "timestamp": 1795630003.250866
     }
   ],
   "cooldown_until": 1795559040.8370488
