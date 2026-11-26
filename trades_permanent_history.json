@@ -577,14 +577,14 @@
     {
       "symbol": "BCH/USDT",
       "entry": 200.37,
-      "sl": 208.2684,
+      "sl": 208.3275,
       "original_sl": 193.90142,
       "tp1": 210.719728,
       "tp2": 218.48202400000002,
       "amount": 47.62,
       "tp1_hit": true,
       "profit_locked": 2.459719755252782,
-      "highest_price": 211.44,
+      "highest_price": 211.5,
       "time": "2026-11-25 18:06",
       "timestamp": 1795630007.497675
     },
