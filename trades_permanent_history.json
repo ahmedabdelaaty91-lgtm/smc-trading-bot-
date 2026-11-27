@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 965.1938147458079,
-  "total_profit_usdt": -34.8061852541921,
+  "current_balance": 966.1768627118067,
+  "total_profit_usdt": -33.82313728819331,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -170,6 +170,13 @@
       "exit": 0.1279,
       "profit": 0.9779778830963841,
       "time": "2026-11-27 14:31"
+    },
+    {
+      "symbol": "FLOKI/USDT",
+      "entry": 1.647e-05,
+      "exit": 1.664e-05,
+      "profit": 0.983047965998786,
+      "time": "2026-11-27 14:32"
     }
   ],
   "losing_trades": [
@@ -608,20 +615,6 @@
       "highest_price": 550.197,
       "time": "2026-11-25 18:06",
       "timestamp": 1795630003.250866
-    },
-    {
-      "symbol": "FLOKI/USDT",
-      "entry": 1.647e-05,
-      "sl": 1.590812e-05,
-      "original_sl": 1.590812e-05,
-      "tp1": 1.7369008e-05,
-      "tp2": 1.8043264000000002e-05,
-      "amount": 95.24,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 1.647e-05,
-      "time": "2026-11-25 19:03",
-      "timestamp": 1795633408.435737
     },
     {
       "symbol": "VET/USDT",
