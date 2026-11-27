@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 966.1768627118067,
-  "total_profit_usdt": -33.82313728819331,
+  "current_balance": 971.9824226284366,
+  "total_profit_usdt": -28.01757737156349,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -177,6 +177,27 @@
       "exit": 1.664e-05,
       "profit": 0.983047965998786,
       "time": "2026-11-27 14:32"
+    },
+    {
+      "symbol": "ETH/USDT",
+      "entry": 1684.63,
+      "exit": 1697.59,
+      "profit": 0.7326893145675796,
+      "time": "2026-11-27 14:34"
+    },
+    {
+      "symbol": "BNB/USDT",
+      "entry": 550.197,
+      "exit": 556.255,
+      "profit": 1.0486497018340692,
+      "time": "2026-11-27 14:34"
+    },
+    {
+      "symbol": "VET/USDT",
+      "entry": 0.004821,
+      "exit": 0.0050038,
+      "profit": 4.0242209002281655,
+      "time": "2026-11-27 14:34"
     }
   ],
   "losing_trades": [
@@ -587,48 +608,6 @@
       "highest_price": 59830.9,
       "time": "2026-11-25 18:06",
       "timestamp": 1795629998.922473
-    },
-    {
-      "symbol": "ETH/USDT",
-      "entry": 1684.63,
-      "sl": 1626.77992,
-      "original_sl": 1626.77992,
-      "tp1": 1777.1901280000004,
-      "tp2": 1846.6102240000005,
-      "amount": 95.24,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 1684.63,
-      "time": "2026-11-25 18:06",
-      "timestamp": 1795630001.2659209
-    },
-    {
-      "symbol": "BNB/USDT",
-      "entry": 550.197,
-      "sl": 533.64058,
-      "original_sl": 533.64058,
-      "tp1": 576.687272,
-      "tp2": 596.554976,
-      "amount": 95.24,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 550.197,
-      "time": "2026-11-25 18:06",
-      "timestamp": 1795630003.250866
-    },
-    {
-      "symbol": "VET/USDT",
-      "entry": 0.004821,
-      "sl": 0.0050038,
-      "original_sl": 0.00468062,
-      "tp1": 0.005045607999999999,
-      "tp2": 0.005214063999999999,
-      "amount": 47.62,
-      "tp1_hit": true,
-      "profit_locked": 2.2185921924911787,
-      "highest_price": 0.00508,
-      "time": "2026-11-25 19:03",
-      "timestamp": 1795633421.80763
     },
     {
       "symbol": "UNI/USDT",
