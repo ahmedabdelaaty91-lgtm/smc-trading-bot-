@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 971.9824226284366,
-  "total_profit_usdt": -28.01757737156349,
+  "current_balance": 973.0696354231629,
+  "total_profit_usdt": -26.93036457683702,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -198,6 +198,13 @@
       "exit": 0.0050038,
       "profit": 4.0242209002281655,
       "time": "2026-11-27 14:34"
+    },
+    {
+      "symbol": "BTC/USDT",
+      "entry": 59830.9,
+      "exit": 60513.9,
+      "profit": 1.0872127947264707,
+      "time": "2026-11-27 14:38"
     }
   ],
   "losing_trades": [
@@ -595,20 +602,6 @@
     }
   ],
   "open_trades": [
-    {
-      "symbol": "BTC/USDT",
-      "entry": 59830.9,
-      "sl": 57988.79,
-      "original_sl": 57988.79,
-      "tp1": 62778.276000000005,
-      "tp2": 64988.808000000005,
-      "amount": 95.24,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 59830.9,
-      "time": "2026-11-25 18:06",
-      "timestamp": 1795629998.922473
-    },
     {
       "symbol": "UNI/USDT",
       "entry": 4.8298,
