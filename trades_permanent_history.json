@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 963.3164531648983,
-  "total_profit_usdt": -36.68354683510161,
+  "current_balance": 965.1938147458079,
+  "total_profit_usdt": -34.8061852541921,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -156,6 +156,20 @@
       "exit": 2.309,
       "profit": 0.6645617095508073,
       "time": "2026-11-27 13:19"
+    },
+    {
+      "symbol": "ICP/USDT",
+      "entry": 2.012,
+      "exit": 2.031,
+      "profit": 0.8993836978131272,
+      "time": "2026-11-27 14:31"
+    },
+    {
+      "symbol": "XLM/USDT",
+      "entry": 0.1266,
+      "exit": 0.1279,
+      "profit": 0.9779778830963841,
+      "time": "2026-11-27 14:31"
     }
   ],
   "losing_trades": [
@@ -594,34 +608,6 @@
       "highest_price": 550.197,
       "time": "2026-11-25 18:06",
       "timestamp": 1795630003.250866
-    },
-    {
-      "symbol": "ICP/USDT",
-      "entry": 2.012,
-      "sl": 1.952088,
-      "original_sl": 1.952088,
-      "tp1": 2.1078592,
-      "tp2": 2.1797535999999997,
-      "amount": 95.24,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 2.012,
-      "time": "2026-11-25 18:49",
-      "timestamp": 1795632597.215375
-    },
-    {
-      "symbol": "XLM/USDT",
-      "entry": 0.1266,
-      "sl": 0.1224546,
-      "original_sl": 0.1224546,
-      "tp1": 0.13323263999999999,
-      "tp2": 0.13820711999999996,
-      "amount": 95.24,
-      "tp1_hit": false,
-      "profit_locked": 0.0,
-      "highest_price": 0.1266,
-      "time": "2026-11-25 19:03",
-      "timestamp": 1795633399.4156363
     },
     {
       "symbol": "FLOKI/USDT",
