@@ -1,7 +1,7 @@
 {
   "starting_balance": 1000.0,
-  "current_balance": 952.3874046879769,
-  "total_profit_usdt": -47.61259531202312,
+  "current_balance": 959.151634014922,
+  "total_profit_usdt": -40.84836598507796,
   "winning_trades": [
     {
       "symbol": "PEPE/USDT",
@@ -135,6 +135,13 @@
       "exit": 0.0773225,
       "profit": 4.437536904632156,
       "time": "2026-11-25 05:11"
+    },
+    {
+      "symbol": "BCH/USDT",
+      "entry": 200.37,
+      "exit": 218.48202400000002,
+      "profit": 6.764229326945155,
+      "time": "2026-11-27 02:33"
     }
   ],
   "losing_trades": [
@@ -573,20 +580,6 @@
       "highest_price": 550.197,
       "time": "2026-11-25 18:06",
       "timestamp": 1795630003.250866
-    },
-    {
-      "symbol": "BCH/USDT",
-      "entry": 200.37,
-      "sl": 214.77925,
-      "original_sl": 193.90142,
-      "tp1": 210.719728,
-      "tp2": 218.48202400000002,
-      "amount": 47.62,
-      "tp1_hit": true,
-      "profit_locked": 2.459719755252782,
-      "highest_price": 218.05,
-      "time": "2026-11-25 18:06",
-      "timestamp": 1795630007.497675
     },
     {
       "symbol": "ICP/USDT",
